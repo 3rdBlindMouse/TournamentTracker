@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+// textProcessor for using extended methods
+using TournamentLibrary.DataAccess.TextProcessor;
+using TournamentLibrary.Models;
+
+namespace TournamentLibrary.DataAccess
+{
+    public class TextConnector : IDataConnection
+    {
+        // PersonModel.csv will always be this file/name (note fullpath not locked in) 
+        private const string PersonFile = "PersonModel.csv";
+
+        public DivisionModel CreateDivision(DivisionModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Saves a new Person to the text file(s).
+        /// </summary>
+        /// <param name="model">The Person Information</param>
+        /// <returns>The Person information, including the unique identifier</returns>
+        public PersonModel CreatePerson(PersonModel model)
+        {
+            // List of PersonModels from textfile.
+            // Load the text file and convert to a list of PersonModel
+            List<PersonModel> people = PersonFile.FullFilePath().LoadFile().convertToPersonModel();
+
+            int currentId = 1;
+            if (people.Count > 0)
+            {
+                currentId = people.OrderByDescending(x => x.PersonID).First().PersonID + 1;
+            }
+            model.PersonID = currentId;
+
+            // add the new record with the new id (max + 1)
+            people.Add(model);
+
+            // save the list<string> to the text file
+            people.saveToPersonFile(PersonFile);
+
+            return model;
+        }
+
+        public SeasonModel CreateSeason(SeasonModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SkippedDatesModel CreateSkippedDatesModel(SkippedDatesModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetAllPeople()
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
