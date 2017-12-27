@@ -19,8 +19,9 @@ namespace TournamentTrackerUI
 
             //Application.Run(new TournamentCreator());
             //Application.Run(new DivisionCreator());
-            Application.Run(new TeamCreatorForm());
+            //Application.Run(new TeamCreatorForm());
             //Application.Run(new PersonCreatorForm());
+            Application.Run(new VenueCreatorForm());
         }
     }
 }

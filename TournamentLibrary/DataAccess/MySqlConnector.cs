@@ -16,16 +16,6 @@ namespace TournamentLibrary.DataAccess
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
-                //var p = new DynamicParameters();
-                //p.Add("@DivisionID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                //p.Add("@DivisionName", model.DivisionName);
-                //p.Add("@DivisionNumber", model.DivisionNumber);
-                //p.Add("@email", model.);
-                //p.Add("@phone", model.ContactNumber);
-                //p.Add("@sex", model.Sex);
-                //p.Add("@DateOfBirth", model.DateOfBirth);
-
-                //connection.Execute("spPerson", p, commandType: CommandType.StoredProcedure);
                 return model;
             }
         }
@@ -63,6 +53,34 @@ namespace TournamentLibrary.DataAccess
             }
         }
 
+        public List<RosterModel> CreateRoster(RosterModel model)
+        {
+            List<RosterModel> roster = new List<RosterModel>();
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                foreach (PersonModel player in model.players)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@RosterID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    
+                    p.Add("@PersonID", player.PersonID);
+                    p.Add("@TeamID", model.TeamID);
+
+
+                    connection.Execute("spRoster",p, commandType: CommandType.StoredProcedure);
+
+
+                    // grabs newly created ID from database and returns it as part of the current Person Model
+                    // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                    var id = p.Get<int?>("RosterID");
+                    model.RosterID = Convert.ToInt32(id);
+
+                    roster.Add(model);
+                }
+                return roster;
+            }
+            }
+
         public SeasonModel CreateSeason(SeasonModel model)
         {
             // lesson 10 30:30
@@ -98,6 +116,53 @@ namespace TournamentLibrary.DataAccess
 
         }
 
+        public TeamModel CreateTeam(TeamModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@TeamName", model.TeamName);
+                // TODO sort venues
+                p.Add("@TeamVenue", model.TeamVenue.VenueID);
+                //p.Add("@DivisionID", 0);
+
+
+               connection.Execute("spTeam", p, commandType: CommandType.StoredProcedure);
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                model.TeamID = p.Get<int>("@TeamID");
+
+
+                return model;
+            
+        }
+            }
+
+        public VenueModel CreateVenue(VenueModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@VenueID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@VenueName", model.VenueName);
+                p.Add("@VenueAddress", model.VenueAddress);
+                p.Add("@VenuePhone", model.VenuePhone);
+                p.Add("@ContactPerson", model.ContactPerson);
+                p.Add("@PoolTables", model.NumberOfPoolTables);
+
+
+
+                connection.Execute("spVenue", p, commandType: CommandType.StoredProcedure);
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                model.VenueID = p.Get<int>("@VenueID");
+
+
+                return model;
+            }
+        }
+
         public List<PersonModel> GetAllPeople()
         {
             List<PersonModel> output;
@@ -106,6 +171,38 @@ namespace TournamentLibrary.DataAccess
                 output = connection.Query<PersonModel>("spGetAllPeople").ToList();
             }
             return output;
+        }
+
+        public List<TeamModel> GetAllTeams()
+        {
+            List<TeamModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<TeamModel>("spGetAllTeams").ToList();
+            }
+            return output;
+        }
+
+        public List<VenueModel> GetAllVenues()
+        {
+            List<VenueModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<VenueModel>("spGetAllVenues").ToList();
+            }
+            return output;
+        }
+
+        public List<PersonModel> GetLastPerson()
+        {
+            List<PersonModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<PersonModel>("spGetLastPerson").ToList();
+            }
+            return output;
+
+
         }
     }
 }

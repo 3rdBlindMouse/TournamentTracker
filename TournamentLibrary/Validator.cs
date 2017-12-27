@@ -60,7 +60,21 @@ namespace TournamentLibrary
             return false;
         }
 
+        public bool isValidAddress(String str)
+        {
+            return Regex.IsMatch(str, @"^[#.0-9a-zA-Z\s,-]+$");
+                                      
+        }
 
+        public bool isValidName(String str)
+        {
+            return Regex.IsMatch(str, @"^[a-zA-Z\s,&]+$");
+            //                      // @"[^A-Za-z0-9'\.&@:?!()$#^]"
+        }
 
+        public bool isValidPhoneNumber(String str)
+        {
+            return Regex.IsMatch(str, @"^([\(\)\+0-9\s\-\#]+)$");
+        }
     }
 }

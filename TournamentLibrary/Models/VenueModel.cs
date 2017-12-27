@@ -26,7 +26,7 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// Name of contact person/publican of Venue
         /// </summary>
-        public PersonModel ContactPerson { get; set; }
+        public string ContactPerson { get; set; }
         /// <summary>
         /// number of pool tables at the venue
         /// </summary>

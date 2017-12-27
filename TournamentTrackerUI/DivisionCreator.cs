@@ -16,14 +16,24 @@ namespace TournamentTrackerUI
     {
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
+        private static List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
 
         public DivisionCreator()
         {
             InitializeComponent();
+            WireupLists();
         }
+
+        private void WireupLists()
+        {
+            addTeamsDropdown.DataSource = null;
+            addTeamsDropdown.DataSource = teams;
+            addTeamsDropdown.DisplayMember = "TeamName";
+        }
+
         /*
-         * User notifications
-         */
+* User notifications
+*/
         private void OnEnter(TextBox tb)
         {
             tb.BackColor = SystemColors.Info;
@@ -56,32 +66,46 @@ namespace TournamentTrackerUI
         private void UpdateStartDate()
         {
             detailsListbox.Items.RemoveAt(6);
-            detailsListbox.Items.Insert(6, StartDate.Value.ToString("d"));
+            detailsListbox.Items.Insert(6, StartDate.Value.ToString("D"));
         }
         /// <summary>
         /// Updates display to show selected date(s) to skip
         /// </summary>
         private void addSkipdates()
         {
-            skippedDates.Add(SkipDatesdateTimePicker.Value);
+            var date = SkipDatesdateTimePicker.Value.ToString("D");
+            // check to see if date is already selected as a skipped date
+            if (!skippedDates.Contains(DateTime.Parse(date)))
+            {
+                skippedDates.Add(DateTime.Parse(date));
+                updateSkippedDatesBox();
+                
+               
+            }
+        }
+
+        private void updateSkippedDatesBox()
+        {
             skippedDatesListbox.Items.Clear();
             var sortedDates = skippedDates.OrderBy(x => x).ToList();
             foreach (DateTime dates in sortedDates)
             {
-                skippedDatesListbox.Items.Add(dates.ToShortDateString());
+                skippedDatesListbox.Items.Add(dates.ToString("D"));
             }
         }
+
         /// <summary>
         /// Updates display to remove selected date(s)
         /// </summary>
         private void removeSkippedDates()
         {
-            skippedDates.Remove(SkipDatesdateTimePicker.Value);
-            skippedDatesListbox.Items.Clear();
-            var sortedDates = skippedDates.OrderBy(x => x).ToList();
-            foreach (DateTime dates in sortedDates)
+            if (skippedDatesListbox.SelectedItem != null)
             {
-                skippedDatesListbox.Items.Add(dates.ToShortDateString());
+                var sortedDates = skippedDates.OrderBy(x => x).ToList();
+                var date = DateTime.Parse(skippedDatesListbox.SelectedItem.ToString());
+                skippedDates.Remove(date);
+
+                updateSkippedDatesBox();
             }
         }
         /*
@@ -153,10 +177,7 @@ namespace TournamentTrackerUI
         {
             OnEnter(DivisionNumberTextbox);
         }
-        private void NumberOfTeamsTextbox_Enter(object sender, EventArgs e)
-        {
-            OnEnter(NumberOfTeamsTextbox);
-        }
+       
         /*
          * Leave Events
          */
@@ -174,13 +195,7 @@ namespace TournamentTrackerUI
                 UpdateDivNumber(DivisionNumberTextbox);
             }
         }
-        private void NumberOfTeamsTextbox_Leave(object sender, EventArgs e)
-        {
-            if (ValidateNumberOfTeams(NumberOfTeamsTextbox))
-            {
-                UpdateDivTeams(NumberOfTeamsTextbox);
-            }
-        }
+        
         /*
          * Select Events
          */

@@ -44,6 +44,11 @@ namespace TournamentLibrary.DataAccess
             return model;
         }
 
+        public List<RosterModel> CreateRoster(RosterModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public SeasonModel CreateSeason(SeasonModel model)
         {
             throw new NotImplementedException();
@@ -54,7 +59,34 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public TeamModel CreateTeam(TeamModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public VenueModel CreateVenue(VenueModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<PersonModel> GetAllPeople()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetAllTeams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<VenueModel> GetAllVenues()
+        {
+            throw new NotImplementedException();
+        }
+
+        
+
+        List<PersonModel> IDataConnection.GetLastPerson()
         {
             throw new NotImplementedException();
         }

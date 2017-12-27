@@ -46,8 +46,10 @@ namespace TournamentTrackerUI
 
                 GlobalConfig.Connection.CreatePerson(model);
 
+                this.Close();
+                
+                //clearForm();
 
-                clearForm();
             }
             else
             {

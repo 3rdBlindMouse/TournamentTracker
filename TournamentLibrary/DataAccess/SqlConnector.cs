@@ -44,6 +44,11 @@ namespace TournamentLibrary.DataAccess
             }
         }
 
+        public List<RosterModel> CreateRoster(RosterModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public SeasonModel CreateSeason(SeasonModel model)
         {
             throw new NotImplementedException();
@@ -54,7 +59,52 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public TeamModel CreateTeam(TeamModel model)
+        {
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString("tournament")))
+            {
+                var p = new DynamicParameters();
+                p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@TeamName", model.TeamName);
+                //p.Add("@TeamVenue", model.TeamVenue);
+
+
+                connection.Execute("spTeam", p, commandType: CommandType.StoredProcedure);
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                model.TeamID = p.Get<int>("@TeamID");
+
+
+                return model;
+            }
+            }
+
+        public VenueModel CreateVenue(VenueModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<PersonModel> GetAllPeople()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetAllTeams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<VenueModel> GetAllVenues()
+        {
+            throw new NotImplementedException();
+        }
+
+        public PersonModel GetLastPerson()
+        {
+            throw new NotImplementedException();
+        }
+
+        List<PersonModel> IDataConnection.GetLastPerson()
         {
             throw new NotImplementedException();
         }
