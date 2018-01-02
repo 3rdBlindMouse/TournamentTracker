@@ -45,23 +45,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DivisionCreator.cs">
+    <Compile Include="CreateDivisionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DivisionCreator.Designer.cs">
-      <DependentUpon>DivisionCreator.cs</DependentUpon>
+    <Compile Include="CreateDivisionForm.Designer.cs">
+      <DependentUpon>CreateDivisionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonCreatorForm.cs">
+    <Compile Include="FirstForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PersonCreatorForm.Designer.cs">
-      <DependentUpon>PersonCreatorForm.cs</DependentUpon>
+    <Compile Include="FirstForm.Designer.cs">
+      <DependentUpon>FirstForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeamPersonCreatorForm.cs">
+    <Compile Include="EditPersonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TeamPersonCreatorForm.Designer.cs">
-      <DependentUpon>TeamPersonCreatorForm.cs</DependentUpon>
+    <Compile Include="EditPersonForm.Designer.cs">
+      <DependentUpon>EditPersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreatePersonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreatePersonForm.Designer.cs">
+      <DependentUpon>CreatePersonForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ScoreCard.cs">
       <SubType>Form</SubType>
@@ -69,11 +75,11 @@
     <Compile Include="ScoreCard.Designer.cs">
       <DependentUpon>ScoreCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="TeamCreatorForm.cs">
+    <Compile Include="CreateTeamForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TeamCreatorForm.Designer.cs">
-      <DependentUpon>TeamCreatorForm.cs</DependentUpon>
+    <Compile Include="CreateTeamForm.Designer.cs">
+      <DependentUpon>CreateTeamForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TournamentCreatorForm.cs">
       <SubType>Form</SubType>
@@ -83,23 +89,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VenueCreatorForm.cs">
+    <Compile Include="CreateVenueForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VenueCreatorForm.Designer.cs">
-      <DependentUpon>VenueCreatorForm.cs</DependentUpon>
+    <Compile Include="CreateVenueForm.Designer.cs">
+      <DependentUpon>CreateVenueForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="DivisionCreator.resx">
-      <DependentUpon>DivisionCreator.cs</DependentUpon>
+    <EmbeddedResource Include="CreateDivisionForm.resx">
+      <DependentUpon>CreateDivisionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FirstForm.resx">
+      <DependentUpon>FirstForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScoreCard.resx">
       <DependentUpon>ScoreCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeamCreatorForm.resx">
-      <DependentUpon>TeamCreatorForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreateTeamForm.resx">
+      <DependentUpon>CreateTeamForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TeamPersonCreatorForm.resx">
-      <DependentUpon>TeamPersonCreatorForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreatePersonForm.resx">
+      <DependentUpon>CreatePersonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TournamentCreatorForm.resx">
       <DependentUpon>TournamentCreatorForm.cs</DependentUpon>
@@ -113,8 +122,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="VenueCreatorForm.resx">
-      <DependentUpon>VenueCreatorForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreateVenueForm.resx">
+      <DependentUpon>CreateVenueForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

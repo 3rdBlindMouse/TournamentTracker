@@ -124,7 +124,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@TeamName", model.TeamName);
                 // TODO sort venues
-                p.Add("@TeamVenue", model.TeamVenue.VenueID);
+                p.Add("@VenueID", model.VenueID);
                 //p.Add("@DivisionID", 0);
 
 

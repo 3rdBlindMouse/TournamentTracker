@@ -1,6 +1,6 @@
 ﻿namespace TournamentTrackerUI
 {
-    partial class DivisionCreator
+    partial class CreateDivisionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -197,12 +197,13 @@
             // 
             // ExitToMainMenuButton
             // 
-            this.ExitToMainMenuButton.Location = new System.Drawing.Point(8, 361);
+            this.ExitToMainMenuButton.Location = new System.Drawing.Point(671, 362);
             this.ExitToMainMenuButton.Name = "ExitToMainMenuButton";
             this.ExitToMainMenuButton.Size = new System.Drawing.Size(87, 34);
             this.ExitToMainMenuButton.TabIndex = 18;
             this.ExitToMainMenuButton.Text = "Exit to Main Menu";
             this.ExitToMainMenuButton.UseVisualStyleBackColor = true;
+            this.ExitToMainMenuButton.Click += new System.EventHandler(this.ExitToMainMenuButton_Click);
             // 
             // DivisionTournamentNameLabel
             // 
@@ -227,7 +228,7 @@
             // 
             // TeamsButton
             // 
-            this.TeamsButton.Location = new System.Drawing.Point(633, 361);
+            this.TeamsButton.Location = new System.Drawing.Point(544, 362);
             this.TeamsButton.Name = "TeamsButton";
             this.TeamsButton.Size = new System.Drawing.Size(87, 34);
             this.TeamsButton.TabIndex = 21;
@@ -236,7 +237,7 @@
             // 
             // EditDivisionButton
             // 
-            this.EditDivisionButton.Location = new System.Drawing.Point(473, 361);
+            this.EditDivisionButton.Location = new System.Drawing.Point(378, 361);
             this.EditDivisionButton.Name = "EditDivisionButton";
             this.EditDivisionButton.Size = new System.Drawing.Size(138, 34);
             this.EditDivisionButton.TabIndex = 22;
@@ -303,7 +304,7 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "or Create New Team";
             // 
-            // DivisionCreator
+            // CreateDivisionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -330,7 +331,7 @@
             this.Controls.Add(this.DivisionHeaderLabel);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "DivisionCreator";
+            this.Name = "CreateDivisionForm";
             this.Text = "DivisionCreator";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

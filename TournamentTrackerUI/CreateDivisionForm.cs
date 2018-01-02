@@ -12,13 +12,13 @@ using TournamentLibrary.Models;
 
 namespace TournamentTrackerUI
 {
-    public partial class DivisionCreator : Form
+    public partial class CreateDivisionForm : Form
     {
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
         private static List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
 
-        public DivisionCreator()
+        public CreateDivisionForm()
         {
             InitializeComponent();
             WireupLists();
@@ -215,6 +215,11 @@ namespace TournamentTrackerUI
         private void createDivisionButton_Click(object sender, EventArgs e)
         {
         }
+
+        private void ExitToMainMenuButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
+    }
     }
 

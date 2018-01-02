@@ -1,6 +1,6 @@
 ﻿namespace TournamentTrackerUI
 {
-    partial class PersonCreatorForm
+    partial class EditPersonForm
     {
         /// <summary>
         /// Required designer variable.

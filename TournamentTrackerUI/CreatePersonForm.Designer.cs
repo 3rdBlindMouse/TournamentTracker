@@ -1,6 +1,6 @@
 ﻿namespace TournamentTrackerUI
 {
-    partial class TeamPersonCreatorForm
+    partial class CreatePersonForm
     {
         /// <summary>
         /// Required designer variable.
@@ -196,6 +196,7 @@
             this.exitButton.TabIndex = 13;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // SexComboBox
             // 

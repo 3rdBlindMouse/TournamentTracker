@@ -24,6 +24,7 @@ namespace TournamentLibrary.Models
         /// Team's Home
         /// </summary>
         /// //TODO work something out with venue probably a new class in between.
+        public int VenueID { get; set; }
         public VenueModel TeamVenue { get; set; }
         /// <summary>
         /// List of team members

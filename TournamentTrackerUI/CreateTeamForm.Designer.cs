@@ -1,6 +1,6 @@
 ﻿namespace TournamentTrackerUI
 {
-    partial class TeamCreatorForm
+    partial class CreateTeamForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.CreateNewTeamLabel = new System.Windows.Forms.Label();
-            this.teamDropDown = new System.Windows.Forms.ComboBox();
-            this.EditTeamButton = new System.Windows.Forms.Button();
             this.TeamNameLabel = new System.Windows.Forms.Label();
             this.teamNameTextbox = new System.Windows.Forms.TextBox();
             this.TeamVenueLabel = new System.Windows.Forms.Label();
@@ -48,6 +45,7 @@
             this.captainSelectButton = new System.Windows.Forms.Button();
             this.venueDropDown = new System.Windows.Forms.ComboBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.exitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -61,39 +59,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Team Creator";
             // 
-            // CreateNewTeamLabel
-            // 
-            this.CreateNewTeamLabel.AutoSize = true;
-            this.CreateNewTeamLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateNewTeamLabel.Location = new System.Drawing.Point(40, 88);
-            this.CreateNewTeamLabel.Name = "CreateNewTeamLabel";
-            this.CreateNewTeamLabel.Size = new System.Drawing.Size(281, 21);
-            this.CreateNewTeamLabel.TabIndex = 1;
-            this.CreateNewTeamLabel.Text = "Create New Team or Edit Existing Team";
-            // 
-            // teamDropDown
-            // 
-            this.teamDropDown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teamDropDown.FormattingEnabled = true;
-            this.teamDropDown.Location = new System.Drawing.Point(345, 85);
-            this.teamDropDown.Name = "teamDropDown";
-            this.teamDropDown.Size = new System.Drawing.Size(156, 29);
-            this.teamDropDown.TabIndex = 2;
-            // 
-            // EditTeamButton
-            // 
-            this.EditTeamButton.Location = new System.Drawing.Point(540, 91);
-            this.EditTeamButton.Name = "EditTeamButton";
-            this.EditTeamButton.Size = new System.Drawing.Size(75, 23);
-            this.EditTeamButton.TabIndex = 3;
-            this.EditTeamButton.Text = "Edit";
-            this.EditTeamButton.UseVisualStyleBackColor = true;
-            // 
             // TeamNameLabel
             // 
             this.TeamNameLabel.AutoSize = true;
             this.TeamNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TeamNameLabel.Location = new System.Drawing.Point(40, 139);
+            this.TeamNameLabel.Location = new System.Drawing.Point(31, 84);
             this.TeamNameLabel.Name = "TeamNameLabel";
             this.TeamNameLabel.Size = new System.Drawing.Size(94, 21);
             this.TeamNameLabel.TabIndex = 4;
@@ -102,7 +72,7 @@
             // teamNameTextbox
             // 
             this.teamNameTextbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teamNameTextbox.Location = new System.Drawing.Point(171, 139);
+            this.teamNameTextbox.Location = new System.Drawing.Point(162, 84);
             this.teamNameTextbox.Name = "teamNameTextbox";
             this.teamNameTextbox.Size = new System.Drawing.Size(165, 29);
             this.teamNameTextbox.TabIndex = 5;
@@ -113,7 +83,7 @@
             // 
             this.TeamVenueLabel.AutoSize = true;
             this.TeamVenueLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TeamVenueLabel.Location = new System.Drawing.Point(40, 195);
+            this.TeamVenueLabel.Location = new System.Drawing.Point(31, 140);
             this.TeamVenueLabel.Name = "TeamVenueLabel";
             this.TeamVenueLabel.Size = new System.Drawing.Size(96, 21);
             this.TeamVenueLabel.TabIndex = 6;
@@ -123,7 +93,7 @@
             // 
             this.AddPlayerLabel.AutoSize = true;
             this.AddPlayerLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddPlayerLabel.Location = new System.Drawing.Point(40, 253);
+            this.AddPlayerLabel.Location = new System.Drawing.Point(31, 198);
             this.AddPlayerLabel.Name = "AddPlayerLabel";
             this.AddPlayerLabel.Size = new System.Drawing.Size(85, 21);
             this.AddPlayerLabel.TabIndex = 8;
@@ -133,7 +103,7 @@
             // 
             this.addPlayerDropdown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addPlayerDropdown.FormattingEnabled = true;
-            this.addPlayerDropdown.Location = new System.Drawing.Point(171, 250);
+            this.addPlayerDropdown.Location = new System.Drawing.Point(162, 195);
             this.addPlayerDropdown.Name = "addPlayerDropdown";
             this.addPlayerDropdown.Size = new System.Drawing.Size(165, 29);
             this.addPlayerDropdown.TabIndex = 9;
@@ -141,7 +111,7 @@
             // CreateNewPlayerLinkLabel
             // 
             this.CreateNewPlayerLinkLabel.AutoSize = true;
-            this.CreateNewPlayerLinkLabel.Location = new System.Drawing.Point(223, 291);
+            this.CreateNewPlayerLinkLabel.Location = new System.Drawing.Point(214, 236);
             this.CreateNewPlayerLinkLabel.Name = "CreateNewPlayerLinkLabel";
             this.CreateNewPlayerLinkLabel.Size = new System.Drawing.Size(113, 13);
             this.CreateNewPlayerLinkLabel.TabIndex = 10;
@@ -153,7 +123,7 @@
             // 
             this.teamCaptainDropdown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.teamCaptainDropdown.FormattingEnabled = true;
-            this.teamCaptainDropdown.Location = new System.Drawing.Point(171, 314);
+            this.teamCaptainDropdown.Location = new System.Drawing.Point(162, 259);
             this.teamCaptainDropdown.Name = "teamCaptainDropdown";
             this.teamCaptainDropdown.Size = new System.Drawing.Size(165, 29);
             this.teamCaptainDropdown.TabIndex = 12;
@@ -162,7 +132,7 @@
             // 
             this.TeamCaptainLabel.AutoSize = true;
             this.TeamCaptainLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TeamCaptainLabel.Location = new System.Drawing.Point(40, 317);
+            this.TeamCaptainLabel.Location = new System.Drawing.Point(31, 262);
             this.TeamCaptainLabel.Name = "TeamCaptainLabel";
             this.TeamCaptainLabel.Size = new System.Drawing.Size(105, 21);
             this.TeamCaptainLabel.TabIndex = 11;
@@ -170,7 +140,7 @@
             // 
             // AddPlayerButton
             // 
-            this.AddPlayerButton.Location = new System.Drawing.Point(389, 234);
+            this.AddPlayerButton.Location = new System.Drawing.Point(343, 188);
             this.AddPlayerButton.Name = "AddPlayerButton";
             this.AddPlayerButton.Size = new System.Drawing.Size(112, 36);
             this.AddPlayerButton.TabIndex = 13;
@@ -193,7 +163,7 @@
             // 
             // createTeamButton
             // 
-            this.createTeamButton.Location = new System.Drawing.Point(389, 344);
+            this.createTeamButton.Location = new System.Drawing.Point(354, 374);
             this.createTeamButton.Name = "createTeamButton";
             this.createTeamButton.Size = new System.Drawing.Size(112, 34);
             this.createTeamButton.TabIndex = 16;
@@ -203,7 +173,7 @@
             // 
             // removePlayerButton
             // 
-            this.removePlayerButton.Location = new System.Drawing.Point(389, 279);
+            this.removePlayerButton.Location = new System.Drawing.Point(343, 247);
             this.removePlayerButton.Name = "removePlayerButton";
             this.removePlayerButton.Size = new System.Drawing.Size(112, 36);
             this.removePlayerButton.TabIndex = 17;
@@ -214,14 +184,14 @@
             // teamMemberListBox
             // 
             this.teamMemberListBox.FormattingEnabled = true;
-            this.teamMemberListBox.Location = new System.Drawing.Point(523, 201);
+            this.teamMemberListBox.Location = new System.Drawing.Point(486, 146);
             this.teamMemberListBox.Name = "teamMemberListBox";
             this.teamMemberListBox.Size = new System.Drawing.Size(235, 212);
             this.teamMemberListBox.TabIndex = 18;
             // 
             // captainSelectButton
             // 
-            this.captainSelectButton.Location = new System.Drawing.Point(261, 355);
+            this.captainSelectButton.Location = new System.Drawing.Point(252, 300);
             this.captainSelectButton.Name = "captainSelectButton";
             this.captainSelectButton.Size = new System.Drawing.Size(75, 37);
             this.captainSelectButton.TabIndex = 19;
@@ -233,7 +203,7 @@
             // 
             this.venueDropDown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.venueDropDown.FormattingEnabled = true;
-            this.venueDropDown.Location = new System.Drawing.Point(171, 192);
+            this.venueDropDown.Location = new System.Drawing.Point(162, 137);
             this.venueDropDown.Name = "venueDropDown";
             this.venueDropDown.Size = new System.Drawing.Size(165, 29);
             this.venueDropDown.TabIndex = 20;
@@ -248,17 +218,28 @@
             "Team Name :",
             "Team Venue :",
             "Team Captain :"});
-            this.listBox1.Location = new System.Drawing.Point(523, 139);
+            this.listBox1.Location = new System.Drawing.Point(486, 84);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(83, 52);
             this.listBox1.TabIndex = 21;
             // 
-            // TeamCreatorForm
+            // exitButton
+            // 
+            this.exitButton.Location = new System.Drawing.Point(625, 374);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(96, 34);
+            this.exitButton.TabIndex = 22;
+            this.exitButton.Text = "Exit To Main Menu";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
+            // CreateTeamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(770, 420);
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.venueDropDown);
             this.Controls.Add(this.captainSelectButton);
@@ -275,12 +256,9 @@
             this.Controls.Add(this.TeamVenueLabel);
             this.Controls.Add(this.teamNameTextbox);
             this.Controls.Add(this.TeamNameLabel);
-            this.Controls.Add(this.EditTeamButton);
-            this.Controls.Add(this.teamDropDown);
-            this.Controls.Add(this.CreateNewTeamLabel);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "TeamCreatorForm";
+            this.Name = "CreateTeamForm";
             this.Text = "TeamCreator";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -290,9 +268,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label CreateNewTeamLabel;
-        private System.Windows.Forms.ComboBox teamDropDown;
-        private System.Windows.Forms.Button EditTeamButton;
         private System.Windows.Forms.Label TeamNameLabel;
         private System.Windows.Forms.TextBox teamNameTextbox;
         private System.Windows.Forms.Label TeamVenueLabel;
@@ -309,5 +284,6 @@
         private System.Windows.Forms.Button captainSelectButton;
         private System.Windows.Forms.ComboBox venueDropDown;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button exitButton;
     }
 }

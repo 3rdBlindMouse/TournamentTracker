@@ -12,7 +12,7 @@ using TournamentLibrary.Models;
 
 namespace TournamentTrackerUI
 {
-    public partial class TeamCreatorForm : Form
+    public partial class CreateTeamForm : Form
     {
         private List<PersonModel> availablePlayers = GlobalConfig.Connection.GetAllPeople();
         private List<PersonModel> selectedPlayers = new List<PersonModel>();
@@ -21,7 +21,7 @@ namespace TournamentTrackerUI
         private List<PersonModel> lastPerson;
         private PersonModel captain = new PersonModel();
 
-        public TeamCreatorForm()
+        public CreateTeamForm()
         {
             InitializeComponent();
             //createSampleData();
@@ -56,9 +56,9 @@ namespace TournamentTrackerUI
             venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
             venueDropDown.DisplayMember = "VenueName";
 
-            teamDropDown.DataSource = null;
-            teamDropDown.DataSource = teams.OrderBy(p => p.TeamName).ToList();
-            teamDropDown.DisplayMember = "TeamName";
+            //teamDropDown.DataSource = null;
+            //teamDropDown.DataSource = teams.OrderBy(p => p.TeamName).ToList();
+            //teamDropDown.DisplayMember = "TeamName";
 
         }
         /// <summary>
@@ -72,7 +72,7 @@ namespace TournamentTrackerUI
         /// <param name="e"></param>
         private void CreateNewPlayerLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            TeamPersonCreatorForm personForm = new TeamPersonCreatorForm();
+            CreatePersonForm personForm = new CreatePersonForm();
             personForm.Show();
             this.Hide();
             personForm.FormClosing += personForm_FormClosing;
@@ -134,7 +134,7 @@ namespace TournamentTrackerUI
         {
             Validator validator = new Validator();
             bool output = true;
-            if (!validator.isValidString(teamNameTextbox.Text))
+            if (!validator.isValidName(teamNameTextbox.Text))
             {
                 output = false;               
             }
@@ -237,6 +237,11 @@ namespace TournamentTrackerUI
         private void venueDropDown_Enter(object sender, EventArgs e)
         {
             venueDropDown.BackColor = SystemColors.Info;
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
