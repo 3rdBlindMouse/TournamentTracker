@@ -179,6 +179,13 @@ namespace TournamentLibrary.DataAccess
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 output = connection.Query<TeamModel>("spGetAllTeams").ToList();
+
+                foreach(TeamModel team in output)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@TeamID", team.TeamID);
+                    team.TeamMembers = connection.Query<PersonModel>("spGetTeamMembers",p, commandType: CommandType.StoredProcedure).ToList();
+                }
             }
             return output;
         }

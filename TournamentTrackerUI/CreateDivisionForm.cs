@@ -16,7 +16,8 @@ namespace TournamentTrackerUI
     {
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
-        private static List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
+        private static List<TeamModel> availableTeams = GlobalConfig.Connection.GetAllTeams();
+        private List<TeamModel> selectedTeams = new List<TeamModel>();
 
         public CreateDivisionForm()
         {
@@ -27,8 +28,14 @@ namespace TournamentTrackerUI
         private void WireupLists()
         {
             addTeamsDropdown.DataSource = null;
-            addTeamsDropdown.DataSource = teams;
+            addTeamsDropdown.DataSource = availableTeams;
             addTeamsDropdown.DisplayMember = "TeamName";
+
+            teamsListBox.DataSource = null;
+            teamsListBox.DataSource = selectedTeams.OrderBy(t => t.TeamName).ToList(); ;
+            teamsListBox.DisplayMember = "TeamName";
+
+            numTeams.Text = selectedTeams.Count.ToString();
         }
 
         /*
@@ -50,23 +57,19 @@ namespace TournamentTrackerUI
         }
         private void UpdateDivName(TextBox tb)
         {
-            detailsListbox.Items.RemoveAt(0);
-            detailsListbox.Items.Insert(0, tb.Text);
+            name.Text = tb.Text;
         }
         private void UpdateDivNumber(TextBox tb)
         {
-            detailsListbox.Items.RemoveAt(2);
-            detailsListbox.Items.Insert(2, tb.Text);
+            number.Text = tb.Text;
         }
         private void UpdateDivTeams(TextBox tb)
         {
-            detailsListbox.Items.RemoveAt(4);
-            detailsListbox.Items.Insert(4, tb.Text);
+            
         }
         private void UpdateStartDate()
         {
-            detailsListbox.Items.RemoveAt(6);
-            detailsListbox.Items.Insert(6, StartDate.Value.ToString("D"));
+            selectedStartDate.Text = StartDate.Value.ToString("D");
         }
         /// <summary>
         /// Updates display to show selected date(s) to skip
@@ -219,6 +222,31 @@ namespace TournamentTrackerUI
         private void ExitToMainMenuButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TeamModel t = (TeamModel)addTeamsDropdown.SelectedItem;
+            if (t != null)
+            {
+                availableTeams.Remove(t);
+                selectedTeams.Add(t);
+
+                WireupLists();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            TeamModel t = (TeamModel)teamsListBox.SelectedItem;
+            if (t != null)
+            {
+                selectedTeams.Remove(t);
+                availableTeams.Add(t);
+                
+
+                WireupLists();
+            }
         }
     }
     }
