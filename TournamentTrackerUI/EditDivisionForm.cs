@@ -12,31 +12,59 @@ using TournamentLibrary.Models;
 
 namespace TournamentTrackerUI
 {
-    public partial class CreateDivisionForm : Form
+    public partial class EditDivisionForm : Form
     {
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
-        //TODO
-        private static List<TeamModel> availableTeams = GlobalConfig.Connection.GetAllTeams();
-        private List<TeamModel> selectedTeams = new List<TeamModel>();
+        private static List<DivisionModel> divs = GlobalConfig.Connection.GetAllDivisions();
+        private static List<TeamModel> selectedTeams = new List<TeamModel>();
+        private static List<TeamModel> teamsAvailable = GlobalConfig.Connection.GetAllTeams();
+        private static List<TeamModel> availableTeams = new List<TeamModel>(teamsAvailable);
+        private static List<SkippedDatesModel> sd = new List<SkippedDatesModel>();
 
-        public CreateDivisionForm()
+        private static DivisionModel dm ;
+
+        public EditDivisionForm()
         {
             InitializeComponent();
+            //SetupAvailableTeams();
             WireupLists();
+            DivisionNameComboBox.SelectedIndex = -1;
+            //WireupLists();
+            
+            
+        }
+
+        private void SetupAvailableTeams()
+        {
+            
+            foreach (TeamModel team in selectedTeams)
+            {
+                int id = team.TeamID;
+                foreach (TeamModel aTeam in teamsAvailable)
+                {
+                    if (id.Equals(aTeam.TeamID))
+                    {
+                        availableTeams.Remove(aTeam);
+                    }
+                }
+            }
+            
         }
 
         private void WireupLists()
         {
+            DivisionNameComboBox.DataSource = null;
+            DivisionNameComboBox.DataSource = divs;
+            DivisionNameComboBox.DisplayMember = "DivisionName";
+
+            
+
             addTeamsDropdown.DataSource = null;
             addTeamsDropdown.DataSource = availableTeams;
             addTeamsDropdown.DisplayMember = "TeamName";
 
-            teamsListBox.DataSource = null;
-            teamsListBox.DataSource = selectedTeams.OrderBy(t => t.TeamName).ToList(); ;
-            teamsListBox.DisplayMember = "TeamName";
-
-            numTeams.Text = selectedTeams.Count.ToString();
+           
         }
 
         /*
@@ -56,17 +84,19 @@ namespace TournamentTrackerUI
             tb.BackColor = Color.Crimson;
             tb.Text = "Try Again";
         }
-        private void UpdateDivName(TextBox tb)
+        private void UpdateDivName(ComboBox cb)
         {
-            name.Text = tb.Text;
+            DivisionModel d = new DivisionModel();
+            d = (DivisionModel)cb.SelectedItem;
+            nameTextBox.Text = d.DivisionName;
         }
         private void UpdateDivNumber(TextBox tb)
         {
-            number.Text = tb.Text;
+            numberTextBox.Text = tb.Text;
         }
         private void UpdateDivTeams(TextBox tb)
         {
-            
+
         }
         private void UpdateStartDate()
         {
@@ -82,7 +112,7 @@ namespace TournamentTrackerUI
             if (!skippedDates.Contains(DateTime.Parse(date)))
             {
                 skippedDates.Add(DateTime.Parse(date));
-                updateSkippedDatesBox();                         
+                updateSkippedDatesBox();
             }
         }
 
@@ -119,7 +149,7 @@ namespace TournamentTrackerUI
         /// <param name="tb"></param>
         private bool ValidateDivisionName(TextBox tb)
         {
-            Validator validator = new Validator();           
+            Validator validator = new Validator();
             if (validator.isValidString(tb.Text))
             {
                 Success(tb);
@@ -171,25 +201,16 @@ namespace TournamentTrackerUI
         /*
         * Enter Events
         */
-        private void DivisionNameTextbox_Enter(object sender, EventArgs e)
-        {
-            OnEnter(DivisionNameTextbox);
-        }
+       
         private void DivisionNumberTextbox_Enter(object sender, EventArgs e)
         {
             OnEnter(DivisionNumberTextbox);
         }
-       
+
         /*
          * Leave Events
          */
-        private void DivisionNameTextbox_Leave(object sender, EventArgs e)
-        {
-            if (ValidateDivisionName(DivisionNameTextbox))
-            {
-                UpdateDivName(DivisionNameTextbox);
-            }
-        }
+       
         private void DivisionNumberTextbox_Leave(object sender, EventArgs e)
         {
             if (ValidateDivisionNumber(DivisionNumberTextbox))
@@ -197,7 +218,7 @@ namespace TournamentTrackerUI
                 UpdateDivNumber(DivisionNumberTextbox);
             }
         }
-        
+
         /*
          * Select Events
          */
@@ -218,7 +239,7 @@ namespace TournamentTrackerUI
         {
             // create a division model
             DivisionModel model = new DivisionModel();
-            model.DivisionName = DivisionNameTextbox.Text;
+            model.DivisionName = DivisionNameComboBox.SelectedItem.ToString();
             model.DivisionNumber = int.Parse(DivisionNumberTextbox.Text);
             //model.DivisionTeams = selectedTeams;
             model.StartDate = StartDate.Value;
@@ -231,7 +252,7 @@ namespace TournamentTrackerUI
                 SkippedDatesModel skDates = new SkippedDatesModel();
                 skDates.DivisionID = model.DivisionID;
                 skDates.DateToSkip = date;
-                GlobalConfig.Connection.CreateSkippedDates(skDates);               
+                //GlobalConfig.Connection.CreateSkippedDates(skDates);
             }
 
             model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
@@ -241,10 +262,10 @@ namespace TournamentTrackerUI
                 TeamModel teammodel = new TeamModel();
                 teammodel.DivisionID = model.DivisionID;
                 teammodel.TeamID = team.TeamID;
-                GlobalConfig.Connection.CreateDivisionTeams(teammodel);
+              //  GlobalConfig.Connection.CreateDivisionTeams(teammodel);
             }
-        
-           
+
+
         }
 
         private void ExitToMainMenuButton_Click(object sender, EventArgs e)
@@ -271,11 +292,38 @@ namespace TournamentTrackerUI
             {
                 selectedTeams.Remove(t);
                 availableTeams.Add(t);
-                
+
 
                 WireupLists();
             }
         }
+
+        private void DivisionNameComboBox_Leave(object sender, EventArgs e)
+        {
+            UpdateDivName(DivisionNameComboBox);
+        }
+
+        private void DivisionNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
+            teamsListBox.DataSource = null;
+            
+
+            if (DivisionNameComboBox.SelectedIndex != -1)
+            {
+                dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
+                DivisionNumberTextbox.Text = dm.DivisionNumber.ToString();
+                StartDate.Value = dm.StartDate;
+                
+                
+
+                teamsListBox.DataSource = null;
+                selectedTeams = GlobalConfig.Connection.GetDivisionTeams(dm);
+                teamsListBox.DataSource = selectedTeams.OrderBy(p => p.TeamName).ToList();
+                teamsListBox.DisplayMember = "TeamName";
+                //WireupLists();
+            }
+        }
     }
-    }
+}
 

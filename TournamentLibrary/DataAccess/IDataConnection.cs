@@ -14,14 +14,18 @@ namespace TournamentLibrary.DataAccess
         List<PersonModel> GetAllPeople();
         //TODO convert GetLastPerson from list into PersonModel only
         List<PersonModel> GetLastPerson();
-
+        List<DivisionModel> GetAllDivisions();
         List<VenueModel> GetAllVenues();
 
         List<TeamModel> GetAllTeams();
+        List<TeamModel> GetDivisionTeams(DivisionModel model);
 
         
 
         DivisionModel CreateDivision(DivisionModel model);
-        SkippedDatesModel CreateSkippedDatesModel(SkippedDatesModel model);
+        SkippedDatesModel CreateSkippedDates(SkippedDatesModel model);
+        List<SkippedDatesModel> GetSkippedDates(DivisionModel model);
+        void CreateDivisionTeams(TeamModel teammodel);
+        void EditDivision(DivisionModel model);
     }
 }

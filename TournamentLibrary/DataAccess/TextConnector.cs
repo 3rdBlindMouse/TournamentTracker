@@ -12,6 +12,16 @@ namespace TournamentLibrary.DataAccess
         // PersonModel.csv will always be this file/name (note fullpath not locked in) 
         private const string PersonFile = "PersonModel.csv";
 
+        public void EditDivision(DivisionModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateDivisionTeams(TeamModel team)
+        {
+            throw new NotImplementedException();
+        }
+
         public DivisionModel CreateDivision(DivisionModel model)
         {
             throw new NotImplementedException();
@@ -54,7 +64,7 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public SkippedDatesModel CreateSkippedDatesModel(SkippedDatesModel model)
+        public SkippedDatesModel CreateSkippedDates(SkippedDatesModel model)
         {
             throw new NotImplementedException();
         }
@@ -69,12 +79,17 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public List<DivisionModel> GetAllDivisions()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<PersonModel> GetAllPeople()
         {
             throw new NotImplementedException();
         }
 
-        public List<TeamModel> GetAllTeams()
+        public List<TeamModel> GetDivisionTeams()
         {
             throw new NotImplementedException();
         }
@@ -84,9 +99,22 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        
+        public List<SkippedDatesModel> GetSkippedDates(DivisionModel model)
+        {
+            throw new NotImplementedException();
+        }
 
         List<PersonModel> IDataConnection.GetLastPerson()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetAllTeams()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetDivisionTeams(DivisionModel model)
         {
             throw new NotImplementedException();
         }

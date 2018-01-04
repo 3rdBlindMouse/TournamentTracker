@@ -16,6 +16,19 @@ namespace TournamentLibrary.DataAccess
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
+                var p = new DynamicParameters();
+                p.Add("@DivisionID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@DivisionName", model.DivisionName);
+                p.Add("@DivisionNumber", model.DivisionNumber);
+                p.Add("@StartDate", model.StartDate);
+                connection.Execute("spDivision", p, commandType: CommandType.StoredProcedure);
+
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                var id = p.Get<int?>("DivisionID");
+                model.DivisionID = Convert.ToInt32(id);
+
                 return model;
             }
         }
@@ -62,12 +75,12 @@ namespace TournamentLibrary.DataAccess
                 {
                     var p = new DynamicParameters();
                     p.Add("@RosterID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                    
+
                     p.Add("@PersonID", player.PersonID);
                     p.Add("@TeamID", model.TeamID);
 
 
-                    connection.Execute("spRoster",p, commandType: CommandType.StoredProcedure);
+                    connection.Execute("spRoster", p, commandType: CommandType.StoredProcedure);
 
 
                     // grabs newly created ID from database and returns it as part of the current Person Model
@@ -79,7 +92,7 @@ namespace TournamentLibrary.DataAccess
                 }
                 return roster;
             }
-            }
+        }
 
         public SeasonModel CreateSeason(SeasonModel model)
         {
@@ -108,11 +121,28 @@ namespace TournamentLibrary.DataAccess
 
 
 
-        public SkippedDatesModel CreateSkippedDatesModel(SkippedDatesModel model)
+        public SkippedDatesModel CreateSkippedDates(SkippedDatesModel model)
         {
 
 
-            return model;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@SkippedDatesID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@DateToSkip", model.DateToSkip);
+
+
+                connection.Execute("spSkippedDates", p, commandType: CommandType.StoredProcedure);
+
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                var id = p.Get<int?>("SkippedDatesID");
+                model.SkippedDatesID = Convert.ToInt32(id);
+
+                return model;
+            }
 
         }
 
@@ -124,20 +154,20 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@TeamName", model.TeamName);
                 // TODO sort venues
-                p.Add("@VenueID", model.VenueID);
+                p.Add("@TeamVenue", model.TeamVenue.VenueID);
                 //p.Add("@DivisionID", 0);
 
 
-               connection.Execute("spTeam", p, commandType: CommandType.StoredProcedure);
+                connection.Execute("spTeam", p, commandType: CommandType.StoredProcedure);
 
                 // grabs newly created ID from database and returns it as part of the current Person Model
                 model.TeamID = p.Get<int>("@TeamID");
 
 
                 return model;
-            
-        }
+
             }
+        }
 
         public VenueModel CreateVenue(VenueModel model)
         {
@@ -163,6 +193,44 @@ namespace TournamentLibrary.DataAccess
             }
         }
 
+        public List<DivisionModel> GetAllDivisions()
+        {
+            List<DivisionModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<DivisionModel>("spGetAllDivisions").ToList();
+
+                foreach (DivisionModel div in output)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@DivisionID", div.DivisionID);
+                    div.DivisionSkippedDates = connection.Query<SkippedDatesModel>("spGetSkippedDates", p, commandType: CommandType.StoredProcedure).ToList();
+                    div.DivisionTeams = connection.Query<TeamModel>("spGetDivisionTeams", p, commandType: CommandType.StoredProcedure).ToList();
+                }
+
+            }
+            return output;
+        }
+
+        public List<TeamModel> GetDivisionTeams(DivisionModel model)
+        {
+            List<TeamModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@DivisionID", model.DivisionID);
+                output = connection.Query<TeamModel>("spGetDivisionTeams", p, commandType: CommandType.StoredProcedure).ToList();
+
+                foreach (TeamModel team in output)
+                {
+                    p = new DynamicParameters();
+                    p.Add("@TeamID", team.TeamID);
+                    team.TeamMembers = connection.Query<PersonModel>("spGetTeamMembers", p, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+            return output;
+        }
+
         public List<PersonModel> GetAllPeople()
         {
             List<PersonModel> output;
@@ -175,17 +243,10 @@ namespace TournamentLibrary.DataAccess
 
         public List<TeamModel> GetAllTeams()
         {
-            List<TeamModel> output;
+            List<TeamModel> output = new List<TeamModel>();
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 output = connection.Query<TeamModel>("spGetAllTeams").ToList();
-
-                foreach(TeamModel team in output)
-                {
-                    var p = new DynamicParameters();
-                    p.Add("@TeamID", team.TeamID);
-                    team.TeamMembers = connection.Query<PersonModel>("spGetTeamMembers",p, commandType: CommandType.StoredProcedure).ToList();
-                }
             }
             return output;
         }
@@ -211,8 +272,56 @@ namespace TournamentLibrary.DataAccess
 
 
         }
+
+        public List<SkippedDatesModel> GetSkippedDates(DivisionModel model)
+        {
+            List<SkippedDatesModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@DivisionID", model.DivisionID);
+                output = connection.Query<SkippedDatesModel>("spGetSkippedDates", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public void CreateDivisionTeams(TeamModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@DivisionTeamsID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@TeamID", model.TeamID);
+
+
+                connection.Execute("spDivisionTeams", p, commandType: CommandType.StoredProcedure);
+
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                var id = p.Get<int?>("DivisionTeamsID");
+                //model.DivisionTeamsID = Convert.ToInt32(id);
+
+                //return model;
+            }
+        }
+
+        public void EditDivision(DivisionModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@DivisionName", model.DivisionName);
+                p.Add("@DivisionNumber", model.DivisionNumber);
+                p.Add("@StartDate", model.StartDate);
+                connection.Execute("spEditDivision", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
+
 
 //connection.Open();
 

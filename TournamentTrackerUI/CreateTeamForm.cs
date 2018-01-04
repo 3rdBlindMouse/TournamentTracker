@@ -17,7 +17,8 @@ namespace TournamentTrackerUI
         private List<PersonModel> availablePlayers = GlobalConfig.Connection.GetAllPeople();
         private List<PersonModel> selectedPlayers = new List<PersonModel>();
         private List<VenueModel> venues = GlobalConfig.Connection.GetAllVenues();
-        private List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
+        //TODO
+        //private List<TeamModel> teams = GlobalConfig.Connection.GetDivisionTeams();
         private List<PersonModel> lastPerson;
         private PersonModel captain = new PersonModel();
 
