@@ -40,5 +40,22 @@ namespace TournamentLibrary.Models
         /// A List of the Dates with no games played in this Division 
         /// </summary>
         public List<SkippedDatesModel> DivisionSkippedDates { get; set; }
+
+
+        /// <summary>
+        /// used to create a "Heading" for division combo boxes
+        /// allows a DivisionModel to be created and added to a List that is about to become a datasource
+        /// </summary>
+        /// <param name="name"></param>
+        public DivisionModel(String name)
+        {
+            DivisionName = name;
+        }
+
+        public DivisionModel()
+        {
+
+        }
     }
+    
 }

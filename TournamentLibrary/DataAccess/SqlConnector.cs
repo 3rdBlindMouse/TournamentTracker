@@ -140,5 +140,15 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteSkippedDates(DivisionModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteDivisionTeams(TeamModel teammodel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

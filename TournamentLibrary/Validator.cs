@@ -26,7 +26,7 @@ namespace TournamentLibrary
         /// <returns>true or false</returns>
         public bool isValidString(String str)
         {
-            return Regex.IsMatch(str, @"^[a-zA-Z]+$");
+            return Regex.IsMatch(str, @"^[a-zA-Z ]+$");
         }
         /// <summary>
         /// Regex for validating an email address

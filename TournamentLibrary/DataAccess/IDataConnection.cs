@@ -27,5 +27,7 @@ namespace TournamentLibrary.DataAccess
         List<SkippedDatesModel> GetSkippedDates(DivisionModel model);
         void CreateDivisionTeams(TeamModel teammodel);
         void EditDivision(DivisionModel model);
+        void DeleteSkippedDates(DivisionModel model);
+        void DeleteDivisionTeams(TeamModel teammodel);
     }
 }

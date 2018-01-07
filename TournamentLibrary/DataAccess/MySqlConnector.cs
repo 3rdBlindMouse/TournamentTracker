@@ -291,8 +291,8 @@ namespace TournamentLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@DivisionTeamsID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                p.Add("@DivisionID", model.DivisionID);
-                p.Add("@TeamID", model.TeamID);
+                p.Add("@InDivisionID", model.DivisionID);
+                p.Add("@InTeamID", model.TeamID);
 
 
                 connection.Execute("spDivisionTeams", p, commandType: CommandType.StoredProcedure);
@@ -312,11 +312,34 @@ namespace TournamentLibrary.DataAccess
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@InDivisionID", model.DivisionID);
                 p.Add("@DivisionName", model.DivisionName);
                 p.Add("@DivisionNumber", model.DivisionNumber);
                 p.Add("@StartDate", model.StartDate);
                 connection.Execute("spEditDivision", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void DeleteSkippedDates(DivisionModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InDivisionID", model.DivisionID);
+                
+                connection.Execute("spDeleteSkippedDates", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void DeleteDivisionTeams(TeamModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InDivisionID", model.DivisionID);
+                p.Add("@InTeamID", model.TeamID);
+
+                connection.Execute("spDeleteDivisionTeams", p, commandType: CommandType.StoredProcedure);
             }
         }
     }
