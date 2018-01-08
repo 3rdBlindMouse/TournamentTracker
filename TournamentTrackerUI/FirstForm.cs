@@ -75,6 +75,14 @@ namespace TournamentTrackerUI
             editDivisionForm.FormClosing += closeForm;
 
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            EditVenueForm eVenueForm = new EditVenueForm();
+            eVenueForm.Show();
+            this.Hide();
+            eVenueForm.FormClosing += closeForm;
+        }
     }
     
 }

@@ -179,7 +179,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@VenueAddress", model.VenueAddress);
                 p.Add("@VenuePhone", model.VenuePhone);
                 p.Add("@ContactPerson", model.ContactPerson);
-                p.Add("@PoolTables", model.NumberOfPoolTables);
+                p.Add("@PoolTables", model.PoolTables);
 
 
 
@@ -340,6 +340,21 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@InTeamID", model.TeamID);
 
                 connection.Execute("spDeleteDivisionTeams", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void EditVenue(VenueModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InVenueID", model.VenueID);
+                p.Add("@InVenueName", model.VenueName);
+                p.Add("@InVenueAddress", model.VenueAddress);
+                p.Add("@InVenuePhone", model.VenuePhone);
+                p.Add("@InContactPerson", model.ContactPerson);
+                p.Add("@InPoolTables", model.PoolTables);
+                connection.Execute("spEditVenue", p, commandType: CommandType.StoredProcedure);
             }
         }
     }

@@ -53,13 +53,25 @@ namespace TournamentTrackerUI
         /// </summary>
         private void WireupDivisionSelector()
         {
-            // creates a dummy DivisionModel
-            DivisionModel d = new DivisionModel("Select Division");
-            // insert at "top" of combobox
-            divs.Insert(0, d);
+            AddSelectTitle();
+           
             DivisionNameComboBox.DataSource = null;
             DivisionNameComboBox.DataSource = divs.OrderBy(p => p.DivisionNumber).ToList(); ;
             DivisionNameComboBox.DisplayMember = "DivisionName";
+        }
+
+        private void AddSelectTitle()
+        {
+            int index = divs.FindIndex(item => item.DivisionID == -1);
+            if (index >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                DivisionModel d = new DivisionModel("Select Division", -1);
+                divs.Insert(0, d);
+            }
         }
 
         /// <summary>

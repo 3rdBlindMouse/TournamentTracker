@@ -57,6 +57,12 @@
     <Compile Include="EditDivisionForm.Designer.cs">
       <DependentUpon>EditDivisionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditVenueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditVenueForm.Designer.cs">
+      <DependentUpon>EditVenueForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FirstForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditDivisionForm.resx">
       <DependentUpon>EditDivisionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditVenueForm.resx">
+      <DependentUpon>EditVenueForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FirstForm.resx">
       <DependentUpon>FirstForm.cs</DependentUpon>

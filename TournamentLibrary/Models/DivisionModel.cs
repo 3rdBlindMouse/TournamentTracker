@@ -47,9 +47,10 @@ namespace TournamentLibrary.Models
         /// allows a DivisionModel to be created and added to a List that is about to become a datasource
         /// </summary>
         /// <param name="name"></param>
-        public DivisionModel(String name)
+        public DivisionModel(String name, int i)
         {
             DivisionName = name;
+            DivisionID = i;
         }
 
         public DivisionModel()

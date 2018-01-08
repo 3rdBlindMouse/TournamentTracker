@@ -29,5 +29,6 @@ namespace TournamentLibrary.DataAccess
         void EditDivision(DivisionModel model);
         void DeleteSkippedDates(DivisionModel model);
         void DeleteDivisionTeams(TeamModel teammodel);
+        void EditVenue(VenueModel model);
     }
 }

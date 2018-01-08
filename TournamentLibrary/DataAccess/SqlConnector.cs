@@ -150,5 +150,10 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void EditVenue(VenueModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

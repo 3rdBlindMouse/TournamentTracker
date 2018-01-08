@@ -8,6 +8,23 @@ namespace TournamentLibrary.Models
 {
     public class VenueModel
     {
+        
+
+        public VenueModel()
+        {
+        }
+
+        /// <summary>
+        /// this contructor is used to add "Select Venue" at top of combobox in EditVenueForm
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="i"></param>
+        public VenueModel(string n, int i )
+        {
+            this.VenueName = n;
+            this.VenueID = i;
+        }
+
         /// <summary>
         /// Unique ID for Venue
         /// </summary>
@@ -30,6 +47,6 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// number of pool tables at the venue
         /// </summary>
-        public int NumberOfPoolTables { get; set; }       
+        public int PoolTables { get; set; }       
     }
 }

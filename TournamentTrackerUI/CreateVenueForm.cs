@@ -22,11 +22,11 @@ namespace TournamentTrackerUI
 
         private void createVenueButton_Click(object sender, EventArgs e)
         {
-            //if(ValidateForm())
-            //{
-            //    createModel();
+            if(ValidateForm())
+            {
+                createModel();
                 
-            //}
+            }
             clearForm();
         }
 
@@ -39,7 +39,7 @@ namespace TournamentTrackerUI
             model.VenueAddress = venueAddressTextBox.Text;
             model.VenuePhone = venuePhoneTextBox.Text;
             model.ContactPerson = contactPersonTextBox.Text;
-            model.NumberOfPoolTables = int.Parse(numberOfPoolTablesTextBox.Text);
+            model.PoolTables = int.Parse(numberOfPoolTablesTextBox.Text);
 
             GlobalConfig.Connection.CreateVenue(model);
         }

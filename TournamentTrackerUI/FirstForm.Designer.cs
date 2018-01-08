@@ -40,7 +40,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.newPlayerButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
+            this.EditVenueFormButton = new System.Windows.Forms.Button();
             this.newVenueButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -172,15 +172,16 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Player";
             // 
-            // button9
+            // EditVenueFormButton
             // 
-            this.button9.Location = new System.Drawing.Point(199, 191);
-            this.button9.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(112, 35);
-            this.button9.TabIndex = 10;
-            this.button9.Text = "Edit Existing";
-            this.button9.UseVisualStyleBackColor = true;
+            this.EditVenueFormButton.Location = new System.Drawing.Point(199, 191);
+            this.EditVenueFormButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.EditVenueFormButton.Name = "EditVenueFormButton";
+            this.EditVenueFormButton.Size = new System.Drawing.Size(112, 35);
+            this.EditVenueFormButton.TabIndex = 10;
+            this.EditVenueFormButton.Text = "Edit Existing";
+            this.EditVenueFormButton.UseVisualStyleBackColor = true;
+            this.EditVenueFormButton.Click += new System.EventHandler(this.button9_Click);
             // 
             // newVenueButton
             // 
@@ -206,7 +207,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.newSeasonButton);
-            this.groupBox1.Controls.Add(this.button9);
+            this.groupBox1.Controls.Add(this.EditVenueFormButton);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.newVenueButton);
             this.groupBox1.Controls.Add(this.button3);
@@ -256,7 +257,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button newPlayerButton;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button EditVenueFormButton;
         private System.Windows.Forms.Button newVenueButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
