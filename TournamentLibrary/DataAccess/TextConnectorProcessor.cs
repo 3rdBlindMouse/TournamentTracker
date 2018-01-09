@@ -49,7 +49,7 @@ namespace TournamentLibrary.DataAccess.TextProcessor
                 p.PersonID = int.Parse(columns[0]);
                 p.FirstName = columns[1];
                 p.LastName = columns[2];
-                p.EmailAddress = columns[3];
+                p.Email = columns[3];
                 p.ContactNumber = columns[4];
                 p.Sex = columns[5];
                 p.DateOfBirth = DateTime.Parse(columns[6]);
@@ -70,7 +70,7 @@ namespace TournamentLibrary.DataAccess.TextProcessor
             List<string> lines = new List<string>();
             foreach(PersonModel p in models)
             {
-                lines.Add($"{p.PersonID},{p.FirstName},{p.LastName},{p.EmailAddress},{p.ContactNumber},{p.Sex},{p.DateOfBirth}");
+                lines.Add($"{p.PersonID},{p.FirstName},{p.LastName},{p.Email},{p.ContactNumber},{p.Sex},{p.DateOfBirth}");
                 File.WriteAllLines(filename.FullFilePath(),lines);
             }
         }

@@ -400,7 +400,21 @@ namespace TournamentTrackerUI
                 return false;
             }
         }
-
+        /// <summary>
+        /// Creates basic framework of Division Model
+        /// </summary>
+        /// <returns></returns>
+        private DivisionModel getDivisionModel()
+        {
+            // create a division model
+            DivisionModel model = (DivisionModel)DivisionNameComboBox.SelectedItem;
+            model.DivisionName = nameTextBox.Text;
+            model.DivisionNumber = int.Parse(numberTextBox.Text);
+            //model.DivisionTeams = selectedTeams;
+            model.StartDate = StartDate.Value;
+            // store division in Db and return ID    
+            return model;
+        }
         /// <summary>
         /// Where the heavy lifting happens
         /// </summary>
@@ -413,8 +427,8 @@ namespace TournamentTrackerUI
                 //Create updated Model(s)
                 if ((ValidateDivisionName(nameTextBox)) && (ValidateDivisionNumber(numberTextBox)))
                 {
-                    // Create a simple Division Model
-                    DivisionModel model = createDivisionModel();
+                    // Create a simple Division Model using selected Division ID and any changes on form that may or may not have been made
+                    DivisionModel model = getDivisionModel();
                     // Commit simple Divison Model to db et.al
                     GlobalConfig.Connection.EditDivision(model);
                     // Commit Division Skipped Dates to db et.al
@@ -510,21 +524,7 @@ namespace TournamentTrackerUI
             model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
         }
 
-        /// <summary>
-        /// Creates basic framework of Division Model
-        /// </summary>
-        /// <returns></returns>
-        private DivisionModel createDivisionModel()
-        {
-            // create a division model
-            DivisionModel model = (DivisionModel)DivisionNameComboBox.SelectedItem; 
-            model.DivisionName = nameTextBox.Text;
-            model.DivisionNumber = int.Parse(numberTextBox.Text);
-            //model.DivisionTeams = selectedTeams;
-            model.StartDate = StartDate.Value;
-            // store division in Db and return ID    
-            return model;
-        }
+        
 
         /// <summary>
         /// Resets form labels, comboxboxes, colors etc

@@ -8,6 +8,8 @@ namespace TournamentLibrary.Models
 {
     public class PersonModel
     {
+        
+
         /// <summary>
         /// unique ID of person
         /// </summary>
@@ -23,7 +25,7 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// Person's email address
         /// </summary>
-        public string EmailAddress { get; set; }
+        public string Email { get; set; }
         /// <summary>
         /// Person's cntact number
         /// </summary>
@@ -58,12 +60,21 @@ namespace TournamentLibrary.Models
         {
             FirstName = firstName;
             LastName = lastName;
-            EmailAddress = email;
+            Email = email;
             ContactNumber = contactNumber;
             Sex = sex;
             DateOfBirth = dateOfBirth;
         }
 
-
+        /// <summary>
+        /// this contructor is used to add "Select Player" at top of combobox in EditPersonForm
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="i"></param>
+        public PersonModel(string n, int i)
+        {
+            PersonID = i;
+            LastName = n;
+        }
     }
 }

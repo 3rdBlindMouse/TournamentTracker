@@ -113,6 +113,9 @@
     <EmbeddedResource Include="EditDivisionForm.resx">
       <DependentUpon>EditDivisionForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditPersonForm.resx">
+      <DependentUpon>EditPersonForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditVenueForm.resx">
       <DependentUpon>EditVenueForm.cs</DependentUpon>
     </EmbeddedResource>

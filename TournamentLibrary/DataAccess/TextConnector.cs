@@ -133,5 +133,10 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void EditPerson(PersonModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

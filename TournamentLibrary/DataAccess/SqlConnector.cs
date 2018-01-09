@@ -28,7 +28,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@PersonID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@FirstName", model.FirstName);
                 p.Add("@LastName", model.LastName);
-                p.Add("@email", model.EmailAddress);
+                p.Add("@email", model.Email);
                 p.Add("@phone", model.ContactNumber);
                 p.Add("@sex", model.Sex);
                 p.Add("@DateOfBirth", model.DateOfBirth);
@@ -152,6 +152,11 @@ namespace TournamentLibrary.DataAccess
         }
 
         public void EditVenue(VenueModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditPerson(PersonModel model)
         {
             throw new NotImplementedException();
         }

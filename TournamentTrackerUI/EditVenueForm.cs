@@ -38,8 +38,9 @@ namespace TournamentTrackerUI
         private void WireupVenueSelector()
         {
             AddSelectTitle();
+
             VenueNameComboBox.DataSource = null;                                         
-            VenueNameComboBox.DataSource = venues.OrderBy(p => p.VenueID).ToList(); ;
+            VenueNameComboBox.DataSource = venues.OrderBy(p => p.VenueName).ToList(); ;
             VenueNameComboBox.DisplayMember = "VenueName";
         }
 
@@ -52,7 +53,7 @@ namespace TournamentTrackerUI
             }
             else
             {
-                VenueModel v = new VenueModel("Select Venue", -1);
+                VenueModel v = new VenueModel(" Select Venue ", -1);
                 venues.Insert(0, v);
             }
         }
@@ -174,7 +175,7 @@ namespace TournamentTrackerUI
         }
         private void venueAddressTextBox_Leave(object sender, EventArgs e)
         {
-            if (VenueNameComboBox.Text != "Select Venue")
+            if (VenueNameComboBox.Text != " Select Venue ")
             {
                 if (validateAddress(venueAddressTextBox.Text))
                 {
@@ -292,7 +293,7 @@ namespace TournamentTrackerUI
             venuePhones = new List<string>();
             foreach (VenueModel model in venues)
             {
-                if (model.VenueName != "Select Venue")
+                if (model.VenueName != " Select Venue ")
                 {
                     if (model.VenueName != selectedVenueName)
                     {
@@ -330,7 +331,7 @@ namespace TournamentTrackerUI
             // If a Division has been selected from DivisionNameComboBox
             if ((VenueNameComboBox.SelectedIndex != 0)
                 && (VenueNameComboBox.SelectedItem != null)
-                && (VenueNameComboBox.SelectedText != "Select Venue"))
+                && (VenueNameComboBox.SelectedText != " Select Venue "))
                 return true;
             else
             {

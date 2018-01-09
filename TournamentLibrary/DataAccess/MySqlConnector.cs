@@ -48,7 +48,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@PersonID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@FirstName", model.FirstName);
                 p.Add("@LastName", model.LastName);
-                p.Add("@email", model.EmailAddress);
+                p.Add("@email", model.Email);
                 p.Add("@phone", model.ContactNumber);
                 p.Add("@sex", model.Sex);
                 p.Add("@DateOfBirth", model.DateOfBirth);
@@ -355,6 +355,22 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@InContactPerson", model.ContactPerson);
                 p.Add("@InPoolTables", model.PoolTables);
                 connection.Execute("spEditVenue", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void EditPerson(PersonModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InPersonID", model.PersonID);
+                p.Add("@InFirstName", model.FirstName);
+                p.Add("@InLastName", model.LastName);
+                p.Add("@InEmail", model.Email);
+                p.Add("@InPhone", model.ContactNumber);
+                p.Add("@InSex", model.Sex);
+                p.Add("@InDateOfBirth", model.DateOfBirth);
+                connection.Execute("spEditPerson", p, commandType: CommandType.StoredProcedure);
             }
         }
     }
