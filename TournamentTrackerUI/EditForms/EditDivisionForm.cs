@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TournamentLibrary;
 using TournamentLibrary.Models;
+using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI
 {
-    public partial class EditDivisionForm : Form
+    public partial class EditDivisionForm : Form, ITeamRequester
     {
         // List of All Divisions
         //TODO sort Season out so list of divisions in selcted season.
@@ -634,6 +635,25 @@ namespace TournamentTrackerUI
                 }
         }
     }
+
+        private void createNewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CreateTeamForm teamForm = new CreateTeamForm(this);
+            teamForm.Show();
+            this.Hide();
+            teamForm.FormClosing += closeForm;
+        }
+
+        public void closeForm(object sender, FormClosingEventArgs e)
+        {
+            this.Show();
+        }
+
+        public void TeamComplete(TeamModel model)
+        {
+            selectedTeams.Add(model);
+            WireupTeamLists(teamsAvailable, selectedTeams);
+        }
     }
 }
 

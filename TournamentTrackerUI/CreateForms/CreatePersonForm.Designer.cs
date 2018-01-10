@@ -48,9 +48,19 @@
             this.resetDOBButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.confirmDOBButton = new System.Windows.Forms.Button();
-            this.detailsHeadingsListBox = new System.Windows.Forms.ListBox();
-            this.detailsListBox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.DisplayDOB = new System.Windows.Forms.Label();
+            this.DisplayDOBLabel = new System.Windows.Forms.Label();
+            this.DisplaySex = new System.Windows.Forms.Label();
+            this.DisplaySexLabel = new System.Windows.Forms.Label();
+            this.DisplayPhone = new System.Windows.Forms.Label();
+            this.DisplayPhoneLabel = new System.Windows.Forms.Label();
+            this.DisplayEmail = new System.Windows.Forms.Label();
+            this.DisplayEmailLabel = new System.Windows.Forms.Label();
+            this.DisplayLastName = new System.Windows.Forms.Label();
+            this.DisplayLastNameLabel = new System.Windows.Forms.Label();
+            this.DisplayFirstName = new System.Windows.Forms.Label();
+            this.DisplayFirstNameLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -445,72 +455,176 @@
             this.confirmDOBButton.UseVisualStyleBackColor = true;
             this.confirmDOBButton.Click += new System.EventHandler(this.button3_Click);
             // 
-            // detailsHeadingsListBox
-            // 
-            this.detailsHeadingsListBox.BackColor = System.Drawing.SystemColors.Info;
-            this.detailsHeadingsListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.detailsHeadingsListBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.detailsHeadingsListBox.FormattingEnabled = true;
-            this.detailsHeadingsListBox.ItemHeight = 17;
-            this.detailsHeadingsListBox.Items.AddRange(new object[] {
-            "First Name",
-            "",
-            "Last Name",
-            "",
-            "Email",
-            "",
-            "Contact #",
-            "",
-            "Sex",
-            "",
-            "Date of Birth "});
-            this.detailsHeadingsListBox.Location = new System.Drawing.Point(0, 7);
-            this.detailsHeadingsListBox.Name = "detailsHeadingsListBox";
-            this.detailsHeadingsListBox.Size = new System.Drawing.Size(87, 204);
-            this.detailsHeadingsListBox.TabIndex = 8;
-            this.detailsHeadingsListBox.TabStop = false;
-            // 
-            // detailsListBox
-            // 
-            this.detailsListBox.BackColor = System.Drawing.SystemColors.Info;
-            this.detailsListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.detailsListBox.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.detailsListBox.ForeColor = System.Drawing.Color.Green;
-            this.detailsListBox.FormattingEnabled = true;
-            this.detailsListBox.ItemHeight = 17;
-            this.detailsListBox.Items.AddRange(new object[] {
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""});
-            this.detailsListBox.Location = new System.Drawing.Point(93, 7);
-            this.detailsListBox.Name = "detailsListBox";
-            this.detailsListBox.Size = new System.Drawing.Size(246, 204);
-            this.detailsListBox.TabIndex = 0;
-            this.detailsListBox.TabStop = false;
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Info;
-            this.panel1.Controls.Add(this.detailsHeadingsListBox);
-            this.panel1.Controls.Add(this.detailsListBox);
+            this.panel1.Controls.Add(this.DisplayDOB);
+            this.panel1.Controls.Add(this.DisplayDOBLabel);
+            this.panel1.Controls.Add(this.DisplaySex);
+            this.panel1.Controls.Add(this.DisplaySexLabel);
+            this.panel1.Controls.Add(this.DisplayPhone);
+            this.panel1.Controls.Add(this.DisplayPhoneLabel);
+            this.panel1.Controls.Add(this.DisplayEmail);
+            this.panel1.Controls.Add(this.DisplayEmailLabel);
+            this.panel1.Controls.Add(this.DisplayLastName);
+            this.panel1.Controls.Add(this.DisplayLastNameLabel);
+            this.panel1.Controls.Add(this.DisplayFirstName);
+            this.panel1.Controls.Add(this.DisplayFirstNameLabel);
             this.panel1.Location = new System.Drawing.Point(416, 65);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(342, 236);
-            this.panel1.TabIndex = 17;
+            this.panel1.TabIndex = 18;
             // 
-            // TeamPersonCreatorForm
+            // DisplayDOB
+            // 
+            this.DisplayDOB.AutoSize = true;
+            this.DisplayDOB.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DisplayDOB.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayDOB.ForeColor = System.Drawing.Color.Black;
+            this.DisplayDOB.Location = new System.Drawing.Point(120, 183);
+            this.DisplayDOB.Name = "DisplayDOB";
+            this.DisplayDOB.Size = new System.Drawing.Size(71, 17);
+            this.DisplayDOB.TabIndex = 11;
+            this.DisplayDOB.Text = "First Name";
+            // 
+            // DisplayDOBLabel
+            // 
+            this.DisplayDOBLabel.AutoSize = true;
+            this.DisplayDOBLabel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DisplayDOBLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayDOBLabel.ForeColor = System.Drawing.Color.Black;
+            this.DisplayDOBLabel.Location = new System.Drawing.Point(25, 183);
+            this.DisplayDOBLabel.Name = "DisplayDOBLabel";
+            this.DisplayDOBLabel.Size = new System.Drawing.Size(81, 17);
+            this.DisplayDOBLabel.TabIndex = 10;
+            this.DisplayDOBLabel.Text = "Date of Birth";
+            // 
+            // DisplaySex
+            // 
+            this.DisplaySex.AutoSize = true;
+            this.DisplaySex.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DisplaySex.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplaySex.ForeColor = System.Drawing.Color.Black;
+            this.DisplaySex.Location = new System.Drawing.Point(120, 162);
+            this.DisplaySex.Name = "DisplaySex";
+            this.DisplaySex.Size = new System.Drawing.Size(71, 17);
+            this.DisplaySex.TabIndex = 9;
+            this.DisplaySex.Text = "First Name";
+            // 
+            // DisplaySexLabel
+            // 
+            this.DisplaySexLabel.AutoSize = true;
+            this.DisplaySexLabel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DisplaySexLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplaySexLabel.ForeColor = System.Drawing.Color.Black;
+            this.DisplaySexLabel.Location = new System.Drawing.Point(25, 162);
+            this.DisplaySexLabel.Name = "DisplaySexLabel";
+            this.DisplaySexLabel.Size = new System.Drawing.Size(28, 17);
+            this.DisplaySexLabel.TabIndex = 8;
+            this.DisplaySexLabel.Text = "Sex";
+            // 
+            // DisplayPhone
+            // 
+            this.DisplayPhone.AutoSize = true;
+            this.DisplayPhone.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DisplayPhone.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayPhone.ForeColor = System.Drawing.Color.Black;
+            this.DisplayPhone.Location = new System.Drawing.Point(120, 141);
+            this.DisplayPhone.Name = "DisplayPhone";
+            this.DisplayPhone.Size = new System.Drawing.Size(71, 17);
+            this.DisplayPhone.TabIndex = 7;
+            this.DisplayPhone.Text = "First Name";
+            // 
+            // DisplayPhoneLabel
+            // 
+            this.DisplayPhoneLabel.AutoSize = true;
+            this.DisplayPhoneLabel.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DisplayPhoneLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayPhoneLabel.ForeColor = System.Drawing.Color.Black;
+            this.DisplayPhoneLabel.Location = new System.Drawing.Point(25, 141);
+            this.DisplayPhoneLabel.Name = "DisplayPhoneLabel";
+            this.DisplayPhoneLabel.Size = new System.Drawing.Size(44, 17);
+            this.DisplayPhoneLabel.TabIndex = 6;
+            this.DisplayPhoneLabel.Text = "Phone";
+            // 
+            // DisplayEmail
+            // 
+            this.DisplayEmail.AutoSize = true;
+            this.DisplayEmail.BackColor = System.Drawing.SystemColors.GrayText;
+            this.DisplayEmail.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayEmail.ForeColor = System.Drawing.Color.Black;
+            this.DisplayEmail.Location = new System.Drawing.Point(120, 121);
+            this.DisplayEmail.Name = "DisplayEmail";
+            this.DisplayEmail.Size = new System.Drawing.Size(71, 17);
+            this.DisplayEmail.TabIndex = 5;
+            this.DisplayEmail.Text = "First Name";
+            // 
+            // DisplayEmailLabel
+            // 
+            this.DisplayEmailLabel.AutoSize = true;
+            this.DisplayEmailLabel.BackColor = System.Drawing.SystemColors.GrayText;
+            this.DisplayEmailLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayEmailLabel.ForeColor = System.Drawing.Color.Black;
+            this.DisplayEmailLabel.Location = new System.Drawing.Point(25, 121);
+            this.DisplayEmailLabel.Name = "DisplayEmailLabel";
+            this.DisplayEmailLabel.Size = new System.Drawing.Size(39, 17);
+            this.DisplayEmailLabel.TabIndex = 4;
+            this.DisplayEmailLabel.Text = "Email";
+            // 
+            // DisplayLastName
+            // 
+            this.DisplayLastName.AutoSize = true;
+            this.DisplayLastName.BackColor = System.Drawing.SystemColors.GrayText;
+            this.DisplayLastName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayLastName.ForeColor = System.Drawing.Color.Black;
+            this.DisplayLastName.Location = new System.Drawing.Point(120, 101);
+            this.DisplayLastName.Name = "DisplayLastName";
+            this.DisplayLastName.Size = new System.Drawing.Size(71, 17);
+            this.DisplayLastName.TabIndex = 3;
+            this.DisplayLastName.Text = "First Name";
+            // 
+            // DisplayLastNameLabel
+            // 
+            this.DisplayLastNameLabel.AutoSize = true;
+            this.DisplayLastNameLabel.BackColor = System.Drawing.SystemColors.GrayText;
+            this.DisplayLastNameLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayLastNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.DisplayLastNameLabel.Location = new System.Drawing.Point(25, 101);
+            this.DisplayLastNameLabel.Name = "DisplayLastNameLabel";
+            this.DisplayLastNameLabel.Size = new System.Drawing.Size(70, 17);
+            this.DisplayLastNameLabel.TabIndex = 2;
+            this.DisplayLastNameLabel.Text = "Last Name";
+            // 
+            // DisplayFirstName
+            // 
+            this.DisplayFirstName.AutoSize = true;
+            this.DisplayFirstName.BackColor = System.Drawing.SystemColors.GrayText;
+            this.DisplayFirstName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayFirstName.ForeColor = System.Drawing.Color.Black;
+            this.DisplayFirstName.Location = new System.Drawing.Point(120, 81);
+            this.DisplayFirstName.Name = "DisplayFirstName";
+            this.DisplayFirstName.Size = new System.Drawing.Size(71, 17);
+            this.DisplayFirstName.TabIndex = 1;
+            this.DisplayFirstName.Text = "First Name";
+            // 
+            // DisplayFirstNameLabel
+            // 
+            this.DisplayFirstNameLabel.AutoSize = true;
+            this.DisplayFirstNameLabel.BackColor = System.Drawing.SystemColors.GrayText;
+            this.DisplayFirstNameLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayFirstNameLabel.ForeColor = System.Drawing.Color.Black;
+            this.DisplayFirstNameLabel.Location = new System.Drawing.Point(25, 81);
+            this.DisplayFirstNameLabel.Name = "DisplayFirstNameLabel";
+            this.DisplayFirstNameLabel.Size = new System.Drawing.Size(71, 17);
+            this.DisplayFirstNameLabel.TabIndex = 0;
+            this.DisplayFirstNameLabel.Text = "First Name";
+            // 
+            // CreatePersonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 408);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.SexComboBox);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.createPlayerButton);
@@ -525,15 +639,15 @@
             this.Controls.Add(this.sexLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
-            this.Name = "TeamPersonCreatorForm";
+            this.Name = "CreatePersonForm";
             this.Text = "PersonCreator";
             this.Load += new System.EventHandler(this.PersonCreatorForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -560,9 +674,19 @@
         private System.Windows.Forms.ComboBox yearComboBox;
         private System.Windows.Forms.Button resetDOBButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListBox detailsHeadingsListBox;
-        private System.Windows.Forms.ListBox detailsListBox;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button confirmDOBButton;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label DisplayDOB;
+        private System.Windows.Forms.Label DisplayDOBLabel;
+        private System.Windows.Forms.Label DisplaySex;
+        private System.Windows.Forms.Label DisplaySexLabel;
+        private System.Windows.Forms.Label DisplayPhone;
+        private System.Windows.Forms.Label DisplayPhoneLabel;
+        private System.Windows.Forms.Label DisplayEmail;
+        private System.Windows.Forms.Label DisplayEmailLabel;
+        private System.Windows.Forms.Label DisplayLastName;
+        private System.Windows.Forms.Label DisplayLastNameLabel;
+        private System.Windows.Forms.Label DisplayFirstName;
+        private System.Windows.Forms.Label DisplayFirstNameLabel;
     }
 }

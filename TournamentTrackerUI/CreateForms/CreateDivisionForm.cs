@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TournamentLibrary;
 using TournamentLibrary.Models;
+using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI
 {
-    public partial class CreateDivisionForm : Form
+    public partial class CreateDivisionForm : Form, ITeamRequester
     {
+
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
         //TODO
@@ -36,7 +38,7 @@ namespace TournamentTrackerUI
             teamsListBox.DataSource = selectedTeams.OrderBy(t => t.TeamName).ToList(); ;
             teamsListBox.DisplayMember = "TeamName";
 
-            numTeams.Text = selectedTeams.Count.ToString();
+            DisplayNumTeams.Text = selectedTeams.Count.ToString();
         }
 
         /*
@@ -58,16 +60,13 @@ namespace TournamentTrackerUI
         }
         private void UpdateDivName(TextBox tb)
         {
-            name.Text = tb.Text;
+            DisplayName.Text = tb.Text;
         }
         private void UpdateDivNumber(TextBox tb)
         {
-            number.Text = tb.Text;
+            DisplayNumber.Text = tb.Text;
         }
-        private void UpdateDivTeams(TextBox tb)
-        {
-            
-        }
+        
         private void UpdateStartDate()
         {
             selectedStartDate.Text = StartDate.Value.ToString("D");
@@ -120,7 +119,7 @@ namespace TournamentTrackerUI
         private bool ValidateDivisionName(TextBox tb)
         {
             Validator validator = new Validator();           
-            if (validator.isValidString(tb.Text))
+            if ((validator.isValidString(tb.Text) && (tb.Text != "Try Again")))
             {
                 Success(tb);
                 return true;
@@ -138,7 +137,7 @@ namespace TournamentTrackerUI
         private bool ValidateDivisionNumber(TextBox tb)
         {
             Validator check = new Validator();
-            if (check.isValidNumber(tb.Text))
+            if ((check.isValidNumber(tb.Text) && (tb.Text != "")))
             {
                 Success(tb);
                 return true;
@@ -214,37 +213,67 @@ namespace TournamentTrackerUI
             removeSkippedDates();
         }
 
+       
         private void createDivisionButton_Click(object sender, EventArgs e)
         {
-            // create a division model
-            DivisionModel model = new DivisionModel();
-            model.DivisionName = DivisionNameTextbox.Text;
-            model.DivisionNumber = int.Parse(DivisionNumberTextbox.Text);
-            //model.DivisionTeams = selectedTeams;
-            model.StartDate = StartDate.Value;
-            // store division in Db and return ID
-            GlobalConfig.Connection.EditDivision(model);
+            
+                //Create updated Model(s)
+                if ((ValidateDivisionName(DivisionNameTextbox)) && (ValidateDivisionNumber(DivisionNumberTextbox)))
+                {
+                    // create a division model
+                    DivisionModel model = new DivisionModel();
+                    model.DivisionName = DivisionNameTextbox.Text;
+                    model.DivisionNumber = int.Parse(DivisionNumberTextbox.Text);
+                    //model.DivisionTeams = selectedTeams;
+                    model.StartDate = StartDate.Value;
+                    // store division in Db and return ID
+                    GlobalConfig.Connection.CreateDivision(model);
+                    MessageBox.Show("Division Successfully Created");
+                    clearForm();
 
 
-            foreach (DateTime date in skippedDates)
+                    foreach (DateTime date in skippedDates)
+                    {
+                        SkippedDatesModel skDates = new SkippedDatesModel();
+                        skDates.DivisionID = model.DivisionID;
+                        skDates.DateToSkip = date;
+                        GlobalConfig.Connection.CreateSkippedDates(skDates);
+                    }
+
+                    model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
+
+                    foreach (TeamModel team in selectedTeams)
+                    {
+                        TeamModel teammodel = new TeamModel();
+                        teammodel.DivisionID = model.DivisionID;
+                        teammodel.TeamID = team.TeamID;
+                        GlobalConfig.Connection.CreateDivisionTeams(teammodel);
+                    }
+                }
+            else
             {
-                SkippedDatesModel skDates = new SkippedDatesModel();
-                skDates.DivisionID = model.DivisionID;
-                skDates.DateToSkip = date;
-                GlobalConfig.Connection.CreateSkippedDates(skDates);               
+                MessageBox.Show("Form Has Invalid Information");
             }
-
-            model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
-
-            foreach (TeamModel team in selectedTeams)
-            {
-                TeamModel teammodel = new TeamModel();
-                teammodel.DivisionID = model.DivisionID;
-                teammodel.TeamID = team.TeamID;
-                GlobalConfig.Connection.CreateDivisionTeams(teammodel);
-            }
-        
+            
            
+        }
+
+        private void clearForm()
+        {
+            DivisionNameTextbox.Text = "";
+            DivisionNumberTextbox.Text = "";
+            StartDate.ResetText();
+            selectedStartDate.Text = "";
+            SkipDatesdateTimePicker.ResetText();
+            skippedDatesListbox.Items.Clear();
+            DisplayName.Text = "";
+            DisplayNumber.Text = "";
+            DisplayNumTeams.Text = "";
+            if (teamsListBox.Items.Count > 0)
+            {
+                teamsListBox.Items.Clear();
+            }
+            addTeamsDropdown.DataSource = GlobalConfig.Connection.GetAllTeams();
         }
 
         private void ExitToMainMenuButton_Click(object sender, EventArgs e)
@@ -275,6 +304,27 @@ namespace TournamentTrackerUI
 
                 WireupLists();
             }
+        }
+
+       
+
+        public void TeamComplete(TeamModel model)
+        {
+            selectedTeams.Add(model);
+            WireupLists();
+        }
+
+        private void createNewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CreateTeamForm teamForm = new CreateTeamForm(this);
+            teamForm.Show();
+            this.Hide();
+            teamForm.FormClosing += closeForm;
+        }
+
+        public void closeForm(object sender, FormClosingEventArgs e)
+        {
+            this.Show();
         }
     }
     }

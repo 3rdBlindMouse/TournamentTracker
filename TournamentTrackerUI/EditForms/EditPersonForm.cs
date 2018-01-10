@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,51 +14,54 @@ using TournamentLibrary;
 using TournamentLibrary.DataAccess;
 using TournamentLibrary.Models;
 
+
 namespace TournamentTrackerUI
 {
-    public partial class CreatePersonForm : Form
+    public partial class EditPersonForm : Form
     {
-        public CreatePersonForm()
+        
+        // Get List of People/Players
+        private static List<PersonModel> players = GlobalConfig.Connection.GetAllPeople();
+        private static PersonModel pm = new PersonModel();
+
+       
+
+
+        public EditPersonForm()
         {
             InitializeComponent();
+            
+           
+            WireupPlayerSelector();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // wireup Player combobox
+        private void WireupPlayerSelector()
         {
-            if (validateForm())
+            AddSelectTitle();
+
+            PlayerNameComboBox.DataSource = null;
+            PlayerNameComboBox.DataSource = players.OrderBy(p => p.LastName).ToList(); ;
+            PlayerNameComboBox.DisplayMember = "FullName";
+        }
+
+        private void AddSelectTitle()
+        {
+            int index = players.FindIndex(item => item.PersonID == -1);
+            if (index >= 0)
             {
-                // need to add something or else saving to text file blows up
-                if (EmailTextbox.Text == "")
-                {
-                    EmailTextbox.Text = "No Email";
-                }
-                if (ContactNumberTextbox.Text == "")
-                {
-                    ContactNumberTextbox.Text = "No Contact Number";
-                }
-
-                PersonModel model = new PersonModel(
-                    FirstNameTextbox.Text,
-                    LastNameTextbox.Text,
-                    EmailTextbox.Text,
-                    ContactNumberTextbox.Text,
-                    SexComboBox.SelectedItem.ToString(),
-                    // TODO fix dob method
-                    dob());
-
-                GlobalConfig.Connection.CreatePerson(model);
-
-                this.Close();
-                
-                //clearForm();
-
+                // element exists, do what you need
             }
             else
             {
-                MessageBox.Show("This form has invalid information");
+                PersonModel p = new PersonModel(" Select Player ", -1);
+                players.Insert(0, p);
             }
         }
 
+        /// <summary>
+        /// Clears the form resets all colors and textfields
+        /// </summary>
         private void clearForm()
         {
             FirstNameTextbox.Text = "";
@@ -75,33 +80,39 @@ namespace TournamentTrackerUI
             monthComboBox.BackColor = SystemColors.Info;
             yearComboBox.Text = "YEAR";
             yearComboBox.BackColor = SystemColors.Info;
-        }
 
+            DisplayFirstName.Text = "";
+            DisplayLastName.Text = "";
+            DisplayEmail.Text = "";
+            DisplayPhone.Text = "";
+            DisplaySex.Text = "";
+            DisplayDOB.Text = "";
+
+
+        }
+        /// <summary>
+        /// Validates the entire form
+        /// </summary>
+        /// <returns></returns>
         private bool validateForm()
         {
             Validator validator = new Validator();
             bool output = false;
             if (
-                   (validator.isValidString(FirstNameTextbox.Text))
-                && (validator.isValidString(LastNameTextbox.Text))
+                   (validator.isValidName(FirstNameTextbox.Text))
+                && (validator.isValidName(LastNameTextbox.Text))
                 && ((validator.isValidEmail(EmailTextbox.Text)) || (EmailTextbox.Text == ""))
-                && ((validator.isValidNumber(ContactNumberTextbox.Text)) || (ContactNumberTextbox.Text == ""))
+                && ((validator.isValidPhoneNumber(ContactNumberTextbox.Text)) || (ContactNumberTextbox.Text == ""))
                 && (validator.isValidSex(SexComboBox.Text))
                 )
             {
                 output = true;
             }
             return output;
-
         }
-
-
-
-
         /*
          * Validating for each of the form fields
          */
-
         /// <summary>
         /// Compares user input FirstName to a string regex
         /// </summary>
@@ -109,14 +120,13 @@ namespace TournamentTrackerUI
         private void validateFirstName()
         {
             Validator validator = new Validator();
-            bool output = validator.isValidString(FirstNameTextbox.Text);
+            bool output = validator.isValidName(FirstNameTextbox.Text);
 
             if (output == true)
             {
                 FirstNameTextbox.BackColor = Color.LightGreen;
                 FirstNameTextbox.Text = FirstNameTextbox.Text;
-                detailsListBox.Items.RemoveAt(0);
-                detailsListBox.Items.Insert(0, FirstNameTextbox.Text);
+                
             }
             else
             {
@@ -131,13 +141,12 @@ namespace TournamentTrackerUI
         private void validateLastName()
         {
             Validator validator = new Validator();
-            bool output = validator.isValidString(LastNameTextbox.Text);
+            bool output = validator.isValidName(LastNameTextbox.Text);
             if (output == true)
             {
                 LastNameTextbox.BackColor = Color.LightGreen;
                 LastNameTextbox.Text = LastNameTextbox.Text;
-                detailsListBox.Items.RemoveAt(2);
-                detailsListBox.Items.Insert(2, LastNameTextbox.Text);
+                
             }
             else
             {
@@ -158,8 +167,7 @@ namespace TournamentTrackerUI
 
                 EmailTextbox.BackColor = Color.LightGreen;
                 EmailTextbox.Text = EmailTextbox.Text;
-                detailsListBox.Items.RemoveAt(4);
-                detailsListBox.Items.Insert(4, EmailTextbox.Text);
+               
             }
             else
             {
@@ -174,14 +182,13 @@ namespace TournamentTrackerUI
         private void validateContactNumber()
         {
             Validator validator = new Validator();
-            bool output = validator.isValidNumber(ContactNumberTextbox.Text);
+            bool output = validator.isValidPhoneNumber(ContactNumberTextbox.Text);
             if (output == true)
             {
 
                 ContactNumberTextbox.BackColor = Color.LightGreen;
                 ContactNumberTextbox.Text = ContactNumberTextbox.Text;
-                detailsListBox.Items.RemoveAt(6);
-                detailsListBox.Items.Insert(6, ContactNumberTextbox.Text);
+                
             }
             else
             {
@@ -216,12 +223,6 @@ namespace TournamentTrackerUI
             else
             {
                 DateTime datetime = dob();
-                if (detailsListBox.Items.Count > 10)
-                {
-                    detailsListBox.Items.RemoveAt(10);
-                }
-
-                detailsListBox.Items.Insert(10, datetime.ToString("dd/MM/yyyy"));
             }
         }
         /// <summary>
@@ -235,7 +236,6 @@ namespace TournamentTrackerUI
             {
                 MessageBox.Show("Invalid date of birth");
                 return datetime;
-
             }
             else
             {
@@ -244,55 +244,14 @@ namespace TournamentTrackerUI
                 return datetime;
             }
         }
-
         /*
-         * Events
+         * Button Click Events
          */
-        private void EmailTextbox_Enter(object sender, EventArgs e)
+        // TODO change button name
+        private void button3_Click(object sender, EventArgs e)
         {
-            EmailTextbox.BackColor = SystemColors.Info;
-            EmailTextbox.Text = "";
+            validateDateOfBirth();
         }
-        private void EmailTextbox_Leave(object sender, EventArgs e)
-        {
-            validateEmail();
-        }
-
-        private void FirstNameTextbox_Enter(object sender, EventArgs e)
-        {
-            FirstNameTextbox.BackColor = SystemColors.Info;
-            FirstNameTextbox.Text = "";
-        }
-        private void FirstNameTextbox_Leave(object sender, EventArgs e)
-        {
-            validateFirstName();
-        }
-
-
-
-
-        private void LastNameTextbox_Leave(object sender, EventArgs e)
-        {
-            validateLastName();
-        }
-
-        private void LastNameTextbox_Enter(object sender, EventArgs e)
-        {
-            LastNameTextbox.BackColor = SystemColors.Info;
-            LastNameTextbox.Text = "";
-        }
-
-        private void contactNumberTextbox_Enter(object sender, EventArgs e)
-        {
-            ContactNumberTextbox.BackColor = SystemColors.Info;
-            ContactNumberTextbox.Text = "";
-        }
-
-        private void PersonCreatorForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Reset date of birth combo boxes (colours and text), remove date from display if there.
         /// </summary>
@@ -306,45 +265,72 @@ namespace TournamentTrackerUI
             dayComboBox.BackColor = SystemColors.Window;
             monthComboBox.BackColor = SystemColors.Window;
             yearComboBox.BackColor = SystemColors.Window;
-            if (detailsListBox.Items.Count > 10)
-            {
-                detailsListBox.Items.RemoveAt(10);
-            }
+            
         }
+        /*
+        * Enter Leave Events
+        */
+        private void EmailTextbox_Enter(object sender, EventArgs e)
+        {
+            EmailTextbox.BackColor = SystemColors.Info;
+            EmailTextbox.Text = "";
+        }
+        private void EmailTextbox_Leave(object sender, EventArgs e)
+        {
+            validateEmail();
+        }
+        private void FirstNameTextbox_Enter(object sender, EventArgs e)
+        {
+            FirstNameTextbox.BackColor = SystemColors.Info;
+            FirstNameTextbox.Text = "";
+        }
+        private void FirstNameTextbox_Leave(object sender, EventArgs e)
+        {
+            validateFirstName();
+        }
+        private void LastNameTextbox_Leave(object sender, EventArgs e)
+        {
+            validateLastName();
+        }
+        private void LastNameTextbox_Enter(object sender, EventArgs e)
+        {
+            LastNameTextbox.BackColor = SystemColors.Info;
+            LastNameTextbox.Text = "";
+        }
+        private void contactNumberTextbox_Enter(object sender, EventArgs e)
+        {
+            ContactNumberTextbox.BackColor = SystemColors.Info;
+            ContactNumberTextbox.Text = "";
+        }
+        private void PersonCreatorForm_Load(object sender, EventArgs e)
+        {
 
+        }
         private void contactNumberTextbox_Leave(object sender, EventArgs e)
         {
-            validateContactNumber();
+            // if blank no need to validate
+            if (ContactNumberTextbox.Text != "")
+            {
+                validateContactNumber();
+            }
         }
-
         private void SexComboBox_Leave(object sender, EventArgs e)
         {
             if (SexComboBox.Text == Sex.Male.ToString())
             {
                 SexComboBox.BackColor = Color.LightGreen;
-                detailsListBox.Items.RemoveAt(8);
-                detailsListBox.Items.Insert(8, "Male");
+                
             }
             else if (SexComboBox.Text == Sex.Female.ToString())
             {
                 SexComboBox.BackColor = Color.LightGreen;
-                detailsListBox.Items.RemoveAt(8);
-                detailsListBox.Items.Insert(8, "Female");
+                
             }
         }
-
-
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            validateDateOfBirth();
-        }
-
         private void dayComboBox_Enter(object sender, EventArgs e)
         {
             dayComboBox.BackColor = SystemColors.Window;
         }
-
         private void dayComboBox_Leave(object sender, EventArgs e)
         {
             if (dayComboBox.Text != "DAY")
@@ -356,7 +342,6 @@ namespace TournamentTrackerUI
         {
             monthComboBox.BackColor = SystemColors.Window;
         }
-
         private void monthComboBox_Leave(object sender, EventArgs e)
         {
             if (monthComboBox.Text != "MONTH")
@@ -364,12 +349,10 @@ namespace TournamentTrackerUI
                 monthComboBox.BackColor = Color.LightGreen;
             }
         }
-
         private void yearComboBox_Enter(object sender, EventArgs e)
         {
             yearComboBox.BackColor = SystemColors.Window;
         }
-
         private void yearComboBox_Leave(object sender, EventArgs e)
         {
             if (yearComboBox.Text != "YEAR")
@@ -378,9 +361,104 @@ namespace TournamentTrackerUI
             }
         }
 
-        private void exitButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Make sure form is in ready state before user can edit anything
+        /// </summary>
+        /// <returns></returns>
+        private bool formReady()
         {
-            this.Close();
+            // If a Division has been selected from DivisionNameComboBox
+            if ((PlayerNameComboBox.SelectedIndex != 0)
+                && (PlayerNameComboBox.SelectedItem != null)
+                && (PlayerNameComboBox.SelectedText != " Select Player "))
+                return true;
+            else
+            {
+                return false;
+            }
+        }
+
+        private void PlayerNameComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            pm = (PersonModel)PlayerNameComboBox.SelectedItem;
+            if (formReady() == true)
+            {
+               
+                UpdateDisplays(pm);
+            }
+        }
+
+        private void UpdateDisplays(PersonModel p)
+        {
+            FirstNameTextbox.Text = p.FirstName;
+            LastNameTextbox.Text = p.LastName;
+            EmailTextbox.Text = p.Email;
+            ContactNumberTextbox.Text = p.ContactNumber;
+            SexComboBox.Text = p.Sex;
+            dayComboBox.Text = p.DateOfBirth.Day.ToString("00");
+            monthComboBox.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(p.DateOfBirth.Month);
+            yearComboBox.Text = p.DateOfBirth.Year.ToString();
+
+            DisplayFirstName.Text = p.FirstName;
+            DisplayLastName.Text = p.LastName;
+            DisplayEmail.Text = p.Email;
+            DisplayPhone.Text = p.ContactNumber;
+            DisplaySex.Text = p.Sex;
+            DisplayDOB.Text = p.DateOfBirth.ToShortDateString();
+            
+
+
+
+        }
+
+        private void EditPlayerButton_Click(object sender, EventArgs e)
+        {
+            if (formReady() == true)
+            {
+                {
+                    if (validateForm())
+                    {
+                        // needed to add something or else saving to text file blows up
+                        if (EmailTextbox.Text == "")
+                        {
+                            EmailTextbox.Text = "No Email";
+                        }
+                        if (ContactNumberTextbox.Text == "")
+                        {
+                            ContactNumberTextbox.Text = "No Contact Number";
+                        }
+
+                        PersonModel model = new PersonModel();
+                        model.PersonID = pm.PersonID;
+                        model.FirstName = FirstNameTextbox.Text;
+                        model.LastName = LastNameTextbox.Text;
+                        model.Email = EmailTextbox.Text;
+                        model.ContactNumber = ContactNumberTextbox.Text;
+                        model.Sex = SexComboBox.SelectedItem.ToString();
+                        // TODO fix dob method
+                        model.DateOfBirth = dob();
+
+                        GlobalConfig.Connection.EditPerson(model);
+                        
+
+
+                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("This form has invalid information");
+                    }
+                    MessageBox.Show("Player Successfully Edited");
+
+                    
+
+                    clearForm();
+                    
+                    players = GlobalConfig.Connection.GetAllPeople();
+                    WireupPlayerSelector();
+
+                }
+            }
         }
     }
 }

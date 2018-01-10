@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TournamentLibrary;
 using TournamentLibrary.Models;
+using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI
 {
     public partial class CreateVenueForm : Form
     {
+        IVenueRequester callingForm;
         Validator validator = new Validator();
-        public CreateVenueForm()
+        private string method;
+
+
+        public CreateVenueForm(IVenueRequester caller)
         {
             InitializeComponent();
+            callingForm = caller;
+
+            StackFrame frame = new StackFrame(1, true);
+            method = (frame.GetMethod().Name);
         }
 
         private void createVenueButton_Click(object sender, EventArgs e)
@@ -25,7 +35,16 @@ namespace TournamentTrackerUI
             if(ValidateForm())
             {
                 createModel();
-                
+                if (method == "createNewVenueLinkLabel_LinkClicked")
+                {
+                    this.Close();
+                    //MessageBox.Show("");
+                }
+                else
+                {
+                    //MessageBox.Show("Not ");
+                }
+
             }
             clearForm();
         }
@@ -42,6 +61,7 @@ namespace TournamentTrackerUI
             model.PoolTables = int.Parse(numberOfPoolTablesTextBox.Text);
 
             GlobalConfig.Connection.CreateVenue(model);
+            callingForm.VenueComplete(model);
         }
 
         private bool ValidateForm()

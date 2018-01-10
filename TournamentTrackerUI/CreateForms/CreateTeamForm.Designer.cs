@@ -38,14 +38,19 @@
             this.teamCaptainDropdown = new System.Windows.Forms.ComboBox();
             this.TeamCaptainLabel = new System.Windows.Forms.Label();
             this.AddPlayerButton = new System.Windows.Forms.Button();
-            this.TeamDetailsListBox = new System.Windows.Forms.ListBox();
             this.createTeamButton = new System.Windows.Forms.Button();
             this.removePlayerButton = new System.Windows.Forms.Button();
             this.teamMemberListBox = new System.Windows.Forms.ListBox();
             this.captainSelectButton = new System.Windows.Forms.Button();
             this.venueDropDown = new System.Windows.Forms.ComboBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.exitButton = new System.Windows.Forms.Button();
+            this.createNewVenueLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.DisplayTeamNameLabel = new System.Windows.Forms.Label();
+            this.DisplayTeamName = new System.Windows.Forms.Label();
+            this.DisplayTeamVenueLabel = new System.Windows.Forms.Label();
+            this.DisplayTeamVenue = new System.Windows.Forms.Label();
+            this.DisplayCaptainLabel = new System.Windows.Forms.Label();
+            this.DisplayCaptain = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -148,19 +153,6 @@
             this.AddPlayerButton.UseVisualStyleBackColor = true;
             this.AddPlayerButton.Click += new System.EventHandler(this.AddPlayerButton_Click);
             // 
-            // TeamDetailsListBox
-            // 
-            this.TeamDetailsListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TeamDetailsListBox.FormattingEnabled = true;
-            this.TeamDetailsListBox.Items.AddRange(new object[] {
-            "",
-            "",
-            ""});
-            this.TeamDetailsListBox.Location = new System.Drawing.Point(612, 139);
-            this.TeamDetailsListBox.Name = "TeamDetailsListBox";
-            this.TeamDetailsListBox.Size = new System.Drawing.Size(146, 52);
-            this.TeamDetailsListBox.TabIndex = 15;
-            // 
             // createTeamButton
             // 
             this.createTeamButton.Location = new System.Drawing.Point(354, 374);
@@ -184,9 +176,9 @@
             // teamMemberListBox
             // 
             this.teamMemberListBox.FormattingEnabled = true;
-            this.teamMemberListBox.Location = new System.Drawing.Point(486, 146);
+            this.teamMemberListBox.Location = new System.Drawing.Point(486, 185);
             this.teamMemberListBox.Name = "teamMemberListBox";
-            this.teamMemberListBox.Size = new System.Drawing.Size(235, 212);
+            this.teamMemberListBox.Size = new System.Drawing.Size(235, 173);
             this.teamMemberListBox.TabIndex = 18;
             // 
             // captainSelectButton
@@ -207,21 +199,8 @@
             this.venueDropDown.Name = "venueDropDown";
             this.venueDropDown.Size = new System.Drawing.Size(165, 29);
             this.venueDropDown.TabIndex = 20;
+            this.venueDropDown.SelectedValueChanged += new System.EventHandler(this.venueDropDown_SelectedValueChanged);
             this.venueDropDown.Enter += new System.EventHandler(this.venueDropDown_Enter);
-            this.venueDropDown.Leave += new System.EventHandler(this.venueDropDown_Leave);
-            // 
-            // listBox1
-            // 
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Team Name :",
-            "Team Venue :",
-            "Team Captain :"});
-            this.listBox1.Location = new System.Drawing.Point(486, 84);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(83, 52);
-            this.listBox1.TabIndex = 21;
             // 
             // exitButton
             // 
@@ -233,20 +212,96 @@
             this.exitButton.UseVisualStyleBackColor = true;
             this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
+            // createNewVenueLinkLabel
+            // 
+            this.createNewVenueLinkLabel.AutoSize = true;
+            this.createNewVenueLinkLabel.Location = new System.Drawing.Point(214, 169);
+            this.createNewVenueLinkLabel.Name = "createNewVenueLinkLabel";
+            this.createNewVenueLinkLabel.Size = new System.Drawing.Size(116, 13);
+            this.createNewVenueLinkLabel.TabIndex = 23;
+            this.createNewVenueLinkLabel.TabStop = true;
+            this.createNewVenueLinkLabel.Text = "or Create New Venue";
+            this.createNewVenueLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewVenueLinkLabel_LinkClicked);
+            // 
+            // DisplayTeamNameLabel
+            // 
+            this.DisplayTeamNameLabel.AutoSize = true;
+            this.DisplayTeamNameLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayTeamNameLabel.Location = new System.Drawing.Point(475, 90);
+            this.DisplayTeamNameLabel.Name = "DisplayTeamNameLabel";
+            this.DisplayTeamNameLabel.Size = new System.Drawing.Size(79, 17);
+            this.DisplayTeamNameLabel.TabIndex = 24;
+            this.DisplayTeamNameLabel.Text = "Team Name";
+            // 
+            // DisplayTeamName
+            // 
+            this.DisplayTeamName.AutoSize = true;
+            this.DisplayTeamName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayTeamName.Location = new System.Drawing.Point(569, 90);
+            this.DisplayTeamName.Name = "DisplayTeamName";
+            this.DisplayTeamName.Size = new System.Drawing.Size(43, 17);
+            this.DisplayTeamName.TabIndex = 25;
+            this.DisplayTeamName.Text = "label3";
+            // 
+            // DisplayTeamVenueLabel
+            // 
+            this.DisplayTeamVenueLabel.AutoSize = true;
+            this.DisplayTeamVenueLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayTeamVenueLabel.Location = new System.Drawing.Point(475, 114);
+            this.DisplayTeamVenueLabel.Name = "DisplayTeamVenueLabel";
+            this.DisplayTeamVenueLabel.Size = new System.Drawing.Size(44, 17);
+            this.DisplayTeamVenueLabel.TabIndex = 26;
+            this.DisplayTeamVenueLabel.Text = "Venue";
+            // 
+            // DisplayTeamVenue
+            // 
+            this.DisplayTeamVenue.AutoSize = true;
+            this.DisplayTeamVenue.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayTeamVenue.Location = new System.Drawing.Point(569, 114);
+            this.DisplayTeamVenue.Name = "DisplayTeamVenue";
+            this.DisplayTeamVenue.Size = new System.Drawing.Size(43, 17);
+            this.DisplayTeamVenue.TabIndex = 27;
+            this.DisplayTeamVenue.Text = "label5";
+            // 
+            // DisplayCaptainLabel
+            // 
+            this.DisplayCaptainLabel.AutoSize = true;
+            this.DisplayCaptainLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayCaptainLabel.Location = new System.Drawing.Point(475, 140);
+            this.DisplayCaptainLabel.Name = "DisplayCaptainLabel";
+            this.DisplayCaptainLabel.Size = new System.Drawing.Size(88, 17);
+            this.DisplayCaptainLabel.TabIndex = 28;
+            this.DisplayCaptainLabel.Text = "Team Captain";
+            // 
+            // DisplayCaptain
+            // 
+            this.DisplayCaptain.AutoSize = true;
+            this.DisplayCaptain.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DisplayCaptain.Location = new System.Drawing.Point(569, 140);
+            this.DisplayCaptain.Name = "DisplayCaptain";
+            this.DisplayCaptain.Size = new System.Drawing.Size(43, 17);
+            this.DisplayCaptain.TabIndex = 29;
+            this.DisplayCaptain.Text = "label7";
+            // 
             // CreateTeamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(770, 420);
+            this.Controls.Add(this.DisplayCaptain);
+            this.Controls.Add(this.DisplayCaptainLabel);
+            this.Controls.Add(this.DisplayTeamVenue);
+            this.Controls.Add(this.DisplayTeamVenueLabel);
+            this.Controls.Add(this.DisplayTeamName);
+            this.Controls.Add(this.DisplayTeamNameLabel);
+            this.Controls.Add(this.createNewVenueLinkLabel);
             this.Controls.Add(this.exitButton);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.venueDropDown);
             this.Controls.Add(this.captainSelectButton);
             this.Controls.Add(this.teamMemberListBox);
             this.Controls.Add(this.removePlayerButton);
             this.Controls.Add(this.createTeamButton);
-            this.Controls.Add(this.TeamDetailsListBox);
             this.Controls.Add(this.AddPlayerButton);
             this.Controls.Add(this.teamCaptainDropdown);
             this.Controls.Add(this.TeamCaptainLabel);
@@ -277,13 +332,18 @@
         private System.Windows.Forms.ComboBox teamCaptainDropdown;
         private System.Windows.Forms.Label TeamCaptainLabel;
         private System.Windows.Forms.Button AddPlayerButton;
-        private System.Windows.Forms.ListBox TeamDetailsListBox;
         private System.Windows.Forms.Button createTeamButton;
         private System.Windows.Forms.Button removePlayerButton;
         private System.Windows.Forms.ListBox teamMemberListBox;
         private System.Windows.Forms.Button captainSelectButton;
         private System.Windows.Forms.ComboBox venueDropDown;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.LinkLabel createNewVenueLinkLabel;
+        private System.Windows.Forms.Label DisplayTeamNameLabel;
+        private System.Windows.Forms.Label DisplayTeamName;
+        private System.Windows.Forms.Label DisplayTeamVenueLabel;
+        private System.Windows.Forms.Label DisplayTeamVenue;
+        private System.Windows.Forms.Label DisplayCaptainLabel;
+        private System.Windows.Forms.Label DisplayCaptain;
     }
 }

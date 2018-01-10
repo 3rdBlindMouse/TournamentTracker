@@ -11,11 +11,11 @@ using System.Windows.Forms;
 using TournamentLibrary;
 using TournamentLibrary.DataAccess;
 using TournamentLibrary.Models;
-
+using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI
 {
-    public partial class FirstForm : Form
+    public partial class FirstForm : Form, ITeamRequester, IVenueRequester, IPersonRequester
     {
         public FirstForm()
         {
@@ -24,7 +24,7 @@ namespace TournamentTrackerUI
 
         private void newPersonButton_Click(object sender, EventArgs e)
         {
-            CreatePersonForm personForm = new CreatePersonForm();
+            CreatePersonForm personForm = new CreatePersonForm(this);
             personForm.Show();
             this.Hide();
             personForm.FormClosing += closeForm;
@@ -53,7 +53,7 @@ namespace TournamentTrackerUI
 
         private void newTeamButton_Click(object sender, EventArgs e)
         {
-            CreateTeamForm teamForm = new CreateTeamForm();
+            CreateTeamForm teamForm = new CreateTeamForm(this);
             teamForm.Show();
             this.Hide();
             teamForm.FormClosing += closeForm;
@@ -61,7 +61,7 @@ namespace TournamentTrackerUI
 
         private void newVenueButton_Click(object sender, EventArgs e)
         {
-            CreateVenueForm venueForm = new CreateVenueForm();
+            CreateVenueForm venueForm = new CreateVenueForm(this);
             venueForm.Show();
             this.Hide();
             venueForm.FormClosing += closeForm;
@@ -90,6 +90,21 @@ namespace TournamentTrackerUI
             ePersonForm.Show();
             this.Hide();
             ePersonForm.FormClosing += closeForm;
+        }
+
+        public void TeamComplete(TeamModel model)
+        {
+            // no need to do anything from this form
+        }
+
+        public void VenueComplete(VenueModel model)
+        {
+            // no need to do anything from this form
+        }
+
+        public void PersonComplete(PersonModel model)
+        {
+            // no need to do anything from this form
         }
     }
     

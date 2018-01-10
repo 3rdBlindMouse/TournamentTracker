@@ -45,22 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateDivisionForm.cs">
+    <Compile Include="CreateForms\CreateDivisionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateDivisionForm.Designer.cs">
+    <Compile Include="CreateForms\CreateDivisionForm.Designer.cs">
       <DependentUpon>CreateDivisionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditDivisionForm.cs">
+    <Compile Include="EditForms\EditDivisionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditDivisionForm.Designer.cs">
+    <Compile Include="EditForms\EditDivisionForm.Designer.cs">
       <DependentUpon>EditDivisionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditVenueForm.cs">
+    <Compile Include="EditForms\EditVenueForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditVenueForm.Designer.cs">
+    <Compile Include="EditForms\EditVenueForm.Designer.cs">
       <DependentUpon>EditVenueForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FirstForm.cs">
@@ -69,28 +69,31 @@
     <Compile Include="FirstForm.Designer.cs">
       <DependentUpon>FirstForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditPersonForm.cs">
+    <Compile Include="EditForms\EditPersonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditPersonForm.Designer.cs">
+    <Compile Include="EditForms\EditPersonForm.Designer.cs">
       <DependentUpon>EditPersonForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreatePersonForm.cs">
+    <Compile Include="CreateForms\CreatePersonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreatePersonForm.Designer.cs">
+    <Compile Include="CreateForms\CreatePersonForm.Designer.cs">
       <DependentUpon>CreatePersonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RequestInterfaces\IPersonRequester.cs" />
+    <Compile Include="RequestInterfaces\ITeamRequester.cs" />
+    <Compile Include="RequestInterfaces\IVenueRequester.cs" />
     <Compile Include="ScoreCard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ScoreCard.Designer.cs">
       <DependentUpon>ScoreCard.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateTeamForm.cs">
+    <Compile Include="CreateForms\CreateTeamForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateTeamForm.Designer.cs">
+    <Compile Include="CreateForms\CreateTeamForm.Designer.cs">
       <DependentUpon>CreateTeamForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TournamentCreatorForm.cs">
@@ -101,22 +104,22 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CreateVenueForm.cs">
+    <Compile Include="CreateForms\CreateVenueForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CreateVenueForm.Designer.cs">
+    <Compile Include="CreateForms\CreateVenueForm.Designer.cs">
       <DependentUpon>CreateVenueForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CreateDivisionForm.resx">
+    <EmbeddedResource Include="CreateForms\CreateDivisionForm.resx">
       <DependentUpon>CreateDivisionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditDivisionForm.resx">
+    <EmbeddedResource Include="EditForms\EditDivisionForm.resx">
       <DependentUpon>EditDivisionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditPersonForm.resx">
+    <EmbeddedResource Include="EditForms\EditPersonForm.resx">
       <DependentUpon>EditPersonForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditVenueForm.resx">
+    <EmbeddedResource Include="EditForms\EditVenueForm.resx">
       <DependentUpon>EditVenueForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FirstForm.resx">
@@ -125,10 +128,10 @@
     <EmbeddedResource Include="ScoreCard.resx">
       <DependentUpon>ScoreCard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreateTeamForm.resx">
+    <EmbeddedResource Include="CreateForms\CreateTeamForm.resx">
       <DependentUpon>CreateTeamForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CreatePersonForm.resx">
+    <EmbeddedResource Include="CreateForms\CreatePersonForm.resx">
       <DependentUpon>CreatePersonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TournamentCreatorForm.resx">
@@ -143,7 +146,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CreateVenueForm.resx">
+    <EmbeddedResource Include="CreateForms\CreateVenueForm.resx">
       <DependentUpon>CreateVenueForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
