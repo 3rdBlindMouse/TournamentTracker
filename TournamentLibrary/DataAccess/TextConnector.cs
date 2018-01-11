@@ -144,7 +144,27 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public void CreateTeamCaptain(TeamModel model)
+        public CaptainModel CreateTeamCaptain(CaptainModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CaptainModel GetTeamCaptain(TeamModel tm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CaptainModel> GetTeamCaptains(TeamModel tm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditTeam(TeamModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditRoster(RosterModel roster)
         {
             throw new NotImplementedException();
         }

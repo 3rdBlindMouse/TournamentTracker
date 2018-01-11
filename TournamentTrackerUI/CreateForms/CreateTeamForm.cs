@@ -23,7 +23,7 @@ namespace TournamentTrackerUI
         //TODO
         //private List<TeamModel> teams = GlobalConfig.Connection.GetDivisionTeams();
         private List<PersonModel> lastPerson;
-        private PersonModel captain;
+        private CaptainModel captain;
         private static string method;
         private static VenueModel vm;
 
@@ -203,9 +203,12 @@ namespace TournamentTrackerUI
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.CreateTeam(model);
-            GlobalConfig.Connection.CreateTeamCaptain(model);
-            callingForm.TeamComplete(model);
             
+            callingForm.TeamComplete(model);
+            captain.TeamID = model.TeamID;
+
+            GlobalConfig.Connection.CreateTeamCaptain(captain);
+
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.CreateRoster(roster);
@@ -272,20 +275,24 @@ namespace TournamentTrackerUI
         private void captainSelectButton_Click(object sender, EventArgs e)
         {
             captain = getCaptain();
-            DisplayCaptain.Text = captain.FullName;
+            DisplayCaptain.Text = captain.Name;
+            
         }
 
-        private PersonModel getCaptain()
+        private CaptainModel getCaptain()
         {
+            CaptainModel capt = new CaptainModel();
             PersonModel p = new PersonModel();
             if (teamCaptainDropdown.SelectedItem != null)
             {
                 p =(PersonModel)teamCaptainDropdown.SelectedItem;
-                return p;            
+                capt.PersonID = p.PersonID;
+                capt.Name = p.FullName;
+                return capt;            
             }
             else
             {
-                return p;
+                return capt;
             }
         }
 

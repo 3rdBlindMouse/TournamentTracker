@@ -41,7 +41,6 @@
             this.teamCaptainDropdown = new System.Windows.Forms.ComboBox();
             this.TeamCaptainLabel = new System.Windows.Forms.Label();
             this.AddPlayerButton = new System.Windows.Forms.Button();
-            this.createTeamButton = new System.Windows.Forms.Button();
             this.removePlayerButton = new System.Windows.Forms.Button();
             this.teamMemberListBox = new System.Windows.Forms.ListBox();
             this.captainSelectButton = new System.Windows.Forms.Button();
@@ -88,12 +87,13 @@
             // 
             // EditTeamButton
             // 
-            this.EditTeamButton.Location = new System.Drawing.Point(540, 91);
+            this.EditTeamButton.Location = new System.Drawing.Point(389, 355);
             this.EditTeamButton.Name = "EditTeamButton";
-            this.EditTeamButton.Size = new System.Drawing.Size(75, 23);
+            this.EditTeamButton.Size = new System.Drawing.Size(112, 37);
             this.EditTeamButton.TabIndex = 3;
-            this.EditTeamButton.Text = "Edit";
+            this.EditTeamButton.Text = "Edit Team";
             this.EditTeamButton.UseVisualStyleBackColor = true;
+            this.EditTeamButton.Click += new System.EventHandler(this.EditTeamButton_Click);
             // 
             // TeamNameLabel
             // 
@@ -183,16 +183,6 @@
             this.AddPlayerButton.Text = "Add Player -->";
             this.AddPlayerButton.UseVisualStyleBackColor = true;
             this.AddPlayerButton.Click += new System.EventHandler(this.AddPlayerButton_Click);
-            // 
-            // createTeamButton
-            // 
-            this.createTeamButton.Location = new System.Drawing.Point(389, 344);
-            this.createTeamButton.Name = "createTeamButton";
-            this.createTeamButton.Size = new System.Drawing.Size(112, 34);
-            this.createTeamButton.TabIndex = 16;
-            this.createTeamButton.Text = "Create Team";
-            this.createTeamButton.UseVisualStyleBackColor = true;
-            this.createTeamButton.Click += new System.EventHandler(this.createTeamButton_Click);
             // 
             // removePlayerButton
             // 
@@ -319,7 +309,6 @@
             this.Controls.Add(this.captainSelectButton);
             this.Controls.Add(this.teamMemberListBox);
             this.Controls.Add(this.removePlayerButton);
-            this.Controls.Add(this.createTeamButton);
             this.Controls.Add(this.AddPlayerButton);
             this.Controls.Add(this.teamCaptainDropdown);
             this.Controls.Add(this.TeamCaptainLabel);
@@ -356,7 +345,6 @@
         private System.Windows.Forms.ComboBox teamCaptainDropdown;
         private System.Windows.Forms.Label TeamCaptainLabel;
         private System.Windows.Forms.Button AddPlayerButton;
-        private System.Windows.Forms.Button createTeamButton;
         private System.Windows.Forms.Button removePlayerButton;
         private System.Windows.Forms.ListBox teamMemberListBox;
         private System.Windows.Forms.Button captainSelectButton;

@@ -332,26 +332,29 @@ namespace TournamentTrackerUI
         {
             // Get ALL teams
             teamsAvailable = GlobalConfig.Connection.GetAllTeams();
-            // Add Selected Teams to a temp list.
-            // WHY???? no idea but cant make it work without doing this.
-            // I thought foreach in selected remove from available would work but nope
-            foreach (TeamModel team in selectedTeams)
-            {
-                int id = team.TeamID;
-                foreach(TeamModel aTeam in teamsAvailable)
-                {
-                    if(id == aTeam.TeamID)
-                    {
-                        tempTeamsList.Add(aTeam);
-                    }
-                }    
-            }
-            // if teamsAvailable list has any of the teams in the temp list remove them from
-            // teamsAvailable list
-            foreach (TeamModel temp in tempTeamsList)
-            {
-                teamsAvailable.Remove(temp);
-            }
+            //// Add Selected Teams to a temp list.
+            //// WHY???? no idea but cant make it work without doing this.
+            //// I thought foreach in selected remove from available would work but nope
+            //foreach (TeamModel team in selectedTeams)
+            //{
+            //    int id = team.TeamID;
+            //    foreach(TeamModel aTeam in teamsAvailable)
+            //    {
+            //        if(id == aTeam.TeamID)
+            //        {
+            //            tempTeamsList.Add(aTeam);
+            //        }
+            //    }    
+            //}
+            //// if teamsAvailable list has any of the teams in the temp list remove them from
+            //// teamsAvailable list
+            //foreach (TeamModel temp in tempTeamsList)
+            //{
+            //    teamsAvailable.Remove(temp);
+            //}
+
+            //11:42pm 11/1/18 learning Linq is a must saved a lot of thinking and coding
+            teamsAvailable.RemoveAll(x => selectedTeams.Any(y => y.TeamID == x.TeamID));
             return teamsAvailable;
         }
 

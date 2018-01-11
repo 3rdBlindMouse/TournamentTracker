@@ -23,55 +23,28 @@ namespace TournamentTrackerUI.EditForms
         private List<VenueModel> venues = GlobalConfig.Connection.GetAllVenues();
         private List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
         private List<PersonModel> lastPerson;
-        private PersonModel captain = new PersonModel();
+        private CaptainModel captain = new CaptainModel();
 
         private TeamModel tm;
         private static VenueModel vm = new VenueModel();
+        private static CaptainModel capt = new CaptainModel();
+
+        // These two lists are to aid in EditRoster storedProcedure by 
+        //storing the People to either Add or remove to Roster
+        private static List<PersonModel> addedPerson = new List<PersonModel>();
+        private static List<PersonModel> removedPerson = new List<PersonModel>();
 
 
         public EditTeamForm()
         {
             InitializeComponent();
             //createSampleData();           
-           WireupLists();
+           
             // teamComboxBox wires up seperately to avoid clearing data from memory
             wireUpTeamComboBox();
         }
 
-        private void AddSelectTitle()
-        {
-            int indexV = venues.FindIndex(item => item.VenueID == -1);
-            int indexP = availablePlayers.FindIndex(item => item.PersonID == -1);
-            int indexT = teams.FindIndex(item => item.TeamID == -1);
-            if (indexV >= 0)
-            {
-                // element exists, do what you need
-            }
-            else
-            {
-                VenueModel v = new VenueModel(" Select Venue ", -1);
-                venues.Insert(0, v);
-            }
-
-            if (indexP >= 0)
-            {
-                // element exists, do what you need
-            }
-            else
-            {
-                PersonModel p = new PersonModel(" Select Player ", -1);
-                availablePlayers.Insert(0, p);
-            }
-            if (indexT >= 0)
-            {
-                // element exists, do what you need
-            }
-            else
-            {
-                TeamModel t = new TeamModel(" Select Team ", -1);
-                teams.Insert(0, t);
-            }
-        }
+        
 
             private void createSampleData()
         {
@@ -81,14 +54,76 @@ namespace TournamentTrackerUI.EditForms
 
         }
 
-        private void WireupLists()
+        
+
+
+        private void wireUpTeamComboBox()
         {
-            AddSelectTitle();
+            int index = teams.FindIndex(item => item.TeamID == -1);
+
+            if (index >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                TeamModel t = new TeamModel(" Select Team ", -1);
+                teams.Insert(0, t);
+            }
+
+
+
+            teamDropDown.DataSource = null;
+            teamDropDown.DataSource = teams.OrderBy(p => p.TeamName).ToList();
+            teamDropDown.DisplayMember = "TeamName";
+        }
+
+        private void WireUpPlayerDropDown()
+        {
+            int indexp = availablePlayers.FindIndex(item => item.PersonID == -1);
+
+            if (indexp >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                PersonModel p = new PersonModel(" Select Player ", -1);
+                availablePlayers.Insert(0, p);
+            }
+
+            //https://stackoverflow.com/questions/19175257/remove-items-from-list-that-intersect-on-property-using-linq
+            availablePlayers.RemoveAll(x => selectedPlayers.Any(y => y.PersonID == x.PersonID));
 
             addPlayerDropdown.DataSource = null;
             addPlayerDropdown.DataSource = availablePlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
             addPlayerDropdown.DisplayMember = "FullName";
+        }
 
+
+        private void WireupVenueDropDown()
+        {
+
+            int index = venues.FindIndex(item => item.VenueID == -1);
+
+            if (index >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                VenueModel v = new VenueModel(" Select Venue ", -1);
+                venues.Insert(0, v);
+            }
+
+            venueDropDown.DataSource = null;
+            venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
+            venueDropDown.DisplayMember = "VenueName";
+
+            
+        }
+        private void WireupMembersAndCaptain()
+        {
             teamMemberListBox.DataSource = null;
 
             teamMemberListBox.DataSource = selectedPlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
@@ -97,18 +132,6 @@ namespace TournamentTrackerUI.EditForms
             teamCaptainDropdown.DataSource = null;
             teamCaptainDropdown.DataSource = selectedPlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
             teamCaptainDropdown.DisplayMember = "FullName";
-
-            venueDropDown.DataSource = null;
-            venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
-            venueDropDown.DisplayMember = "VenueName";          
-        }
-
-
-        private void wireUpTeamComboBox()
-        {
-            teamDropDown.DataSource = null;
-            teamDropDown.DataSource = teams.OrderBy(p => p.TeamName).ToList();
-            teamDropDown.DisplayMember = "TeamName";
         }
 
         /// <summary>
@@ -145,7 +168,8 @@ namespace TournamentTrackerUI.EditForms
             foreach (PersonModel p in lastPerson)
             {
                 selectedPlayers.Add(p);
-                WireupLists();
+                WireUpPlayerDropDown();
+                WireupMembersAndCaptain();
             }
         }
 
@@ -185,7 +209,8 @@ namespace TournamentTrackerUI.EditForms
 
             availablePlayers = GlobalConfig.Connection.GetAllPeople();
             selectedPlayers = new List<PersonModel>();
-            WireupLists();
+            WireUpPlayerDropDown();
+            WireupMembersAndCaptain();
         }
 
         /// <summary>
@@ -198,13 +223,13 @@ namespace TournamentTrackerUI.EditForms
             RosterModel roster = new RosterModel();
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
-            GlobalConfig.Connection.CreateTeam(model);
+            GlobalConfig.Connection.EditTeam(model);
 
            
 
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
-            GlobalConfig.Connection.CreateRoster(roster);
+            GlobalConfig.Connection.EditRoster(roster);
         }
 
         private bool validateForm()
@@ -236,8 +261,13 @@ namespace TournamentTrackerUI.EditForms
             {
                 availablePlayers.Remove(p);
                 selectedPlayers.Add(p);
+                if(p != removedPerson.Find(x => x.PersonID == p.PersonID))
+                    {
+                    addedPerson.Add(p);
+                }
 
-                WireupLists();
+                WireUpPlayerDropDown();
+                WireupMembersAndCaptain();
             }
 
 
@@ -252,7 +282,8 @@ namespace TournamentTrackerUI.EditForms
                 selectedPlayers.Remove(p);
                 availablePlayers.Add(p);
 
-                WireupLists();
+                WireUpPlayerDropDown();
+                WireupMembersAndCaptain();
             }
         }
 
@@ -307,13 +338,14 @@ namespace TournamentTrackerUI.EditForms
         {
             venues.Add(model);
             DisplayTeamVenue.Text = model.VenueName;
-            WireupLists();
+            WireupVenueDropDown();
         }
 
         public void PersonComplete(PersonModel model)
         {
             selectedPlayers.Add(model);
-            WireupLists();
+            WireupMembersAndCaptain();
+            WireUpPlayerDropDown();
         }
 
         private void venueDropDown_SelectedValueChanged(object sender, EventArgs e)
@@ -337,7 +369,9 @@ namespace TournamentTrackerUI.EditForms
         {
             tm = new TeamModel();
             tm = (TeamModel)teamDropDown.SelectedValue;
-            
+
+            teamNameTextbox.Text = tm.TeamName;
+            List<CaptainModel> captains = GlobalConfig.Connection.GetTeamCaptains(tm);
             DisplayTeamName.Text = tm.TeamName;
 
             teamMemberListBox.DataSource = null;
@@ -345,7 +379,7 @@ namespace TournamentTrackerUI.EditForms
             teamMemberListBox.DisplayMember = "FullName";
 
 
-
+            WireupVenueDropDown();
             if (tm.TeamID != -1)
             {
                 int venueID = tm.TeamVenue;
@@ -357,11 +391,44 @@ namespace TournamentTrackerUI.EditForms
 
 
                 selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
-                //WireupLists();
+                captain = captains.Find(c => c.TeamID == tm.TeamID);
+
+                if (captain != null)
+                {
+                    DisplayCaptain.Text = selectedPlayers.Find(p => p.PersonID == captain.PersonID).FullName;
+                }
+                else
+                {
+                    DisplayCaptain.Text = "No Captain";
+                }
+                WireupMembersAndCaptain();
+                WireUpPlayerDropDown();
+               
             }
 
 
             
+        }
+
+        private void EditTeamButton_Click(object sender, EventArgs e)
+        {
+            if (validateForm())
+            {
+                TeamModel model = new TeamModel();
+                model.TeamName = teamNameTextbox.Text;
+                PersonModel p = new PersonModel();
+                model.Captain = getCaptain();
+                // TODO - sort or remove
+
+                VenueModel venue = (VenueModel)venueDropDown.SelectedItem;
+                model.Venue = venue;
+                createTeamAndRoster(model);
+
+                // this.Close();
+                MessageBox.Show("Team Successfully Edited");
+                clearForm();
+
+            }
         }
     }
 }

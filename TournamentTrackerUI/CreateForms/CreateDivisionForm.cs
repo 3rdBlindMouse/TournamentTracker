@@ -239,8 +239,9 @@ namespace TournamentTrackerUI
                         skDates.DateToSkip = date;
                         GlobalConfig.Connection.CreateSkippedDates(skDates);
                     }
+                skippedDates = new List<DateTime>();
 
-                    model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
+                model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
 
                     foreach (TeamModel team in selectedTeams)
                     {
@@ -249,6 +250,7 @@ namespace TournamentTrackerUI
                         teammodel.TeamID = team.TeamID;
                         GlobalConfig.Connection.CreateDivisionTeams(teammodel);
                     }
+                selectedTeams = new List<TeamModel>();
                 }
             else
             {
@@ -271,9 +273,12 @@ namespace TournamentTrackerUI
             DisplayNumTeams.Text = "";
             if (teamsListBox.Items.Count > 0)
             {
+                teamsListBox.DataSource = null;
                 teamsListBox.Items.Clear();
             }
+            addTeamsDropdown.DataSource = null;
             addTeamsDropdown.DataSource = GlobalConfig.Connection.GetAllTeams();
+            addTeamsDropdown.DisplayMember = "TeamName";
         }
 
         private void ExitToMainMenuButton_Click(object sender, EventArgs e)
