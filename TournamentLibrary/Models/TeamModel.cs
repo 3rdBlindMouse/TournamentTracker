@@ -8,6 +8,16 @@ namespace TournamentLibrary.Models
 {
     public class TeamModel
     {
+        public TeamModel()
+        {
+        }
+
+        public TeamModel(string name, int id)
+        {
+            TeamName = name;
+            TeamID = id;
+        }
+
         /// <summary>
         /// Unique ID of team
         /// </summary>
@@ -24,8 +34,8 @@ namespace TournamentLibrary.Models
         /// Team's Home
         /// </summary>
         /// //TODO work something out with venue probably a new class in between.
-        public int VenueID { get; set; }
-        public VenueModel TeamVenue { get; set; }
+        public int TeamVenue { get; set; }
+        public VenueModel Venue { get; set; }
         /// <summary>
         /// List of team members
         /// </summary>
@@ -33,7 +43,8 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// Team captain
         /// </summary>
-        public PersonModel TeamCaptain { get; set; }
+        public int TeamCaptain { get; set; }
+        public PersonModel Captain { get; set; }
         
     }
 }

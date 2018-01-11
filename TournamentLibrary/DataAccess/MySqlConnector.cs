@@ -154,7 +154,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@TeamName", model.TeamName);
                 // TODO sort venues
-                p.Add("@TeamVenue", model.TeamVenue.VenueID);
+                p.Add("@TeamVenue", model.TeamVenue);
                 //p.Add("@DivisionID", 0);
 
 
@@ -371,6 +371,36 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@InSex", model.Sex);
                 p.Add("@InDateOfBirth", model.DateOfBirth);
                 connection.Execute("spEditPerson", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public List<PersonModel> GetTeamMembers(TeamModel model)
+        {
+            List<PersonModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@TeamID", model.TeamID);
+                output = connection.Query<PersonModel>("spGetTeamMembers", p, commandType: CommandType.StoredProcedure).ToList();               
+            }
+            return output;
+        }
+
+        public void CreateTeamCaptain(TeamModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@CaptainID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@TeamID", model.TeamID);
+                p.Add("@PersonID", model.TeamCaptain);
+                
+                connection.Execute("spTeamCaptains", p, commandType: CommandType.StoredProcedure);
+
+                var id = p.Get<int?>("CaptainID");
+               // model.TeamCaptain = Convert.ToInt32(id);
+
+               // return model;
             }
         }
     }

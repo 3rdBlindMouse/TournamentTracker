@@ -17,6 +17,9 @@ namespace TournamentLibrary.DataAccess
         List<DivisionModel> GetAllDivisions();
         List<VenueModel> GetAllVenues();
 
+        List<PersonModel> GetTeamMembers(TeamModel model);
+        
+
         List<TeamModel> GetAllTeams();
         List<TeamModel> GetDivisionTeams(DivisionModel model);
 
@@ -31,5 +34,6 @@ namespace TournamentLibrary.DataAccess
         void DeleteDivisionTeams(TeamModel teammodel);
         void EditVenue(VenueModel model);
         void EditPerson(PersonModel model);
+        void CreateTeamCaptain(TeamModel model);
     }
 }

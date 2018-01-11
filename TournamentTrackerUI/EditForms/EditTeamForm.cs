@@ -12,71 +12,38 @@ using TournamentLibrary;
 using TournamentLibrary.Models;
 using TournamentTrackerUI.RequestInterfaces;
 
-namespace TournamentTrackerUI
+namespace TournamentTrackerUI.EditForms
 {
-    public partial class CreateTeamForm : Form, IVenueRequester, IPersonRequester
+    public partial class EditTeamForm : Form, IVenueRequester, IPersonRequester
     {
-        ITeamRequester callingForm;
+        
+
         private List<PersonModel> availablePlayers = GlobalConfig.Connection.GetAllPeople();
         private List<PersonModel> selectedPlayers = new List<PersonModel>();
         private List<VenueModel> venues = GlobalConfig.Connection.GetAllVenues();
-        //TODO
-        //private List<TeamModel> teams = GlobalConfig.Connection.GetDivisionTeams();
+        private List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
         private List<PersonModel> lastPerson;
-        private PersonModel captain;
-        private static string method;
-        private static VenueModel vm;
+        private PersonModel captain = new PersonModel();
 
-        public CreateTeamForm(ITeamRequester caller)
+        private TeamModel tm;
+        private static VenueModel vm = new VenueModel();
+
+
+        public EditTeamForm()
         {
             InitializeComponent();
-            callingForm = caller;
-            //createSampleData();
-
-
-            StackFrame frame = new StackFrame(1, true);           
-            method = (frame.GetMethod().Name);
-
-            wireUpPlayerDropDown();
-            WireupVenueDropDown();
+            //createSampleData();           
+           WireupLists();
+            // teamComboxBox wires up seperately to avoid clearing data from memory
+            wireUpTeamComboBox();
         }
 
-        
-        private void createSampleData()
+        private void AddSelectTitle()
         {
-            availablePlayers.Add(new PersonModel { FirstName = "Phill", LastName = "Sutherland" });
-            availablePlayers.Add(new PersonModel { FirstName = "Bill", LastName = "Bird" });
-            selectedPlayers.Add(new PersonModel { FirstName = "Sue", LastName = "Storm" });
-
-        }
-
-        private void wireUpPlayerDropDown()
-        {
-            int indexp = availablePlayers.FindIndex(item => item.PersonID == -1);
-
-            if (indexp >= 0)
-            {
-                // element exists, do what you need
-            }
-            else
-            {
-                PersonModel p = new PersonModel(" Select Player ", -1);
-                availablePlayers.Insert(0, p);
-            }
-
-
-            addPlayerDropdown.DataSource = null;
-            addPlayerDropdown.DataSource = availablePlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
-            addPlayerDropdown.DisplayMember = "FullName";
-        }
-
-
-        private void WireupVenueDropDown()
-        {
-
-            int index = venues.FindIndex(item => item.VenueID == -1);
-
-            if (index >= 0)
+            int indexV = venues.FindIndex(item => item.VenueID == -1);
+            int indexP = availablePlayers.FindIndex(item => item.PersonID == -1);
+            int indexT = teams.FindIndex(item => item.TeamID == -1);
+            if (indexV >= 0)
             {
                 // element exists, do what you need
             }
@@ -86,21 +53,64 @@ namespace TournamentTrackerUI
                 venues.Insert(0, v);
             }
 
-            venueDropDown.DataSource = null;
-            venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
-            venueDropDown.DisplayMember = "VenueName";
+            if (indexP >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                PersonModel p = new PersonModel(" Select Player ", -1);
+                availablePlayers.Insert(0, p);
+            }
+            if (indexT >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                TeamModel t = new TeamModel(" Select Team ", -1);
+                teams.Insert(0, t);
+            }
         }
-      private void WireupMembersAndCaptain()
+
+            private void createSampleData()
         {
+            availablePlayers.Add(new PersonModel { FirstName = "Phill", LastName = "Sutherland" });
+            availablePlayers.Add(new PersonModel { FirstName = "Bill", LastName = "Bird" });
+            selectedPlayers.Add(new PersonModel { FirstName = "Sue", LastName = "Storm" });
+
+        }
+
+        private void WireupLists()
+        {
+            AddSelectTitle();
+
+            addPlayerDropdown.DataSource = null;
+            addPlayerDropdown.DataSource = availablePlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
+            addPlayerDropdown.DisplayMember = "FullName";
+
             teamMemberListBox.DataSource = null;
-            
+
             teamMemberListBox.DataSource = selectedPlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
             teamMemberListBox.DisplayMember = "FullName";
 
             teamCaptainDropdown.DataSource = null;
             teamCaptainDropdown.DataSource = selectedPlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
             teamCaptainDropdown.DisplayMember = "FullName";
+
+            venueDropDown.DataSource = null;
+            venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
+            venueDropDown.DisplayMember = "VenueName";          
         }
+
+
+        private void wireUpTeamComboBox()
+        {
+            teamDropDown.DataSource = null;
+            teamDropDown.DataSource = teams.OrderBy(p => p.TeamName).ToList();
+            teamDropDown.DisplayMember = "TeamName";
+        }
+
         /// <summary>
         /// Hies Team Creator form and 
         /// Opens a new form sepcific to createNewPerson link from TeamForm
@@ -119,14 +129,13 @@ namespace TournamentTrackerUI
         }
         /// <summary>
         /// when child form (createTeamPlayerForm) closes
-        /// parent form (TeamCreatorForm) is made visible
+        /// parent form (EditTeamForm) is made visible
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void personForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //this is method i was using before using Interface
-            //addLastPerson();
+            addLastPerson();
             this.Show();
         }
 
@@ -136,8 +145,7 @@ namespace TournamentTrackerUI
             foreach (PersonModel p in lastPerson)
             {
                 selectedPlayers.Add(p);
-                wireUpPlayerDropDown();
-                WireupMembersAndCaptain();
+                WireupLists();
             }
         }
 
@@ -147,50 +155,38 @@ namespace TournamentTrackerUI
             {
                 TeamModel model = new TeamModel();
                 model.TeamName = teamNameTextbox.Text;
-
-                model.TeamCaptain = captain.PersonID;
+                PersonModel p = new PersonModel();
+                model.Captain = getCaptain();
                 // TODO - sort or remove
 
-                
-                
-                model.TeamVenue = vm.VenueID;
+                VenueModel venue = (VenueModel)venueDropDown.SelectedItem;
+                model.Venue = venue;
                 createTeamAndRoster(model);
-                if(method == "createNewTeamLinkLabel_LinkClicked")
-                {
-                    this.Close();
-                    //MessageBox.Show("From Create Division Form");
-                }
-                else
-                {
-                    MessageBox.Show("Not from Division Form");
+
+                // this.Close();
+                MessageBox.Show("Team Successfully Edited");
                     clearForm();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Form Has Invalid Information");
+                
             }
         }
 
+
         private void clearForm()
         {
-            
+
             teamNameTextbox.Text = "";
             DisplayTeamName.Text = "";
             DisplayTeamVenue.Text = "";
-            DisplayCaptain.Text = "";
-            if(teamMemberListBox.Items.Count > 0)
+            if (teamMemberListBox.Items.Count > 0)
             {
                 teamMemberListBox.DataSource = null;
                 teamMemberListBox.Items.Clear();
             }
 
-         availablePlayers = GlobalConfig.Connection.GetAllPeople();
-         selectedPlayers = new List<PersonModel>();
-         WireupMembersAndCaptain();
-         WireupVenueDropDown();
+            availablePlayers = GlobalConfig.Connection.GetAllPeople();
+            selectedPlayers = new List<PersonModel>();
+            WireupLists();
         }
-
 
         /// <summary>
         /// Enters data into Roster table and creates Roster Model(s).
@@ -203,9 +199,9 @@ namespace TournamentTrackerUI
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.CreateTeam(model);
-            GlobalConfig.Connection.CreateTeamCaptain(model);
-            callingForm.TeamComplete(model);
-            
+
+           
+
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.CreateRoster(roster);
@@ -215,26 +211,15 @@ namespace TournamentTrackerUI
         {
             Validator validator = new Validator();
             bool output = true;
-            if ((!validator.isValidName(teamNameTextbox.Text) || (teamNameTextbox.Text == "") || (teamNameTextbox.Text == "Enter a Valid Name")))
+            if (!validator.isValidName(teamNameTextbox.Text))
             {
-                output = false;               
+                output = false;
             }
             else
             {
                 teamNameTextbox.BackColor = Color.LightGreen;
                 output = true;
             }
-            if(captain == null)
-            {
-                MessageBox.Show("Please Select A Captain");
-                output = false;
-            }
-            if((vm.VenueID == -1) || (vm == null))
-            {
-                MessageBox.Show("Please Select A Venue");
-            }
-
-
             return output;
 
         }
@@ -245,15 +230,17 @@ namespace TournamentTrackerUI
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddPlayerButton_Click(object sender, EventArgs e)
-        {          
-                PersonModel p = (PersonModel)addPlayerDropdown.SelectedItem;
-                if ((p != null) && (p.PersonID != -1))
-                {
-                    availablePlayers.Remove(p);
-                    selectedPlayers.Add(p);
-                wireUpPlayerDropDown();
-                    WireupMembersAndCaptain();
-                }           
+        {
+            PersonModel p = (PersonModel)addPlayerDropdown.SelectedItem;
+            if (p != null)
+            {
+                availablePlayers.Remove(p);
+                selectedPlayers.Add(p);
+
+                WireupLists();
+            }
+
+
         }
 
         private void removePlayerButton_Click(object sender, EventArgs e)
@@ -264,15 +251,15 @@ namespace TournamentTrackerUI
             {
                 selectedPlayers.Remove(p);
                 availablePlayers.Add(p);
-                wireUpPlayerDropDown();
-                WireupMembersAndCaptain();
+
+                WireupLists();
             }
         }
 
         private void captainSelectButton_Click(object sender, EventArgs e)
         {
-            captain = getCaptain();
-            DisplayCaptain.Text = captain.FullName;
+            PersonModel p = getCaptain();
+            DisplayCaptain.Text = p.FullName;
         }
 
         private PersonModel getCaptain()
@@ -280,8 +267,8 @@ namespace TournamentTrackerUI
             PersonModel p = new PersonModel();
             if (teamCaptainDropdown.SelectedItem != null)
             {
-                p =(PersonModel)teamCaptainDropdown.SelectedItem;
-                return p;            
+                p = (PersonModel)teamCaptainDropdown.SelectedItem;
+                return p;
             }
             else
             {
@@ -301,7 +288,7 @@ namespace TournamentTrackerUI
             {
                 teamNameTextbox.BackColor = Color.LightGreen;
                 DisplayTeamName.Text = teamNameTextbox.Text;
-                
+
             }
         }
 
@@ -316,31 +303,17 @@ namespace TournamentTrackerUI
             venueDropDown.BackColor = SystemColors.Info;
         }
 
-        private void exitButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void createNewVenueLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            CreateVenueForm venueForm = new CreateVenueForm(this);
-            venueForm.Show();
-            this.Hide();
-            venueForm.FormClosing += closeForm;
-        }
-
-        public void closeForm(object sender, FormClosingEventArgs e)
-        {
-            this.Show();
-        }
-
         public void VenueComplete(VenueModel model)
         {
             venues.Add(model);
-            WireupVenueDropDown();
             DisplayTeamVenue.Text = model.VenueName;
-            venueDropDown.SelectedItem = model;
-            
+            WireupLists();
+        }
+
+        public void PersonComplete(PersonModel model)
+        {
+            selectedPlayers.Add(model);
+            WireupLists();
         }
 
         private void venueDropDown_SelectedValueChanged(object sender, EventArgs e)
@@ -360,11 +333,35 @@ namespace TournamentTrackerUI
             }
         }
 
-        public void PersonComplete(PersonModel model)
+        private void teamDropDown_SelectedValueChanged(object sender, EventArgs e)
         {
-            selectedPlayers.Add(model);
-            WireupMembersAndCaptain();
+            tm = new TeamModel();
+            tm = (TeamModel)teamDropDown.SelectedValue;
+            
+            DisplayTeamName.Text = tm.TeamName;
+
+            teamMemberListBox.DataSource = null;
+            teamMemberListBox.DataSource = GlobalConfig.Connection.GetTeamMembers(tm);
+            teamMemberListBox.DisplayMember = "FullName";
+
+
+
+            if (tm.TeamID != -1)
+            {
+                int venueID = tm.TeamVenue;
+
+                //TODO learn what i have done here study more linq
+                DisplayTeamVenue.Text = venues.Find(v => v.VenueID == venueID).VenueName;
+
+                venueDropDown.SelectedItem = venues.Find(v => v.VenueID == venueID);
+
+
+                selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
+                //WireupLists();
+            }
+
+
+            
         }
     }
-    }
-
+}

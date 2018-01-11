@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using TournamentLibrary;
 using TournamentLibrary.DataAccess;
 using TournamentLibrary.Models;
+using TournamentTrackerUI.EditForms;
 using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI
@@ -105,6 +106,14 @@ namespace TournamentTrackerUI
         public void PersonComplete(PersonModel model)
         {
             // no need to do anything from this form
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            EditTeamForm eTeamForm = new EditTeamForm();
+            eTeamForm.Show();
+            this.Hide();
+            eTeamForm.FormClosing += closeForm;
         }
     }
     

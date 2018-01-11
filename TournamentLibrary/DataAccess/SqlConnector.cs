@@ -160,5 +160,15 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public List<PersonModel> GetTeamMembers(TeamModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateTeamCaptain(TeamModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
