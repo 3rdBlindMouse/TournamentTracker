@@ -186,7 +186,17 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public void EditRoster(RosterModel roster)
+        public void EditRoster(RosterModel model, List<PersonModel> adds, List<PersonModel> removes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditCaptainRemove(TeamModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditCaptain(TeamModel model)
         {
             throw new NotImplementedException();
         }

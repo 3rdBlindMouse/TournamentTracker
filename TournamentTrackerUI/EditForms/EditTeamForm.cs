@@ -27,12 +27,14 @@ namespace TournamentTrackerUI.EditForms
 
         private TeamModel tm;
         private static VenueModel vm = new VenueModel();
-        private static CaptainModel capt = new CaptainModel();
+
+        private static List<CaptainModel> captains = new List<CaptainModel>();
+        
 
         // These two lists are to aid in EditRoster storedProcedure by 
         //storing the People to either Add or remove to Roster
-        private static List<PersonModel> addedPerson = new List<PersonModel>();
-        private static List<PersonModel> removedPerson = new List<PersonModel>();
+        private static List<PersonModel> addedPeople = new List<PersonModel>();
+        private static List<PersonModel> removedPeople = new List<PersonModel>();
 
 
         public EditTeamForm()
@@ -42,6 +44,8 @@ namespace TournamentTrackerUI.EditForms
            
             // teamComboxBox wires up seperately to avoid clearing data from memory
             wireUpTeamComboBox();
+
+            WireupVenueDropDown();
         }
 
         
@@ -80,6 +84,7 @@ namespace TournamentTrackerUI.EditForms
 
         private void WireUpPlayerDropDown()
         {
+            availablePlayers = GlobalConfig.Connection.GetAllPeople();
             int indexp = availablePlayers.FindIndex(item => item.PersonID == -1);
 
             if (indexp >= 0)
@@ -91,7 +96,7 @@ namespace TournamentTrackerUI.EditForms
                 PersonModel p = new PersonModel(" Select Player ", -1);
                 availablePlayers.Insert(0, p);
             }
-
+            
             //https://stackoverflow.com/questions/19175257/remove-items-from-list-that-intersect-on-property-using-linq
             availablePlayers.RemoveAll(x => selectedPlayers.Any(y => y.PersonID == x.PersonID));
 
@@ -173,27 +178,7 @@ namespace TournamentTrackerUI.EditForms
             }
         }
 
-        private void createTeamButton_Click(object sender, EventArgs e)
-        {
-            if (validateForm())
-            {
-                TeamModel model = new TeamModel();
-                model.TeamName = teamNameTextbox.Text;
-                PersonModel p = new PersonModel();
-                model.Captain = getCaptain();
-                // TODO - sort or remove
-
-                VenueModel venue = (VenueModel)venueDropDown.SelectedItem;
-                model.Venue = venue;
-                createTeamAndRoster(model);
-
-                // this.Close();
-                MessageBox.Show("Team Successfully Edited");
-                    clearForm();
-                
-            }
-        }
-
+       
 
         private void clearForm()
         {
@@ -218,7 +203,7 @@ namespace TournamentTrackerUI.EditForms
         /// Roster shows which players play for which teams
         /// </summary>
         /// <param name="model">A TeamModel</param>
-        private void createTeamAndRoster(TeamModel model)
+        private void EditTeam(TeamModel model)
         {
             RosterModel roster = new RosterModel();
             roster.TeamID = model.TeamID;
@@ -229,7 +214,16 @@ namespace TournamentTrackerUI.EditForms
 
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
-            GlobalConfig.Connection.EditRoster(roster);
+            GlobalConfig.Connection.EditRoster(roster, addedPeople, removedPeople);
+
+            if(selectedPlayers.Count == 0)
+            {
+                GlobalConfig.Connection.EditCaptainRemove(model);
+            }
+            else
+            {
+                GlobalConfig.Connection.EditCaptain(model);
+            }
         }
 
         private bool validateForm()
@@ -261,9 +255,13 @@ namespace TournamentTrackerUI.EditForms
             {
                 availablePlayers.Remove(p);
                 selectedPlayers.Add(p);
-                if(p != removedPerson.Find(x => x.PersonID == p.PersonID))
+                if(p != removedPeople.Find(x => x.PersonID == p.PersonID))
                     {
-                    addedPerson.Add(p);
+                    addedPeople.Add(p);
+                }
+                else
+                {
+                    removedPeople.Remove(p);
                 }
 
                 WireUpPlayerDropDown();
@@ -282,6 +280,16 @@ namespace TournamentTrackerUI.EditForms
                 selectedPlayers.Remove(p);
                 availablePlayers.Add(p);
 
+
+                if (p != addedPeople.Find(x => x.PersonID == p.PersonID))
+                {
+                    removedPeople.Add(p);
+                }
+                else
+                {
+                    addedPeople.Remove(p);
+                }
+
                 WireUpPlayerDropDown();
                 WireupMembersAndCaptain();
             }
@@ -289,21 +297,25 @@ namespace TournamentTrackerUI.EditForms
 
         private void captainSelectButton_Click(object sender, EventArgs e)
         {
-            PersonModel p = getCaptain();
-            DisplayCaptain.Text = p.FullName;
+            CaptainModel c = getCaptain();
+            DisplayCaptain.Text = c.Name;
         }
 
-        private PersonModel getCaptain()
+        private CaptainModel getCaptain()
         {
+            
             PersonModel p = new PersonModel();
             if (teamCaptainDropdown.SelectedItem != null)
             {
+                captain = new CaptainModel();
                 p = (PersonModel)teamCaptainDropdown.SelectedItem;
-                return p;
+                captain.PersonID = p.PersonID;
+                captain.Name = p.FullName;
+                return captain;
             }
             else
             {
-                return p;
+                return captain;
             }
         }
 
@@ -350,79 +362,103 @@ namespace TournamentTrackerUI.EditForms
 
         private void venueDropDown_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (venueDropDown.SelectedItem != null)
-            {
-                // Get/Create Division Model that has been selected
-                vm = (VenueModel)venueDropDown.SelectedItem;
-                if (vm.VenueName != " Select Venue ")
-                {
-                    DisplayTeamVenue.Text = vm.VenueName;
-                }
-                else
-                {
-                    DisplayTeamVenue.Text = "";
-                }
-            }
+            //if (venueDropDown.SelectedItem != null)
+            //{
+            //    // Get/Create Division Model that has been selected
+            //    vm = (VenueModel)venueDropDown.SelectedItem;
+            //    if (vm.VenueName != " Select Venue ")
+            //    {
+            //        DisplayTeamVenue.Text = vm.VenueName;
+            //    }
+            //    else
+            //    {
+            //        DisplayTeamVenue.Text = "";
+            //    }
+            //}
         }
 
         private void teamDropDown_SelectedValueChanged(object sender, EventArgs e)
         {
-            tm = new TeamModel();
+   
             tm = (TeamModel)teamDropDown.SelectedValue;
+            
 
-            teamNameTextbox.Text = tm.TeamName;
-            List<CaptainModel> captains = GlobalConfig.Connection.GetTeamCaptains(tm);
-            DisplayTeamName.Text = tm.TeamName;
+            
 
-            teamMemberListBox.DataSource = null;
-            teamMemberListBox.DataSource = GlobalConfig.Connection.GetTeamMembers(tm);
-            teamMemberListBox.DisplayMember = "FullName";
+            
 
 
-            WireupVenueDropDown();
+
             if (tm.TeamID != -1)
             {
-                int venueID = tm.TeamVenue;
-
-                //TODO learn what i have done here study more linq
-                DisplayTeamVenue.Text = venues.Find(v => v.VenueID == venueID).VenueName;
-
-                venueDropDown.SelectedItem = venues.Find(v => v.VenueID == venueID);
-
-
+                teamNameTextbox.Text = tm.TeamName;
+                DisplayTeamName.Text = tm.TeamName;
                 selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
-                captain = captains.Find(c => c.TeamID == tm.TeamID);
+                // Find captain and display details
+                DoCaptainStuff(tm);
+                // Display cyrrent teams Venue in Display and as VenueBox selectedItem
+                DoVenueStuff(tm);
 
-                if (captain != null)
-                {
-                    DisplayCaptain.Text = selectedPlayers.Find(p => p.PersonID == captain.PersonID).FullName;
-                }
-                else
-                {
-                    DisplayCaptain.Text = "No Captain";
-                }
+                // Populate Teams Members ListBox
+                DoTeamMemberStuff(tm);
+
+                
+
+                addedPeople.Clear();
+                removedPeople.Clear();
+
                 WireupMembersAndCaptain();
                 WireUpPlayerDropDown();
-               
             }
 
 
             
         }
 
+        private void DoTeamMemberStuff(TeamModel tm)
+        {
+            teamMemberListBox.DataSource = null;
+            teamMemberListBox.DataSource = GlobalConfig.Connection.GetTeamMembers(tm);
+            teamMemberListBox.DisplayMember = "FullName";
+        }
+
+        private void DoVenueStuff(TeamModel tm)
+        {
+            int venueID = tm.TeamVenue;
+            //TODO learn what i have done here study more linq
+            DisplayTeamVenue.Text = venues.Find(v => v.VenueID == venueID).VenueName;            
+            venueDropDown.SelectedItem = venues.Find(v => v.VenueID == venueID);
+        }
+
+        private void DoCaptainStuff(TeamModel tm)
+        {
+            captains = GlobalConfig.Connection.GetTeamCaptains(tm);
+            captain = captains.Find(c => c.TeamID == tm.TeamID);
+
+            if ((captain != null))
+            {
+                DisplayCaptain.Text = selectedPlayers.Find(p => p.PersonID == captain.PersonID).FullName;
+            }
+            else
+            {
+                DisplayCaptain.Text = "No Captain";
+            }
+        }
+
         private void EditTeamButton_Click(object sender, EventArgs e)
         {
             if (validateForm())
             {
-                TeamModel model = new TeamModel();
-                model.TeamName = teamNameTextbox.Text;
+                
+                tm.TeamName = teamNameTextbox.Text;
                 PersonModel p = new PersonModel();
-                model.Captain = getCaptain();
-                // TODO - sort or remove
+                
+                tm.TeamCaptain = captain.PersonID;
+                
 
                 VenueModel venue = (VenueModel)venueDropDown.SelectedItem;
-                model.Venue = venue;
-                createTeamAndRoster(model);
+                tm.Venue = venue;
+                EditTeam(tm);
 
                 // this.Close();
                 MessageBox.Show("Team Successfully Edited");

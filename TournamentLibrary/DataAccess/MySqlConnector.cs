@@ -391,8 +391,8 @@ namespace TournamentLibrary.DataAccess
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@TeamID", model.TeamID);
-                output = connection.Query<CaptainModel>("spGetTeamMembers", p, commandType: CommandType.StoredProcedure).ToList();
+                p.Add("@InTeamID", model.TeamID);
+                output = connection.Query<CaptainModel>("spGetTeamCaptain", p, commandType: CommandType.StoredProcedure).ToList();
             }
             return output;
         }
@@ -473,9 +473,29 @@ namespace TournamentLibrary.DataAccess
         /// Modifies Roster data in MySQL DB
         /// </summary>
         /// <param name="model"></param>
-        public void EditRoster(RosterModel roster)
+        public void EditRoster(RosterModel model, List<PersonModel> adds, List<PersonModel> removes)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                
+                foreach(PersonModel x in adds)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@InTeamID", model.TeamID);
+                    p.Add("@InPersonID", x.PersonID);
+                    connection.Execute("spEditRosterAdd", p, commandType: CommandType.StoredProcedure);
+                }
+
+                foreach (PersonModel y in removes)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@InTeamID", model.TeamID);
+                    p.Add("@InPersonID", y.PersonID);
+                    connection.Execute("spEditRosterRemove", p, commandType: CommandType.StoredProcedure);
+                }
+
+                
+            }
         }
 
         public void DeleteSkippedDates(DivisionModel model)
@@ -498,6 +518,27 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@InTeamID", model.TeamID);
 
                 connection.Execute("spDeleteDivisionTeams", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void EditCaptainRemove(TeamModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InTeamID", model.TeamID);
+                connection.Execute("spEditCaptainRemove", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void EditCaptain(TeamModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InTeamID", model.TeamID);
+                p.Add("@InCaptainID", model.TeamCaptain);                
+                connection.Execute("spEditCaptain", p, commandType: CommandType.StoredProcedure);
             }
         }
     }

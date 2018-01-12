@@ -37,6 +37,8 @@ namespace TournamentLibrary.DataAccess
         void EditPerson(PersonModel model);
         List<CaptainModel> GetTeamCaptains(TeamModel tm);
         void EditTeam(TeamModel model);
-        void EditRoster(RosterModel roster);
+        void EditRoster(RosterModel model, List<PersonModel> adds, List<PersonModel> removes);
+        void EditCaptainRemove(TeamModel model);
+        void EditCaptain(TeamModel model);
     }
 }
