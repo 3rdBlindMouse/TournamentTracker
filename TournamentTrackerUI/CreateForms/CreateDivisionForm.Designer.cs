@@ -44,8 +44,6 @@
             this.DivisionTournamentNameLabel = new System.Windows.Forms.Label();
             this.skipDatesRemoveButton = new System.Windows.Forms.Button();
             this.addTeamsDropdown = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.createNewTeamLinkLabel = new System.Windows.Forms.LinkLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DisplayNumber = new System.Windows.Forms.Label();
@@ -61,6 +59,8 @@
             this.DisplayNumberLabel = new System.Windows.Forms.Label();
             this.DisplayNameLabel = new System.Windows.Forms.Label();
             this.skippedDatesListbox = new System.Windows.Forms.ListBox();
+            this.addTeamButton = new System.Windows.Forms.Button();
+            this.removeTeamButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,8 +133,7 @@
             this.DivisionNameTextbox.Name = "DivisionNameTextbox";
             this.DivisionNameTextbox.Size = new System.Drawing.Size(218, 29);
             this.DivisionNameTextbox.TabIndex = 7;
-            this.DivisionNameTextbox.Enter += new System.EventHandler(this.DivisionNameTextbox_Enter);
-            this.DivisionNameTextbox.Leave += new System.EventHandler(this.DivisionNameTextbox_Leave);
+            this.DivisionNameTextbox.TextChanged += new System.EventHandler(this.DivisionNameTextbox_TextChanged);
             // 
             // DivisionNumberTextbox
             // 
@@ -144,8 +143,7 @@
             this.DivisionNumberTextbox.Name = "DivisionNumberTextbox";
             this.DivisionNumberTextbox.Size = new System.Drawing.Size(218, 29);
             this.DivisionNumberTextbox.TabIndex = 11;
-            this.DivisionNumberTextbox.Enter += new System.EventHandler(this.DivisionNumberTextbox_Enter);
-            this.DivisionNumberTextbox.Leave += new System.EventHandler(this.DivisionNumberTextbox_Leave);
+            this.DivisionNumberTextbox.TextChanged += new System.EventHandler(this.DivisionNumberTextbox_TextChanged);
             // 
             // StartDate
             // 
@@ -221,26 +219,6 @@
             this.addTeamsDropdown.Name = "addTeamsDropdown";
             this.addTeamsDropdown.Size = new System.Drawing.Size(218, 25);
             this.addTeamsDropdown.TabIndex = 25;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(284, 348);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 39);
-            this.button2.TabIndex = 28;
-            this.button2.Text = "Remove Team";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(284, 302);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 39);
-            this.button1.TabIndex = 29;
-            this.button1.Text = "Add Team";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // createNewTeamLinkLabel
             // 
@@ -401,16 +379,36 @@
             this.skippedDatesListbox.Size = new System.Drawing.Size(180, 186);
             this.skippedDatesListbox.TabIndex = 24;
             // 
+            // addTeamButton
+            // 
+            this.addTeamButton.Location = new System.Drawing.Point(284, 315);
+            this.addTeamButton.Name = "addTeamButton";
+            this.addTeamButton.Size = new System.Drawing.Size(75, 39);
+            this.addTeamButton.TabIndex = 32;
+            this.addTeamButton.Text = "Add Team";
+            this.addTeamButton.UseVisualStyleBackColor = true;
+            this.addTeamButton.Click += new System.EventHandler(this.addTeamButton_Click);
+            // 
+            // removeTeamButton
+            // 
+            this.removeTeamButton.Location = new System.Drawing.Point(284, 360);
+            this.removeTeamButton.Name = "removeTeamButton";
+            this.removeTeamButton.Size = new System.Drawing.Size(75, 39);
+            this.removeTeamButton.TabIndex = 33;
+            this.removeTeamButton.Text = "Remove Team";
+            this.removeTeamButton.UseVisualStyleBackColor = true;
+            this.removeTeamButton.Click += new System.EventHandler(this.removeTeamButton_Click);
+            // 
             // CreateDivisionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(793, 461);
+            this.Controls.Add(this.removeTeamButton);
+            this.Controls.Add(this.addTeamButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.createNewTeamLinkLabel);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.addTeamsDropdown);
             this.Controls.Add(this.DivisionTournamentNameLabel);
             this.Controls.Add(this.ExitToMainMenuButton);
@@ -454,8 +452,6 @@
         private System.Windows.Forms.Label DivisionTournamentNameLabel;
         private System.Windows.Forms.Button skipDatesRemoveButton;
         private System.Windows.Forms.ComboBox addTeamsDropdown;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.LinkLabel createNewTeamLinkLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label DisplayNumTeams;
@@ -471,5 +467,7 @@
         private System.Windows.Forms.ListBox skippedDatesListbox;
         private System.Windows.Forms.Label DisplayNumber;
         private System.Windows.Forms.Label DisplayName;
+        private System.Windows.Forms.Button addTeamButton;
+        private System.Windows.Forms.Button removeTeamButton;
     }
 }

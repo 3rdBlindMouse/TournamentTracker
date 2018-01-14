@@ -25,9 +25,21 @@ namespace TournamentLibrary
         /// <param name="str"></param>
         /// <returns>true or false</returns>
         public bool isValidString(String str)
+        {                       
+            return Regex.IsMatch(str, @"^[a-zA-Z ]+$");           
+        }
+
+        public bool noSpaces(string str)
+        {
+            //return Regex.IsMatch(str, @"^\S$|^\S[\s\S]*\S$");
+            return Regex.IsMatch(str, @"^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$");
+        }
+
+        public bool noNumbers(string str)
         {
             return Regex.IsMatch(str, @"^[a-zA-Z ]+$");
         }
+
         /// <summary>
         /// Regex for validating an email address
         /// taken from https://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address

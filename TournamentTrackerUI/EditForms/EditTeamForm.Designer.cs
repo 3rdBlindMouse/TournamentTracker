@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.TitleLabel = new System.Windows.Forms.Label();
             this.CreateNewTeamLabel = new System.Windows.Forms.Label();
             this.teamDropDown = new System.Windows.Forms.ComboBox();
             this.EditTeamButton = new System.Windows.Forms.Button();
@@ -54,16 +54,16 @@
             this.DisplayTeamNameLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // TitleLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DarkOrange;
-            this.label1.Location = new System.Drawing.Point(257, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 37);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Team Creator";
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TitleLabel.ForeColor = System.Drawing.Color.DarkOrange;
+            this.TitleLabel.Location = new System.Drawing.Point(257, 22);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(160, 37);
+            this.TitleLabel.TabIndex = 0;
+            this.TitleLabel.Text = "Team Editor";
             // 
             // CreateNewTeamLabel
             // 
@@ -220,7 +220,6 @@
             this.venueDropDown.Name = "venueDropDown";
             this.venueDropDown.Size = new System.Drawing.Size(165, 29);
             this.venueDropDown.TabIndex = 20;
-            this.venueDropDown.SelectedValueChanged += new System.EventHandler(this.venueDropDown_SelectedValueChanged);
             // 
             // createNewVenueLinkLabel
             // 
@@ -321,7 +320,7 @@
             this.Controls.Add(this.EditTeamButton);
             this.Controls.Add(this.teamDropDown);
             this.Controls.Add(this.CreateNewTeamLabel);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.TitleLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "EditTeamForm";
             this.Text = "TeamCreator";
@@ -332,7 +331,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label TitleLabel;
         private System.Windows.Forms.Label CreateNewTeamLabel;
         private System.Windows.Forms.ComboBox teamDropDown;
         private System.Windows.Forms.Button EditTeamButton;
