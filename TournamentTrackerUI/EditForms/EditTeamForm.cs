@@ -20,6 +20,9 @@ namespace TournamentTrackerUI.EditForms
         private List<PersonModel> selectedPlayers = new List<PersonModel>();
         private List<VenueModel> venues = GlobalConfig.Connection.GetAllVenues();
         private List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
+
+        private static List<string> teamNames = new List<string>();
+        private static string originalTeamName;
         private CaptainModel captain;
         private static TeamModel tm;
         //private static VenueModel vm;
@@ -110,7 +113,7 @@ namespace TournamentTrackerUI.EditForms
             venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
             venueDropDown.DisplayMember = "VenueName";
 
-            
+
         }
         /// <summary>
         /// Wires up Team Members List Box
@@ -123,10 +126,10 @@ namespace TournamentTrackerUI.EditForms
             {
                 selectedPlayers.RemoveAt(index);
             }
-            
+
             teamMemberListBox.DataSource = null;
             teamMemberListBox.DataSource = selectedPlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
-            teamMemberListBox.DisplayMember = "FullName";          
+            teamMemberListBox.DisplayMember = "FullName";
         }
         /// <summary>
         /// Wires up Team Captain dropdown with list of team members
@@ -205,20 +208,21 @@ namespace TournamentTrackerUI.EditForms
         /// <param name="model">A TeamModel</param>
         private void EditTeam(TeamModel model)
         {
-        RosterModel roster = new RosterModel();
-        roster.TeamID = model.TeamID;
-        roster.players = selectedPlayers;
-        GlobalConfig.Connection.EditTeam(model);
-        GlobalConfig.Connection.EditRoster(roster, addedPeople, removedPeople);
-        // If no team members remove team captain data from DB
-        if(selectedPlayers.Count == 0)
-        {
-            GlobalConfig.Connection.EditCaptainRemove(model);
-        }
-        else
-        {
-            GlobalConfig.Connection.EditCaptain(model);
-        }
+            RosterModel roster = new RosterModel();
+            roster.TeamID = model.TeamID;
+            roster.players = selectedPlayers;
+            GlobalConfig.Connection.EditTeam(model);
+            GlobalConfig.Connection.EditRoster(roster, addedPeople, removedPeople);
+            // If no team members remove team captain data from DB
+            // count of 1 is "No Captain" string
+            if (selectedPlayers.Count == 1)
+            {
+                GlobalConfig.Connection.EditCaptainRemove(model);
+            }
+            else
+            {
+                GlobalConfig.Connection.EditCaptain(model);
+            }
         }
         /// <summary>
         /// Validates the form before allowing edit actions to be written
@@ -230,7 +234,7 @@ namespace TournamentTrackerUI.EditForms
         {
             Validator validator = new Validator();
             bool output = true;
-            if (!validator.isValidName(teamNameTextbox.Text))
+            if (!validateTeamName(teamNameTextbox))
             {
                 output = false;
             }
@@ -239,6 +243,17 @@ namespace TournamentTrackerUI.EditForms
                 teamNameTextbox.BackColor = Color.LightGreen;
                 output = true;
             }
+            //if (captain == null)
+            //{
+            //    MessageBox.Show("Please Select A Captain");
+            //    output = false;
+            //}
+            //if ((vm.VenueID == -1) || (vm == null))
+            //{
+            //    MessageBox.Show("Please Select A Venue");
+            //}
+
+
             return output;
         }
         /// <summary>
@@ -283,9 +298,10 @@ namespace TournamentTrackerUI.EditForms
             if (p != null)
             {
                 selectedPlayers.Remove(p);
-                if(selectedPlayers.Count == 1)
+                if (selectedPlayers.Count == 1)
                 {
                     DisplayCaptain.Text = "No Captain";
+                    //GlobalConfig.Connection.EditCaptainRemove(tm);
                 }
                 availablePlayers.Add(p);
 
@@ -324,7 +340,7 @@ namespace TournamentTrackerUI.EditForms
         /// </summary>
         /// <returns>A Captain Model</returns>
         private CaptainModel getCaptain()
-        {            
+        {
             PersonModel p = new PersonModel();
             // potentially redunsant check here with check in captainSelectButton_Click
             if (teamCaptainDropdown.SelectedItem != null)
@@ -416,12 +432,17 @@ namespace TournamentTrackerUI.EditForms
         {
             if (teamDropDown.SelectedValue != null)
             {
+                teamNames.Clear();
                 tm = (TeamModel)teamDropDown.SelectedValue;
                 if (tm.TeamID != -1)
                 {
+
+                    
+                    selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
+                    originalTeamName = tm.TeamName;
+                    getTeamNames();
                     teamNameTextbox.Text = tm.TeamName;
                     DisplayTeamName.Text = tm.TeamName;
-                    selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
                     // Find captain and display details
                     DoCaptainStuff(tm);
                     // Display cyrrent teams Venue in Display and as VenueBox selectedItem
@@ -429,14 +450,29 @@ namespace TournamentTrackerUI.EditForms
                     // Populate Teams Members ListBox
                     DoTeamMemberStuff(tm);
                     // Do form and list stuff
+                    
                     addedPeople.Clear();
                     removedPeople.Clear();
                     WireUpPlayerDropDown();
                     WireUpTeamMembers();
                     WireUpCaptainDropDown();
+                   
                 }
-            }  
+            }
         }
+
+        private void getTeamNames()
+        {
+            foreach (TeamModel team in teams)
+            {
+                if (team.TeamID != -1)
+                {
+                    teamNames.Add(team.TeamName);
+                }
+            }
+            teamNames.Remove(originalTeamName);
+        }
+
         /// <summary>
         /// Populate teamMemberListBox
         /// </summary>
@@ -455,7 +491,7 @@ namespace TournamentTrackerUI.EditForms
         {
             int venueID = tm.TeamVenue;
             //TODO learn what i have done here study more linq
-            DisplayTeamVenue.Text = venues.Find(v => v.VenueID == venueID).VenueName;            
+            DisplayTeamVenue.Text = venues.Find(v => v.VenueID == venueID).VenueName;
             venueDropDown.SelectedItem = venues.Find(v => v.VenueID == venueID);
         }
         /// <summary>
@@ -466,7 +502,7 @@ namespace TournamentTrackerUI.EditForms
         {
             captains = GlobalConfig.Connection.GetTeamCaptains(tm);
             captain = captains.Find(c => c.TeamID == tm.TeamID);
-            if ((captain != null))
+            if ((captain != null) && (captain.CaptianID !=0))
             {
                 DisplayCaptain.Text = selectedPlayers.Find(p => p.PersonID == captain.PersonID).FullName;
             }
@@ -483,16 +519,68 @@ namespace TournamentTrackerUI.EditForms
         private void EditTeamButton_Click(object sender, EventArgs e)
         {
             if (validateForm())
-            {              
+            {
                 tm.TeamName = teamNameTextbox.Text;
-                PersonModel p = new PersonModel();                
-                tm.TeamCaptain = captain.PersonID;
+                PersonModel p = new PersonModel();
+                if(captain != null)
+                { tm.TeamCaptain = captain.PersonID;
+                    }
                 VenueModel venue = (VenueModel)venueDropDown.SelectedItem;
                 tm.Venue = venue;
                 EditTeam(tm);
                 MessageBox.Show("Team Successfully Edited");
                 clearForm();
             }
+        }
+
+        private void teamNameTextbox_TextChanged(object sender, EventArgs e)
+        {
+            validateTeamName(teamNameTextbox);
+        }
+
+        private bool validateTeamName(TextBox tb)
+        {
+
+            bool nameValid = true;
+            DisplayTeamName.BackColor = Color.LightGreen;
+            Validator validator = new Validator();
+            if (tb.Text == "")
+            {
+                DisplayTeamName.Text = "Please Enter a Name";
+                DisplayTeamName.BackColor = Color.Crimson;
+                nameValid = false;
+                return nameValid;
+            }
+            else
+            {
+                DisplayTeamName.BackColor = Color.LightGreen;
+                DisplayTeamName.Text = tb.Text;
+
+                if (!validator.noNumbers(tb.Text))
+                {
+                    DisplayTeamName.Text = "No Numbers Allowed";
+                    DisplayTeamName.BackColor = Color.Crimson;
+                    nameValid = false; ;
+                }
+                else if (!validator.noSpaces(tb.Text))
+                {
+                    DisplayTeamName.Text = "No Leading or Ending Spaces Allowed";
+                    DisplayTeamName.BackColor = Color.Crimson;
+                    nameValid = false;
+                }
+                else
+                {
+                    if (teamNames.Contains(tb.Text))
+                    {
+                        DisplayTeamName.Text = "Name Already Exists";
+                        DisplayTeamName.BackColor = Color.Crimson;
+                        nameValid = false;
+                    }
+                }
+
+                return nameValid;
+            }
+
         }
     }
 }

@@ -112,6 +112,7 @@
             this.teamNameTextbox.Name = "teamNameTextbox";
             this.teamNameTextbox.Size = new System.Drawing.Size(165, 29);
             this.teamNameTextbox.TabIndex = 5;
+            this.teamNameTextbox.TextChanged += new System.EventHandler(this.teamNameTextbox_TextChanged);
             this.teamNameTextbox.Enter += new System.EventHandler(this.teamNameTextbox_Enter);
             this.teamNameTextbox.Leave += new System.EventHandler(this.teamNameTextbox_Leave);
             // 

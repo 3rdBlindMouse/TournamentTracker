@@ -178,5 +178,10 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void DeleteTeamCaptain()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

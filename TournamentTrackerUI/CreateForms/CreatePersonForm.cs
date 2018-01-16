@@ -19,6 +19,12 @@ namespace TournamentTrackerUI
     public partial class CreatePersonForm : Form
     {
         IPersonRequester callingForm;
+
+        private List<PersonModel> people = GlobalConfig.Connection.GetAllPeople();
+        private List<string> comparePeople = new List<string>();
+        private string currentPerson;
+        
+
         private string method;
 
         public CreatePersonForm(IPersonRequester caller)
@@ -26,9 +32,25 @@ namespace TournamentTrackerUI
             InitializeComponent();
             callingForm = caller;
 
+            wireUpComparePeopleList();
+
             StackFrame frame = new StackFrame(1, true);
             method = (frame.GetMethod().Name);
 
+        }
+
+        private void wireUpComparePeopleList()
+        {
+           
+            foreach (PersonModel p in people)
+            {
+                string simplePersonModel = "";
+                simplePersonModel += p.FullName;
+                simplePersonModel += p.Sex;
+                simplePersonModel += p.DateOfBirth.ToShortDateString();
+                comparePeople.Add(simplePersonModel);
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,14 +58,14 @@ namespace TournamentTrackerUI
             if (validateForm())
             {
                 // need to add something or else saving to text file blows up
-                if (EmailTextbox.Text == "")
-                {
-                    EmailTextbox.Text = "No Email";
-                }
-                if (ContactNumberTextbox.Text == "")
-                {
-                    ContactNumberTextbox.Text = "No Contact Number";
-                }
+                //if (EmailTextbox.Text == "")
+                //{
+                //    EmailTextbox.Text = "No Email";
+                //}
+                //if (ContactNumberTextbox.Text == "")
+                //{
+                //    ContactNumberTextbox.Text = "No Contact Number";
+                //}
 
                 PersonModel model = new PersonModel(
                     FirstNameTextbox.Text,
@@ -54,18 +76,34 @@ namespace TournamentTrackerUI
                     // TODO fix dob method
                     dob());
 
-                GlobalConfig.Connection.CreatePerson(model);
-                callingForm.PersonComplete(model);
+                currentPerson = "";
+                currentPerson += model.FullName;
+                currentPerson += model.Sex;
+                currentPerson += model.DateOfBirth.ToShortDateString();
 
-
-                if (method == "CreateNewPlayerLinkLabel_LinkClicked")
+                if (comparePeople.Contains(currentPerson))
                 {
-                    this.Close();
+                    MessageBox.Show("A Person with these details already Exists");
                 }
 
+                else
+                {
+                    GlobalConfig.Connection.CreatePerson(model);
+                    callingForm.PersonComplete(model);
 
-                MessageBox.Show("Player Successfully Created");
-                clearForm();
+                    people = GlobalConfig.Connection.GetAllPeople();
+                    wireUpComparePeopleList();
+                    if (method == "CreateNewPlayerLinkLabel_LinkClicked")
+                    {
+                        this.Close();
+                    }
+
+
+                    MessageBox.Show("Player Successfully Created");
+                    clearForm();
+
+                }
+                
 
             }
             else
@@ -103,7 +141,7 @@ namespace TournamentTrackerUI
                 && (validator.isValidString(LastNameTextbox.Text))
                 && ((validator.isValidEmail(EmailTextbox.Text)) || (EmailTextbox.Text == ""))
                 && ((validator.isValidNumber(ContactNumberTextbox.Text)) || (ContactNumberTextbox.Text == ""))
-                && (validator.isValidSex(SexComboBox.Text))
+                && (validator.isValidSex(SexComboBox.Text) && (validateDateOfBirth() == true))
                 )
             {
                 output = true;
@@ -206,32 +244,47 @@ namespace TournamentTrackerUI
         /// Checks values are entered for all of the combo boxes
         /// </summary>
         /// <returns>date of birth as a date</returns>
-        private void validateDateOfBirth()
+        private bool validateDateOfBirth()
         {
+            bool dobValid = true;
             if (dayComboBox.Text == "DAY" && monthComboBox.Text == "MONTH" && yearComboBox.Text == "YEAR")
             {
                 dayComboBox.BackColor = Color.LightGreen;
                 monthComboBox.BackColor = Color.LightGreen;
                 yearComboBox.BackColor = Color.LightGreen;
-            }
-            else if (dayComboBox.Text == "DAY")
-            {
-                dayComboBox.BackColor = Color.Crimson;
-            }
-            else if (monthComboBox.Text == "MONTH")
-            {
-                monthComboBox.BackColor = Color.Crimson;
-            }
-            else if (yearComboBox.Text == "YEAR")
-            {
-                yearComboBox.BackColor = Color.Crimson;
+                dobValid = true;
             }
             else
             {
-                DateTime datetime = dob();
+                if (dayComboBox.Text != "DAY" && monthComboBox.Text != "MONTH" && yearComboBox.Text != "YEAR")
+                {
+                    DateTime datetime = dob();
+                    DisplayDOB.Text = datetime.ToString("dd/MM/yyyy");
+                    dayComboBox.BackColor = Color.LightGreen;
+                    monthComboBox.BackColor = Color.LightGreen;
+                    yearComboBox.BackColor = Color.LightGreen;
+                    dobValid = true;
+                }
 
-               DisplayDOB.Text = datetime.ToString("dd/MM/yyyy");
+                else
+                {
+                    MessageBox.Show("Invalid date of birth");
+                    dobValid = false;
+                    if (dayComboBox.Text == "DAY")
+                    {
+                        dayComboBox.BackColor = Color.Crimson;
+                    }
+                    if (monthComboBox.Text == "MONTH")
+                    {
+                        monthComboBox.BackColor = Color.Crimson;
+                    }
+                    if (yearComboBox.Text == "YEAR")
+                    {
+                        yearComboBox.BackColor = Color.Crimson;
+                    }
+                }
             }
+            return dobValid;
         }
         /// <summary>
         /// Method that takes input from the 3 Date Of Birth combox boxes and converts them to datetime
@@ -240,18 +293,29 @@ namespace TournamentTrackerUI
         private DateTime dob()
         {
             DateTime datetime = new DateTime();
-            if ((dayComboBox.Text == "DAY") || (monthComboBox.Text == "MONTH") || (yearComboBox.Text == "YEAR"))
-            {
-                MessageBox.Show("Invalid date of birth");
-                return datetime;
 
-            }
-            else
+            int i = 0;
+
+            if (dayComboBox.Text == "DAY") i++;
+            if (monthComboBox.Text == "MONTH") i++;
+            if (yearComboBox.Text == "YEAR") i++;
+
+            switch (i)
             {
-                string dob = $"{dayComboBox.Text}{monthComboBox.Text}{yearComboBox.Text}";
-                datetime = Convert.ToDateTime(dob);
-                return datetime;
+                case 0:
+                    string dob = $"{dayComboBox.Text}{monthComboBox.Text}{yearComboBox.Text}";
+                    datetime = Convert.ToDateTime(dob);
+                    return datetime;
+                case 1:
+                    MessageBox.Show("Invalid date of birth");
+                    return datetime;
+                case 2:
+                    MessageBox.Show("Invalid date of birth");
+                    return datetime;
+                case 3:
+                    return datetime;
             }
+            return datetime;
         }
 
         /*

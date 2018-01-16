@@ -28,6 +28,7 @@ namespace TournamentTrackerUI
         // name and number validator variables
         bool nameValid = false;
         bool numberValid = false;
+        bool startDateValid = false;
 
         public CreateDivisionForm()
         {
@@ -171,6 +172,11 @@ namespace TournamentTrackerUI
             }
             else
             {
+                if(DivisionNumberTextbox.Text.Length > 6)
+                {
+                    MessageBox.Show("Please enter a smaller number");
+                    DivisionNumberTextbox.Text = "";
+                }
                 // If number is not a valid number
                 if (!ValidateDivisionNumber(DivisionNumberTextbox))
                 {
@@ -219,6 +225,10 @@ namespace TournamentTrackerUI
         private void UpdateStartDate()
         {
             selectedStartDate.Text = StartDate.Value.ToString("D");
+            if(selectedStartDate.Text != "")
+            {
+                startDateValid = true;
+            }
         }
         /// <summary>
         /// Updates display to show selected date(s) to skip
@@ -310,24 +320,37 @@ namespace TournamentTrackerUI
         /// <param name="e"></param>
         private void createDivisionButton_Click(object sender, EventArgs e)
         {
-            //hasNameAndNumber();
             { 
-                //Create updated Model(s)
-                if ((nameValid == true) && (numberValid == true))
+                // make sure form is valid
+                // == "" checks incase data was valid but was deleted before pressing create
+                if ((nameValid == true) && (DivisionNameTextbox.Text != "") 
+                    && (numberValid == true) && (DivisionNumberTextbox.Text != "")
+                    && (startDateValid == true))
                 {
                     // create a division model
                     DivisionModel model = createDivision();
                     createSkippedDates(model);
-                    createDivisionTeams(model);                  
+                    createDivisionTeams(model);
+                    updateData();            
                     MessageBox.Show("Division Successfully Created");
                     clearForm();    
                 }
                 else
                 {
-                    MessageBox.Show("Form Has Invalid Information");
+                    formFilledIn();
                 }
             }
         }
+        /// <summary>
+        /// Grab any changes from DB (to stop duplicates being made before form closes)
+        /// </summary>
+        private void updateData()
+        {
+            divs = GlobalConfig.Connection.GetAllDivisions();
+            getTeamNames(divs);
+            getTeamNumbers(divs);
+        }
+
         /// <summary>
         /// Create a basic DivsionModel frame and Update DB et.al
         /// </summary>
@@ -378,7 +401,7 @@ namespace TournamentTrackerUI
         /// </summary>
         private void clearForm()
         {
-            DivisionNameTextbox.Text = "";
+            DivisionNameTextbox.Text = "" ;
             DivisionNumberTextbox.Text = "";
             StartDate.ResetText();
             selectedStartDate.Text = "";
@@ -430,36 +453,52 @@ namespace TournamentTrackerUI
         /// Redundant Method
         /// </summary>
         /// <param name="model"></param>
-        //private void hasNameAndNumber()
-        //{
-        //int i = 0;
-        //string message = "Please Enter A ";
-        //if(DivisionNameTextbox.Text == "")
-        //    {
-        //        i++;
-        //    }
-        //if(DivisionNumberTextbox.Text == "")
-        //    {
-        //        i = i + 2;
-        //    }
+        private void formFilledIn()
+        {
+            int i = 0;
+            string message = "Please enter a ";
+            if (DivisionNameTextbox.Text == "") 
+            {
+                i++;
+            }
+            if (DivisionNumberTextbox.Text == "") 
+            {
+                i = i + 2;
+            }
+            if (selectedStartDate.Text == "" )
+            {
+                i = i + 4;
+            }
 
-        //    if (i != 0)
-        //    {
-        //        switch (i)
-        //        {
-        //            case 1:
-        //                message += "Name";
-        //                break;
-        //            case 2:
-        //                message += "Number";
-        //                break;
-        //            case 3:
-        //                message += "Name and Number";
-        //                break;
-        //        }
-        //        MessageBox.Show(message);
-        //    }
-        //}
+            if (i != 0)
+            {
+                switch (i)
+                {
+                    case 1:
+                        message += "Name";
+                        break;
+                    case 2:
+                        message += "Number";
+                        break;
+                    case 3:
+                        message += "Name and Number";
+                        break;
+                    case 4:
+                        message += "Start Date";
+                        break;
+                    case 5:
+                        message += "Name and Start Date";
+                        break;
+                    case 6:
+                        message += "Number and Start Date";
+                        break;
+                    case 7:
+                        message += "Name and Number and Start Date";
+                        break;
+                }
+                MessageBox.Show(message);
+            }
+        }
 
 
 

@@ -306,9 +306,8 @@
             this.selectedStartDate.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.selectedStartDate.Location = new System.Drawing.Point(215, 88);
             this.selectedStartDate.Name = "selectedStartDate";
-            this.selectedStartDate.Size = new System.Drawing.Size(23, 17);
+            this.selectedStartDate.Size = new System.Drawing.Size(0, 17);
             this.selectedStartDate.TabIndex = 34;
-            this.selectedStartDate.Text = "---";
             // 
             // startDateLabel2
             // 

@@ -21,7 +21,12 @@ namespace TournamentTrackerUI
         private List<PersonModel> selectedPlayers = new List<PersonModel>();
         private List<VenueModel> venues = GlobalConfig.Connection.GetAllVenues();
         //TODO
-        //private List<TeamModel> teams = GlobalConfig.Connection.GetDivisionTeams();
+        private List<TeamModel> teams = GlobalConfig.Connection.GetAllTeams();
+
+        private List<string> teamNames = new List<string>();
+
+
+
         private List<PersonModel> lastPerson;
         private CaptainModel captain;
         private static string method;
@@ -34,14 +39,22 @@ namespace TournamentTrackerUI
             //createSampleData();
 
 
-            StackFrame frame = new StackFrame(1, true);           
+            StackFrame frame = new StackFrame(1, true);
             method = (frame.GetMethod().Name);
 
             wireUpPlayerDropDown();
             WireupVenueDropDown();
+            getTeamNames(teams);
         }
 
-        
+        private void getTeamNames(List<TeamModel> teams)
+        {
+            foreach (TeamModel team in teams)
+            {
+                teamNames.Add(team.TeamName);
+            }
+        }
+
         private void createSampleData()
         {
             availablePlayers.Add(new PersonModel { FirstName = "Phill", LastName = "Sutherland" });
@@ -90,10 +103,10 @@ namespace TournamentTrackerUI
             venueDropDown.DataSource = venues.OrderBy(p => p.VenueName).ToList();
             venueDropDown.DisplayMember = "VenueName";
         }
-      private void WireupMembersAndCaptain()
+        private void WireupMembersAndCaptain()
         {
             teamMemberListBox.DataSource = null;
-            
+
             teamMemberListBox.DataSource = selectedPlayers.OrderBy(p => p.LastName).ThenBy(p => p.FirstName).ToList(); ;
             teamMemberListBox.DisplayMember = "FullName";
 
@@ -151,11 +164,11 @@ namespace TournamentTrackerUI
                 model.TeamCaptain = captain.PersonID;
                 // TODO - sort or remove
 
-                
-                
+
+
                 model.TeamVenue = vm.VenueID;
                 createTeamAndRoster(model);
-                if(method == "createNewTeamLinkLabel_LinkClicked")
+                if (method == "createNewTeamLinkLabel_LinkClicked")
                 {
                     this.Close();
                     //MessageBox.Show("From Create Division Form");
@@ -174,21 +187,21 @@ namespace TournamentTrackerUI
 
         private void clearForm()
         {
-            
+
             teamNameTextbox.Text = "";
             DisplayTeamName.Text = "";
             DisplayTeamVenue.Text = "";
             DisplayCaptain.Text = "";
-            if(teamMemberListBox.Items.Count > 0)
+            if (teamMemberListBox.Items.Count > 0)
             {
                 teamMemberListBox.DataSource = null;
                 teamMemberListBox.Items.Clear();
             }
 
-         availablePlayers = GlobalConfig.Connection.GetAllPeople();
-         selectedPlayers = new List<PersonModel>();
-         WireupMembersAndCaptain();
-         WireupVenueDropDown();
+            availablePlayers = GlobalConfig.Connection.GetAllPeople();
+            selectedPlayers = new List<PersonModel>();
+            WireupMembersAndCaptain();
+            WireupVenueDropDown();
         }
 
 
@@ -203,7 +216,7 @@ namespace TournamentTrackerUI
             roster.TeamID = model.TeamID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.CreateTeam(model);
-            
+
             callingForm.TeamComplete(model);
             captain.TeamID = model.TeamID;
 
@@ -218,21 +231,21 @@ namespace TournamentTrackerUI
         {
             Validator validator = new Validator();
             bool output = true;
-            if ((!validator.isValidName(teamNameTextbox.Text) || (teamNameTextbox.Text == "") || (teamNameTextbox.Text == "Enter a Valid Name")))
+            if (!validateTeamName(teamNameTextbox))
             {
-                output = false;               
+                output = false;
             }
             else
             {
                 teamNameTextbox.BackColor = Color.LightGreen;
                 output = true;
             }
-            if(captain == null)
+            if (captain == null)
             {
                 MessageBox.Show("Please Select A Captain");
                 output = false;
             }
-            if((vm.VenueID == -1) || (vm == null))
+            if ((vm.VenueID == -1) || (vm == null))
             {
                 MessageBox.Show("Please Select A Venue");
             }
@@ -248,15 +261,15 @@ namespace TournamentTrackerUI
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddPlayerButton_Click(object sender, EventArgs e)
-        {          
-                PersonModel p = (PersonModel)addPlayerDropdown.SelectedItem;
-                if ((p != null) && (p.PersonID != -1))
-                {
-                    availablePlayers.Remove(p);
-                    selectedPlayers.Add(p);
+        {
+            PersonModel p = (PersonModel)addPlayerDropdown.SelectedItem;
+            if ((p != null) && (p.PersonID != -1))
+            {
+                availablePlayers.Remove(p);
+                selectedPlayers.Add(p);
                 wireUpPlayerDropDown();
-                    WireupMembersAndCaptain();
-                }           
+                WireupMembersAndCaptain();
+            }
         }
 
         private void removePlayerButton_Click(object sender, EventArgs e)
@@ -276,7 +289,7 @@ namespace TournamentTrackerUI
         {
             captain = getCaptain();
             DisplayCaptain.Text = captain.Name;
-            
+
         }
 
         private CaptainModel getCaptain()
@@ -285,10 +298,10 @@ namespace TournamentTrackerUI
             PersonModel p = new PersonModel();
             if (teamCaptainDropdown.SelectedItem != null)
             {
-                p =(PersonModel)teamCaptainDropdown.SelectedItem;
+                p = (PersonModel)teamCaptainDropdown.SelectedItem;
                 capt.PersonID = p.PersonID;
                 capt.Name = p.FullName;
-                return capt;            
+                return capt;
             }
             else
             {
@@ -298,18 +311,7 @@ namespace TournamentTrackerUI
 
         private void teamNameTextbox_Leave(object sender, EventArgs e)
         {
-            Validator validator = new Validator();
-            if (!validator.isValidString(teamNameTextbox.Text))
-            {
-                teamNameTextbox.BackColor = Color.Crimson;
-                teamNameTextbox.Text = "Enter a Valid Name";
-            }
-            else
-            {
-                teamNameTextbox.BackColor = Color.LightGreen;
-                DisplayTeamName.Text = teamNameTextbox.Text;
-                
-            }
+
         }
 
         private void teamNameTextbox_Enter(object sender, EventArgs e)
@@ -347,7 +349,7 @@ namespace TournamentTrackerUI
             WireupVenueDropDown();
             DisplayTeamVenue.Text = model.VenueName;
             venueDropDown.SelectedItem = model;
-            
+
         }
 
         private void venueDropDown_SelectedValueChanged(object sender, EventArgs e)
@@ -372,6 +374,54 @@ namespace TournamentTrackerUI
             selectedPlayers.Add(model);
             WireupMembersAndCaptain();
         }
+
+        private void teamNameTextbox_TextChanged(object sender, EventArgs e)
+        {
+            validateTeamName(teamNameTextbox);
+        }
+
+
+        private bool validateTeamName(TextBox tb)
+        {
+            bool nameValid = true;
+            Validator validator = new Validator();
+            if (tb.Text == "")
+            {
+                DisplayTeamName.Text = "Please Enter a Name";
+                DisplayTeamName.BackColor = Color.Crimson;
+                nameValid = false;
+                return nameValid;
+            }
+            else
+            {
+                DisplayTeamName.BackColor = Color.LightGreen;
+                DisplayTeamName.Text = tb.Text;
+                
+                if (!validator.noNumbers(tb.Text))
+                {
+                    DisplayTeamName.Text = "No Numbers Allowed";
+                    DisplayTeamName.BackColor = Color.Crimson;
+                    nameValid = false; ;
+                }
+                else if (!validator.noSpaces(tb.Text))
+                {
+                    DisplayTeamName.Text = "No Leading or Ending Spaces Allowed";
+                    DisplayTeamName.BackColor = Color.Crimson;
+                    nameValid = false;
+                }
+                else
+                {
+                    if (teamNames.Contains(tb.Text))
+                    {
+                        DisplayTeamName.Text = "Name Already Exists";
+                        DisplayTeamName.BackColor = Color.Crimson;
+                        nameValid = false;
+                    }
+                }
+
+                return nameValid;
+            }
+        }
     }
-    }
+}
 

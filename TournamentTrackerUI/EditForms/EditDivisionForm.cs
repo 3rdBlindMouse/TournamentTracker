@@ -20,6 +20,14 @@ namespace TournamentTrackerUI
         // List of All Divisions
         //TODO sort Season out so list of divisions in selcted season.
         private static List<DivisionModel> divs = GlobalConfig.Connection.GetAllDivisions();
+        //List of Division Names
+        private static List<string> divNames = new List<string>();
+        // Name of Selected Division
+        private static string originalDivName;
+        //List of Division Numbers
+        private static List<int> divNumbers = new List<int>();
+        // Number of Selected Division
+        private static int originalDivNumber;
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
         // used to store Division skipped dates before any edits to allow for comparisons.
@@ -42,6 +50,9 @@ namespace TournamentTrackerUI
         private static DivisionModel dm ;
         // Variable to allow count of teams selected in Division
         private static int numberOfTeams;
+
+
+        private static List<string> teamNames = new List<string>();
 
         public EditDivisionForm()
         {
@@ -179,15 +190,43 @@ namespace TournamentTrackerUI
         /// //TODO stop spaces at end being allowed
         private bool ValidateDivisionName(TextBox tb)
         {
+            bool nameValid = true;
             Validator validator = new Validator();
-            if (validator.isValidString(tb.Text))
-            {                
-                return true;
+            if (tb.Text == "")
+            {
+                nameErrorLabel.Text = "Please Enter a Name";
+                nameErrorLabel.BackColor = Color.Crimson;
+                nameValid = false;
+                return nameValid;
             }
             else
-            {               
-                return false;
-            };
+            {
+                nameErrorLabel.BackColor = Color.LightGreen;
+                nameErrorLabel.Text = tb.Text;
+                if (!validator.noNumbers(tb.Text))
+                {
+                    nameErrorLabel.Text = "No Numbers Allowed";
+                    nameErrorLabel.BackColor = Color.Crimson;
+                    nameValid = false; ;
+                }
+                else if(!validator.noSpaces(tb.Text))
+                    {
+                    nameErrorLabel.Text = "No Leading or Ending Spaces Allowed";
+                    nameErrorLabel.BackColor = Color.Crimson;
+                    nameValid = false;
+                    }
+                else
+                {
+                    if(divNames.Contains(tb.Text))
+                    {
+                        nameErrorLabel.Text = "Name Already Exists";
+                        nameErrorLabel.BackColor = Color.Crimson;
+                        nameValid = false;
+                    }
+                }
+                
+                return nameValid;
+            }
         }
 
         /// <summary>
@@ -196,15 +235,53 @@ namespace TournamentTrackerUI
         /// <param name="tb"></param>
         private bool ValidateDivisionNumber(TextBox tb)
         {
-            Validator check = new Validator();
-            if (check.isValidNumber(tb.Text))
-            {                
-                return true;
+
+            bool numberValid = true;
+            Validator validator = new Validator();
+            if (tb.Text == "")
+            {
+                numberErrorLabel.Text = "Please Enter a Number";
+                numberErrorLabel.BackColor = Color.Crimson;
+                numberValid = false;
+                return numberValid;
             }
             else
-            {               
-                return false;
+            {
+                numberErrorLabel.Text = tb.Text;
+                numberErrorLabel.BackColor = Color.LightGreen;
+                if (numberTextBox.Text.Length > 6 )
+                {
+                    MessageBox.Show("Please Enter a Smaller Number");
+                    numberTextBox.Text = "";
+                    numberValid = false;
+                }
+                else
+                {
+                    if (!validator.isValidNumber(tb.Text))
+                    {
+                        numberErrorLabel.Text = "No Spaces or Letters Allowed";
+                        numberErrorLabel.BackColor = Color.Crimson;
+                        numberValid = false; ;
+                    }
+                    //else if (!validator.noSpaces(tb.Text))
+                    //{
+                    //    numberErrorLabel.Text = "No Leading or Ending Spaces Allowed";
+                    //    numberValid = false;
+                    //}
+                    else
+                    {
+                        if (divNumbers.Contains(int.Parse(tb.Text)))
+                        {
+                            numberErrorLabel.Text = "Number Already Exists";
+                            numberErrorLabel.BackColor = Color.Crimson;
+                            numberValid = false;
+                        }
+                    }
+                }
+                       
+                return numberValid;
             }
+
         }
 
         /*
@@ -376,6 +453,12 @@ namespace TournamentTrackerUI
                 DisplayDivisionNumber(dm);
                 DisplayDivisionStartDate(dm);
                 getSkippedDates(dm);
+                originalDivName = dm.DivisionName;
+                divNames.Clear();
+                getDivNames(divs);
+                originalDivNumber = dm.DivisionNumber;
+                divNumbers.Clear();
+                getDivNumbers(divs);
                 selectedTeams = getDivisionTeams(dm);              
                 teamsAvailable = getAvailableTeams(dm);
                 WireupTeamLists(teamsAvailable, selectedTeams);
@@ -387,6 +470,26 @@ namespace TournamentTrackerUI
                 resetForm();
             }
         }
+
+        private void getDivNumbers(List<DivisionModel> divs)
+        {
+            foreach(DivisionModel d in divs)
+            {
+                divNumbers.Add(d.DivisionNumber);
+            }
+            divNumbers.Remove(originalDivNumber);
+        }
+
+        private void getDivNames(List<DivisionModel> divs)
+        {
+            foreach(DivisionModel d in divs)
+            {
+                divNames.Add(d.DivisionName);
+            }
+            divNames.Remove(originalDivName);
+        }
+
+       
 
         /// <summary>
         /// Make sure form is in ready state before user can edit anything
@@ -559,37 +662,38 @@ namespace TournamentTrackerUI
         /// <param name="e"></param>
         private void nameTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Get DivisionModel user has selected
-            dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
-            // Get Divison Name from selected Division
-            string initialName = dm.DivisionName.ToString();
-            // Create List of Division Names
-            List<string> teamNames = new List<string>();
-            foreach (DivisionModel d in divs)
-            {
-                teamNames.Add(d.DivisionName.ToString());
-            }
-            // Create Temp list Iterate through it and remove initial name from list
-            List<string> tempNames = new List<string>();
-            foreach (string name in teamNames)
-            {
-                if(name != initialName)
-                {
-                    tempNames.Add(name);
-                }
-            }
-            teamNames = tempNames;
-            // Gives users some visual clues
-            if ((teamNames.Contains(nameTextBox.Text) || (!ValidateDivisionName(nameTextBox))))
-            {
-            nameErrorLabel.BackColor = Color.Crimson;
-            nameErrorLabel.Text = "Name Already Exists or is Invalid";
-            }
-            else
-            {
-            nameErrorLabel.BackColor = Color.LightGreen;
-            nameErrorLabel.Text = "Valid Name";
-            }           
+            ValidateDivisionName(nameTextBox);
+            //// Get DivisionModel user has selected
+            //dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
+            //// Get Divison Name from selected Division
+            //string initialName = dm.DivisionName.ToString();
+            //// Create List of Division Names
+            //List<string> teamNames = new List<string>();
+            //foreach (DivisionModel d in divs)
+            //{
+            //    teamNames.Add(d.DivisionName.ToString());
+            //}
+            //// Create Temp list Iterate through it and remove initial name from list
+            //List<string> tempNames = new List<string>();
+            //foreach (string name in teamNames)
+            //{
+            //    if(name != initialName)
+            //    {
+            //        tempNames.Add(name);
+            //    }
+            //}
+            //teamNames = tempNames;
+            //// Gives users some visual clues
+            //if ((teamNames.Contains(nameTextBox.Text) || (!ValidateDivisionName(nameTextBox))))
+            //{
+            //nameErrorLabel.BackColor = Color.Crimson;
+            //nameErrorLabel.Text = "Name Already Exists or is Invalid";
+            //}
+            //else
+            //{
+            //nameErrorLabel.BackColor = Color.LightGreen;
+            //nameErrorLabel.Text = "Valid Name";
+            //}           
         }
 
        
@@ -602,41 +706,42 @@ namespace TournamentTrackerUI
         // TODO disallow huge numbers
         private void numberTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Get DivisionModel user has selected
-            dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
-            // Get Divison Name from selected Division
-            int initialNum = dm.DivisionNumber;
-            // Create List of Division Names
-            List<int> teamNums = new List<int>();
-            foreach (DivisionModel d in divs)
-            {
-                teamNums.Add(d.DivisionNumber);
-            // Create Temp list Iterate through it and remove initial name from list
-            List<int> tempNums = new List<int>();
-            foreach (int n in teamNums)
-            {
-                if (n != initialNum)
-                {
-                    tempNums.Add(n);
-                }
-            }
-            teamNums = tempNums;
-            // show user some visual clues
-            if  ((!ValidateDivisionNumber(numberTextBox)) ||  (numberTextBox.Text == ""))
-            {
-                    numberErrorLabel.BackColor = Color.Crimson;
-            }
-                else if(teamNums.Contains(int.Parse(numberTextBox.Text)))
-                {
-                    numberErrorLabel.BackColor = Color.Crimson;
-                    numberErrorLabel.Text = "Number Already Exists or is Invalid";
-                }
-                    else
-                    {
-                    numberErrorLabel.BackColor = Color.LightGreen;
-                    numberErrorLabel.Text = "Valid Number";
-                }
-        }
+            ValidateDivisionNumber(numberTextBox);
+        //    // Get DivisionModel user has selected
+        //    dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
+        //    // Get Divison Name from selected Division
+        //    int initialNum = dm.DivisionNumber;
+        //    // Create List of Division Names
+        //    List<int> teamNums = new List<int>();
+        //    foreach (DivisionModel d in divs)
+        //    {
+        //        teamNums.Add(d.DivisionNumber);
+        //    // Create Temp list Iterate through it and remove initial name from list
+        //    List<int> tempNums = new List<int>();
+        //    foreach (int n in teamNums)
+        //    {
+        //        if (n != initialNum)
+        //        {
+        //            tempNums.Add(n);
+        //        }
+        //    }
+        //    teamNums = tempNums;
+        //    // show user some visual clues
+        //    if  ((!ValidateDivisionNumber(numberTextBox)) ||  (numberTextBox.Text == ""))
+        //    {
+        //            numberErrorLabel.BackColor = Color.Crimson;
+        //    }
+        //        else if(teamNums.Contains(int.Parse(numberTextBox.Text)))
+        //        {
+        //            numberErrorLabel.BackColor = Color.Crimson;
+        //            numberErrorLabel.Text = "Number Already Exists or is Invalid";
+        //        }
+        //            else
+        //            {
+        //            numberErrorLabel.BackColor = Color.LightGreen;
+        //            numberErrorLabel.Text = "Valid Number";
+        //        }
+        //}
     }
 
         private void createNewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -21,16 +21,18 @@ namespace TournamentTrackerUI
     {
         
         // Get List of People/Players
-        private static List<PersonModel> players = GlobalConfig.Connection.GetAllPeople();
+        private static List<PersonModel> people = GlobalConfig.Connection.GetAllPeople();
         private static PersonModel pm = new PersonModel();
 
-       
+        private List<string> comparePeople = new List<string>();
+        private string currentPerson;
+        private string edittedPerson;
 
 
         public EditPersonForm()
         {
             InitializeComponent();
-            
+
            
             WireupPlayerSelector();
         }
@@ -41,13 +43,27 @@ namespace TournamentTrackerUI
             AddSelectTitle();
 
             PlayerNameComboBox.DataSource = null;
-            PlayerNameComboBox.DataSource = players.OrderBy(p => p.LastName).ToList(); ;
+            PlayerNameComboBox.DataSource = people.OrderBy(p => p.LastName).ToList(); ;
             PlayerNameComboBox.DisplayMember = "FullName";
+        }
+
+        private void wireUpComparePeopleList()
+        {
+            comparePeople.Clear();
+            foreach (PersonModel p in people)
+            {
+                string simplePersonModel = "";
+                simplePersonModel += p.FullName;
+                simplePersonModel += p.Sex;
+                simplePersonModel += p.DateOfBirth.ToShortDateString();
+                comparePeople.Add(simplePersonModel);
+            }
+
         }
 
         private void AddSelectTitle()
         {
-            int index = players.FindIndex(item => item.PersonID == -1);
+            int index = people.FindIndex(item => item.PersonID == -1);
             if (index >= 0)
             {
                 // element exists, do what you need
@@ -55,7 +71,7 @@ namespace TournamentTrackerUI
             else
             {
                 PersonModel p = new PersonModel(" Select Player ", -1);
-                players.Insert(0, p);
+                people.Insert(0, p);
             }
         }
 
@@ -103,7 +119,7 @@ namespace TournamentTrackerUI
                 && (validator.isValidName(LastNameTextbox.Text))
                 && ((validator.isValidEmail(EmailTextbox.Text)) || (EmailTextbox.Text == ""))
                 && ((validator.isValidPhoneNumber(ContactNumberTextbox.Text)) || (ContactNumberTextbox.Text == ""))
-                && (validator.isValidSex(SexComboBox.Text))
+                && (validator.isValidSex(SexComboBox.Text) && (validateDateOfBirth() == true))
                 )
             {
                 output = true;
@@ -200,50 +216,81 @@ namespace TournamentTrackerUI
         /// Checks values are entered for all of the combo boxes
         /// </summary>
         /// <returns>date of birth as a date</returns>
-        private void validateDateOfBirth()
+        private bool validateDateOfBirth()
         {
+            bool dobValid = true;
             if (dayComboBox.Text == "DAY" && monthComboBox.Text == "MONTH" && yearComboBox.Text == "YEAR")
             {
                 dayComboBox.BackColor = Color.LightGreen;
                 monthComboBox.BackColor = Color.LightGreen;
                 yearComboBox.BackColor = Color.LightGreen;
-            }
-            else if (dayComboBox.Text == "DAY")
-            {
-                dayComboBox.BackColor = Color.Crimson;
-            }
-            else if (monthComboBox.Text == "MONTH")
-            {
-                monthComboBox.BackColor = Color.Crimson;
-            }
-            else if (yearComboBox.Text == "YEAR")
-            {
-                yearComboBox.BackColor = Color.Crimson;
+                dobValid = true;
             }
             else
             {
-                DateTime datetime = dob();
+                if (dayComboBox.Text != "DAY" && monthComboBox.Text != "MONTH" && yearComboBox.Text != "YEAR")
+                {
+                    DateTime datetime = dob();
+                    DisplayDOB.Text = datetime.ToString("dd/MM/yyyy");
+                    dayComboBox.BackColor = Color.LightGreen;
+                    monthComboBox.BackColor = Color.LightGreen;
+                    yearComboBox.BackColor = Color.LightGreen;
+                    dobValid = true;
+                }
+
+                else
+                {
+                    MessageBox.Show("Invalid date of birth");
+                    dobValid = false;
+                    if (dayComboBox.Text == "DAY")
+                    {
+                        dayComboBox.BackColor = Color.Crimson;
+                    }
+                    if (monthComboBox.Text == "MONTH")
+                    {
+                        monthComboBox.BackColor = Color.Crimson;
+                    }
+                    if (yearComboBox.Text == "YEAR")
+                    {
+                        yearComboBox.BackColor = Color.Crimson;
+                    }
+                }
             }
+            return dobValid;
         }
         /// <summary>
         /// Method that takes input from the 3 Date Of Birth combox boxes and converts them to datetime
         /// </summary>
         /// <returns>Date Time</returns>
-        private DateTime dob()
-        {
-            DateTime datetime = new DateTime();
-            if ((dayComboBox.Text == "DAY") || (monthComboBox.Text == "MONTH") || (yearComboBox.Text == "YEAR"))
+       
+            private DateTime dob()
             {
-                MessageBox.Show("Invalid date of birth");
+                DateTime datetime = new DateTime();
+
+                int i = 0;
+
+                if (dayComboBox.Text == "DAY") i++;
+                if (monthComboBox.Text == "MONTH") i++;
+                if (yearComboBox.Text == "YEAR") i++;
+
+                switch (i)
+                {
+                    case 0:
+                        string dob = $"{dayComboBox.Text}{monthComboBox.Text}{yearComboBox.Text}";
+                        datetime = Convert.ToDateTime(dob);
+                        return datetime;
+                    case 1:
+                        MessageBox.Show("Invalid date of birth");
+                        return datetime;
+                    case 2:
+                        MessageBox.Show("Invalid date of birth");
+                        return datetime;
+                    case 3:
+                        return datetime;
+                }
                 return datetime;
             }
-            else
-            {
-                string dob = $"{dayComboBox.Text}{monthComboBox.Text}{yearComboBox.Text}";
-                datetime = Convert.ToDateTime(dob);
-                return datetime;
-            }
-        }
+        
         /*
          * Button Click Events
          */
@@ -383,7 +430,15 @@ namespace TournamentTrackerUI
             pm = (PersonModel)PlayerNameComboBox.SelectedItem;
             if (formReady() == true)
             {
-               
+                wireUpComparePeopleList();
+
+                edittedPerson = "";
+                edittedPerson += pm.FullName;
+                edittedPerson += pm.Sex;
+                edittedPerson += pm.DateOfBirth.ToShortDateString();
+
+                comparePeople.Remove(edittedPerson);
+
                 UpdateDisplays(pm);
             }
         }
@@ -414,50 +469,53 @@ namespace TournamentTrackerUI
         private void EditPlayerButton_Click(object sender, EventArgs e)
         {
             if (formReady() == true)
-            {
+            {              
+                if (validateForm())
                 {
-                    if (validateForm())
+                    // needed to add something or else saving to text file blows up
+                    //if (EmailTextbox.Text == "")
+                    //{
+                    //    EmailTextbox.Text = "No Email";
+                    //}
+                    //if (ContactNumberTextbox.Text == "")
+                    //{
+                    //    ContactNumberTextbox.Text = "No Contact Number";
+                    //}
+
+                    PersonModel model = new PersonModel();
+                    model.PersonID = pm.PersonID;
+                    model.FirstName = FirstNameTextbox.Text;
+                    model.LastName = LastNameTextbox.Text;
+                    model.Email = EmailTextbox.Text;
+                    model.ContactNumber = ContactNumberTextbox.Text;
+                    model.Sex = SexComboBox.SelectedItem.ToString();
+                    // TODO fix dob method
+                    model.DateOfBirth = dob();
+
+
+                    currentPerson = "";
+                    currentPerson += model.FullName;
+                    currentPerson += model.Sex;
+                    currentPerson += model.DateOfBirth.ToShortDateString();
+
+                    if (comparePeople.Contains(currentPerson))
                     {
-                        // needed to add something or else saving to text file blows up
-                        if (EmailTextbox.Text == "")
-                        {
-                            EmailTextbox.Text = "No Email";
-                        }
-                        if (ContactNumberTextbox.Text == "")
-                        {
-                            ContactNumberTextbox.Text = "No Contact Number";
-                        }
-
-                        PersonModel model = new PersonModel();
-                        model.PersonID = pm.PersonID;
-                        model.FirstName = FirstNameTextbox.Text;
-                        model.LastName = LastNameTextbox.Text;
-                        model.Email = EmailTextbox.Text;
-                        model.ContactNumber = ContactNumberTextbox.Text;
-                        model.Sex = SexComboBox.SelectedItem.ToString();
-                        // TODO fix dob method
-                        model.DateOfBirth = dob();
-
-                        GlobalConfig.Connection.EditPerson(model);
-                        
-
-
-                        
+                        MessageBox.Show("A Person with these details already Exists");
                     }
                     else
                     {
-                        MessageBox.Show("This form has invalid information");
-                    }
-                    MessageBox.Show("Player Successfully Edited");
-
-                    
-
-                    clearForm();
-                    
-                    players = GlobalConfig.Connection.GetAllPeople();
-                    WireupPlayerSelector();
-
+                        GlobalConfig.Connection.EditPerson(model);
+                        MessageBox.Show("Player Successfully Edited");
+                        people = GlobalConfig.Connection.GetAllPeople();
+                        clearForm();
+                        WireupPlayerSelector();
+                        wireUpComparePeopleList();
+                    }                        
                 }
+                else
+                {
+                    MessageBox.Show("This form has invalid information");
+                }                           
             }
         }
     }

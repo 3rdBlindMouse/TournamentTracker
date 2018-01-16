@@ -541,6 +541,11 @@ namespace TournamentLibrary.DataAccess
                 connection.Execute("spEditCaptain", p, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public void DeleteTeamCaptain()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
