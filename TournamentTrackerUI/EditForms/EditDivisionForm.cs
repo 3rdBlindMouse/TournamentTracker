@@ -19,7 +19,10 @@ namespace TournamentTrackerUI
     {
         // List of All Divisions
         //TODO sort Season out so list of divisions in selcted season.
+        private static List<SeasonModel> seasons = GlobalConfig.Connection.GetAllSeasons();
         //TODO important to get season ID
+        private static List<SeasonDivisionsModel> seasonDivs = new List<SeasonDivisionsModel>();
+
         private static List<DivisionModel> divs = new List<DivisionModel>();
         //List of Division Names
         private static List<string> divNames = new List<string>();
@@ -64,9 +67,24 @@ namespace TournamentTrackerUI
 
         private void WireUpSeasonSelector()
         {
+            AddSeasonSelectTitle();
             SeasonComboBox.DataSource = null;
-            SeasonComboBox.DataSource = GlobalConfig.Connection.GetAllSeasons();
+            SeasonComboBox.DataSource = seasons.OrderBy(p => p.SeasonID).ToList(); ;
             SeasonComboBox.DisplayMember = "SeasonName";
+        }
+
+        private void AddSeasonSelectTitle()
+        {
+            int index = seasons.FindIndex(item => item.SeasonID == -1);
+            if (index >= 0)
+            {
+                // element exists, do what you need
+            }
+            else
+            {
+                SeasonModel s = new SeasonModel("Select Season", -1);
+                seasons.Insert(0, s);
+            }
         }
 
         /// <summary>
@@ -75,14 +93,14 @@ namespace TournamentTrackerUI
         /// </summary>
         private void WireupDivisionSelector()
         {
-            AddSelectTitle();
+            AddDivisionSelectTitle();
            
             DivisionNameComboBox.DataSource = null;
             DivisionNameComboBox.DataSource = divs.OrderBy(p => p.DivisionNumber).ToList(); ;
             DivisionNameComboBox.DisplayMember = "DivisionName";
         }
 
-        private void AddSelectTitle()
+        private void AddDivisionSelectTitle()
         {
             int index = divs.FindIndex(item => item.DivisionID == -1);
             if (index >= 0)
@@ -338,18 +356,18 @@ namespace TournamentTrackerUI
             DivNumberLabel.Text = dm.DivisionNumber.ToString();
         }
 
-        private void DisplayDivisionStartDate(DivisionModel dm)
+        private void DisplayDivisionStartDate(SeasonDivisionsModel sdm)
         {
-            StartDate.Value = dm.StartDate;
+            StartDate.Value = sdm.StartDate;
         }
 
         /// <summary>
         /// Gets Division Teams from datasource
         /// </summary>
         /// <param name="dm"></param>
-        private List<TeamModel> getDivisionTeams(DivisionModel dm)
+        private List<TeamModel> getDivisionTeams(SeasonDivisionsModel sdm)
         {
-            selectedTeams = GlobalConfig.Connection.GetDivisionTeams(dm);            
+            selectedTeams = GlobalConfig.Connection.GetDivisionTeams(sdm);            
             return selectedTeams;
         }
 
@@ -359,7 +377,7 @@ namespace TournamentTrackerUI
         /// populates the skipped dates list box
         /// which can be manipulated
         /// </summary>
-        private void getSkippedDates(DivisionModel dm)
+        private List<SkippedDatesModel> getSkippedDates(DivisionModel dm)
         {
             List<SkippedDatesModel> sd = GlobalConfig.Connection.GetSkippedDates(dm);
             skippedDates = new List<DateTime>();
@@ -368,7 +386,7 @@ namespace TournamentTrackerUI
                 skippedDates.Add(sdm.DateToSkip);
                 OriginalskippedDates.Add(sdm.DateToSkip);
             }
-            updateSkippedDatesBox();
+            return sd;
         }
 
         /// <summary>
@@ -415,7 +433,7 @@ namespace TournamentTrackerUI
         /// list of all teams
         /// </summary>
         /// <param name="dm"></param>
-        private List<TeamModel> getAvailableTeams(DivisionModel dm)
+        private List<TeamModel> getAvailableTeams(SeasonDivisionsModel sdm)
         {
             // Get ALL teams
             teamsAvailable = GlobalConfig.Connection.GetAllTeams();
@@ -459,18 +477,21 @@ namespace TournamentTrackerUI
             {
                 // Get/Create Division Model that has been selected
                 dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
+                SeasonDivisionsModel sdm = GlobalConfig.Connection.GetSeasonDivisionModel(dm);
                 //Display Division details
                 DisplayDivisionNumber(dm);
-                DisplayDivisionStartDate(dm);
-                getSkippedDates(dm);
+                sdm.skippedDates = getSkippedDates(dm);
+                updateSkippedDatesBox();
+                DisplayDivisionStartDate(sdm);
+                
                 originalDivName = dm.DivisionName;
                 divNames.Clear();
                 getDivNames(divs);
                 originalDivNumber = dm.DivisionNumber;
                 divNumbers.Clear();
                 getDivNumbers(divs);
-                selectedTeams = getDivisionTeams(dm);              
-                teamsAvailable = getAvailableTeams(dm);
+                selectedTeams = getDivisionTeams(sdm);              
+                teamsAvailable = getAvailableTeams(sdm);
                 WireupTeamLists(teamsAvailable, selectedTeams);
                 UpdateDivName(DivisionNameComboBox);
                 UpdateDivNumber(DivNumberLabel);
@@ -772,6 +793,13 @@ namespace TournamentTrackerUI
         {
             selectedTeams.Add(model);
             WireupTeamLists(teamsAvailable, selectedTeams);
+        }
+
+        private void SeasonComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            SeasonModel sm = (SeasonModel)SeasonComboBox.SelectedItem;
+            divs = GlobalConfig.Connection.GetSeasonDivisions(sm.SeasonID);
+            WireupDivisionSelector();
         }
     }
 }

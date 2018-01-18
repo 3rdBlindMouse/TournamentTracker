@@ -32,10 +32,17 @@ namespace TournamentLibrary.Models
 
         }
 
-        public SeasonModel(string name, int year)
+        /// <summary>
+        /// used to create a "Heading" for Season combo boxes
+        /// allows a SeasonModel to be created and added to a List that is about to become a datasource
+        /// </summary>
+        /// <param name="name"></param>
+        public SeasonModel(string name, int i)
         {
             SeasonName = name;
-            SeasonYear = year;
+            SeasonID= i;
         }
+
+       
     }
 }

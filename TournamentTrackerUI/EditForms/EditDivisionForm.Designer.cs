@@ -369,7 +369,6 @@
             this.DivisionNameComboBox.Name = "DivisionNameComboBox";
             this.DivisionNameComboBox.Size = new System.Drawing.Size(218, 25);
             this.DivisionNameComboBox.TabIndex = 30;
-            this.DivisionNameComboBox.SelectedIndexChanged += new System.EventHandler(this.DivisionNameComboBox_SelectedValueChanged);
             this.DivisionNameComboBox.SelectedValueChanged += new System.EventHandler(this.DivisionNameComboBox_SelectedValueChanged);
             // 
             // RemoveTeamButton
@@ -432,6 +431,7 @@
             this.SeasonComboBox.Name = "SeasonComboBox";
             this.SeasonComboBox.Size = new System.Drawing.Size(218, 25);
             this.SeasonComboBox.TabIndex = 38;
+            this.SeasonComboBox.SelectedValueChanged += new System.EventHandler(this.SeasonComboBox_SelectedValueChanged);
             // 
             // label1
             // 

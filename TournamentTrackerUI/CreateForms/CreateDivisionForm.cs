@@ -47,8 +47,8 @@ namespace TournamentTrackerUI
 
             InitializeComponent();
             WireupTeams();
-            getTeamNames(divs);
-            getTeamNumbers(divs);
+           // getTeamNames(divs);
+           // getTeamNumbers(divs);
         }
 
 
@@ -64,8 +64,8 @@ namespace TournamentTrackerUI
 
             InitializeComponent();
             WireupTeams();
-            getTeamNames(divs);
-            getTeamNumbers(divs);
+           // getTeamNames(divs);
+            //getTeamNumbers(divs);
         }
         /*
          * Have tried to put methods in order of them being called upon
@@ -394,8 +394,8 @@ namespace TournamentTrackerUI
         private void updateData()
         {
             divs = GlobalConfig.Connection.GetSeasonDivisions(seasonID);
-            getTeamNames(divs);
-            getTeamNumbers(divs);
+           // getTeamNames(divs);
+           // getTeamNumbers(divs);
         }
 
         /// <summary>

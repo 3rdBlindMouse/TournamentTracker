@@ -24,7 +24,7 @@ namespace TournamentLibrary.DataAccess
         
 
         List<TeamModel> GetAllTeams();
-        List<TeamModel> GetDivisionTeams(DivisionModel model);
+        List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model);
 
         
 
@@ -45,5 +45,6 @@ namespace TournamentLibrary.DataAccess
         void DeleteTeamCaptain();
         SeasonDivisionsModel createSeasonDivisions(SeasonDivisionsModel model);
         List<SeasonModel> GetAllSeasons();
+        SeasonDivisionsModel GetSeasonDivisionModel(DivisionModel dm);
     }
 }

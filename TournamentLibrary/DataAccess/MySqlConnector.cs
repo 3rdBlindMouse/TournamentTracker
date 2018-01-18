@@ -167,7 +167,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@TeamName", model.TeamName);
                 // TODO sort venues
-                p.Add("@TeamVenue", model.TeamVenue);
+                //p.Add("@TeamVenue", model.TeamVenue);
                 //p.Add("@DivisionID", 0);
                 connection.Execute("spTeam", p, commandType: CommandType.StoredProcedure);
                 // grabs newly created ID from database and returns it as part of the current Person Model
@@ -265,16 +265,12 @@ namespace TournamentLibrary.DataAccess
             {
                 var q = new DynamicParameters();
                 q.Add("@SeasonID", id);
-                output = connection.Query<DivisionModel>("spGetSeasonDivisions", q, commandType: CommandType.StoredProcedure).ToList();
+                output = connection.Query<DivisionModel>("spGetSeasonDivisions", q, commandType: CommandType.StoredProcedure).ToList();               
 
-                foreach (DivisionModel div in output)
-                {
-                    var p = new DynamicParameters();
-                    p.Add("@DivisionID", div.DivisionID);
-                    div.DivisionSkippedDates = connection.Query<SkippedDatesModel>("spGetSkippedDates", p, commandType: CommandType.StoredProcedure).ToList();
-                    div.DivisionTeams = connection.Query<TeamModel>("spGetDivisionTeams", p, commandType: CommandType.StoredProcedure).ToList();
-                }
-
+            }
+            foreach(DivisionModel d in output)
+            {
+                d.SeasonID = id;
             }
             return output;
         }
@@ -283,13 +279,13 @@ namespace TournamentLibrary.DataAccess
         /// </summary>
         /// <param name="model"></param>
         /// <returns>A List of all the Teams in a Selected Division</returns>
-        public List<TeamModel> GetDivisionTeams(DivisionModel model)
+        public List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model)
         {
             List<TeamModel> output;
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@InSeasonDivisionsID", model.SeasonDivisionsID);
                 output = connection.Query<TeamModel>("spGetDivisionTeams", p, commandType: CommandType.StoredProcedure).ToList();
 
                 foreach (TeamModel team in output)
@@ -364,6 +360,7 @@ namespace TournamentLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@DivisionID", model.DivisionID);
+                p.Add("@SeasonID", model.SeasonID);
                 output = connection.Query<SkippedDatesModel>("spGetSkippedDates", p, commandType: CommandType.StoredProcedure).ToList();
             }
             return output;
@@ -588,6 +585,27 @@ namespace TournamentLibrary.DataAccess
                 output = connection.Query<SeasonModel>("spGetAllSeasons").ToList();
             }
             return output;
+        }
+
+        public SeasonDivisionsModel GetSeasonDivisionModel(DivisionModel model)
+        {
+            List<SeasonDivisionsModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InDivisionID", model.DivisionID);
+                p.Add("@InSeasonID", model.SeasonID);
+                output = connection.Query<SeasonDivisionsModel>("spGetSeasonDivisionsModel", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            SeasonDivisionsModel sm = new SeasonDivisionsModel();
+            foreach(SeasonDivisionsModel x in output)
+            {
+                sm.SeasonDivisionsID = x.SeasonDivisionsID;
+                sm.SeasonID = model.SeasonID;
+                sm.DivisionID = model.DivisionID;
+                sm.StartDate = x.StartDate;
+            }
+            return sm;
         }
     }
 }

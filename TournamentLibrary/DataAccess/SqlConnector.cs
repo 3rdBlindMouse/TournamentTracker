@@ -225,5 +225,15 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public SeasonDivisionsModel GetSeasonDivisionModel(DivisionModel dm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
