@@ -63,6 +63,8 @@
             this.EditDivisionButton = new System.Windows.Forms.Button();
             this.DivNumberLabel = new System.Windows.Forms.Label();
             this.createNewTeamLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.SeasonComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,17 +83,17 @@
             // 
             this.DivisionNameLabel.AutoSize = true;
             this.DivisionNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivisionNameLabel.Location = new System.Drawing.Point(6, 81);
+            this.DivisionNameLabel.Location = new System.Drawing.Point(6, 102);
             this.DivisionNameLabel.Name = "DivisionNameLabel";
-            this.DivisionNameLabel.Size = new System.Drawing.Size(112, 21);
+            this.DivisionNameLabel.Size = new System.Drawing.Size(66, 21);
             this.DivisionNameLabel.TabIndex = 2;
-            this.DivisionNameLabel.Text = "Division Name";
+            this.DivisionNameLabel.Text = "Division";
             // 
             // DivisionNumberLabel
             // 
             this.DivisionNumberLabel.AutoSize = true;
             this.DivisionNumberLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivisionNumberLabel.Location = new System.Drawing.Point(6, 127);
+            this.DivisionNumberLabel.Location = new System.Drawing.Point(6, 148);
             this.DivisionNumberLabel.Name = "DivisionNumberLabel";
             this.DivisionNumberLabel.Size = new System.Drawing.Size(128, 21);
             this.DivisionNumberLabel.TabIndex = 3;
@@ -101,7 +103,7 @@
             // 
             this.AddTeamsLabel.AutoSize = true;
             this.AddTeamsLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddTeamsLabel.Location = new System.Drawing.Point(6, 271);
+            this.AddTeamsLabel.Location = new System.Drawing.Point(6, 292);
             this.AddTeamsLabel.Name = "AddTeamsLabel";
             this.AddTeamsLabel.Size = new System.Drawing.Size(87, 21);
             this.AddTeamsLabel.TabIndex = 4;
@@ -111,7 +113,7 @@
             // 
             this.SkipDatesLabel.AutoSize = true;
             this.SkipDatesLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SkipDatesLabel.Location = new System.Drawing.Point(6, 209);
+            this.SkipDatesLabel.Location = new System.Drawing.Point(6, 230);
             this.SkipDatesLabel.Name = "SkipDatesLabel";
             this.SkipDatesLabel.Size = new System.Drawing.Size(101, 21);
             this.SkipDatesLabel.TabIndex = 5;
@@ -121,7 +123,7 @@
             // 
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartDateLabel.Location = new System.Drawing.Point(6, 165);
+            this.StartDateLabel.Location = new System.Drawing.Point(6, 186);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(79, 21);
             this.StartDateLabel.TabIndex = 6;
@@ -129,7 +131,7 @@
             // 
             // StartDate
             // 
-            this.StartDate.Location = new System.Drawing.Point(141, 164);
+            this.StartDate.Location = new System.Drawing.Point(141, 185);
             this.StartDate.Name = "StartDate";
             this.StartDate.Size = new System.Drawing.Size(200, 22);
             this.StartDate.TabIndex = 12;
@@ -137,14 +139,14 @@
             // 
             // SkipDatesdateTimePicker
             // 
-            this.SkipDatesdateTimePicker.Location = new System.Drawing.Point(141, 208);
+            this.SkipDatesdateTimePicker.Location = new System.Drawing.Point(141, 229);
             this.SkipDatesdateTimePicker.Name = "SkipDatesdateTimePicker";
             this.SkipDatesdateTimePicker.Size = new System.Drawing.Size(200, 22);
             this.SkipDatesdateTimePicker.TabIndex = 13;
             // 
             // skipDatesAddButton
             // 
-            this.skipDatesAddButton.Location = new System.Drawing.Point(141, 236);
+            this.skipDatesAddButton.Location = new System.Drawing.Point(141, 257);
             this.skipDatesAddButton.Name = "skipDatesAddButton";
             this.skipDatesAddButton.Size = new System.Drawing.Size(75, 30);
             this.skipDatesAddButton.TabIndex = 14;
@@ -175,7 +177,7 @@
             // 
             // skipDatesRemoveButton
             // 
-            this.skipDatesRemoveButton.Location = new System.Drawing.Point(266, 236);
+            this.skipDatesRemoveButton.Location = new System.Drawing.Point(266, 257);
             this.skipDatesRemoveButton.Name = "skipDatesRemoveButton";
             this.skipDatesRemoveButton.Size = new System.Drawing.Size(75, 30);
             this.skipDatesRemoveButton.TabIndex = 20;
@@ -353,7 +355,7 @@
             this.addTeamsDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.addTeamsDropdown.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addTeamsDropdown.FormattingEnabled = true;
-            this.addTeamsDropdown.Location = new System.Drawing.Point(141, 271);
+            this.addTeamsDropdown.Location = new System.Drawing.Point(141, 292);
             this.addTeamsDropdown.Name = "addTeamsDropdown";
             this.addTeamsDropdown.Size = new System.Drawing.Size(218, 25);
             this.addTeamsDropdown.TabIndex = 25;
@@ -363,7 +365,7 @@
             this.DivisionNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DivisionNameComboBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DivisionNameComboBox.FormattingEnabled = true;
-            this.DivisionNameComboBox.Location = new System.Drawing.Point(141, 81);
+            this.DivisionNameComboBox.Location = new System.Drawing.Point(141, 102);
             this.DivisionNameComboBox.Name = "DivisionNameComboBox";
             this.DivisionNameComboBox.Size = new System.Drawing.Size(218, 25);
             this.DivisionNameComboBox.TabIndex = 30;
@@ -372,7 +374,7 @@
             // 
             // RemoveTeamButton
             // 
-            this.RemoveTeamButton.Location = new System.Drawing.Point(284, 347);
+            this.RemoveTeamButton.Location = new System.Drawing.Point(284, 368);
             this.RemoveTeamButton.Name = "RemoveTeamButton";
             this.RemoveTeamButton.Size = new System.Drawing.Size(75, 39);
             this.RemoveTeamButton.TabIndex = 31;
@@ -382,7 +384,7 @@
             // 
             // AddTeamButton
             // 
-            this.AddTeamButton.Location = new System.Drawing.Point(284, 302);
+            this.AddTeamButton.Location = new System.Drawing.Point(284, 323);
             this.AddTeamButton.Name = "AddTeamButton";
             this.AddTeamButton.Size = new System.Drawing.Size(75, 39);
             this.AddTeamButton.TabIndex = 33;
@@ -404,7 +406,7 @@
             // 
             this.DivNumberLabel.AutoSize = true;
             this.DivNumberLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivNumberLabel.Location = new System.Drawing.Point(146, 127);
+            this.DivNumberLabel.Location = new System.Drawing.Point(146, 148);
             this.DivNumberLabel.Name = "DivNumberLabel";
             this.DivNumberLabel.Size = new System.Drawing.Size(128, 21);
             this.DivNumberLabel.TabIndex = 35;
@@ -413,7 +415,7 @@
             // createNewTeamLinkLabel
             // 
             this.createNewTeamLinkLabel.AutoSize = true;
-            this.createNewTeamLinkLabel.Location = new System.Drawing.Point(138, 315);
+            this.createNewTeamLinkLabel.Location = new System.Drawing.Point(138, 336);
             this.createNewTeamLinkLabel.Name = "createNewTeamLinkLabel";
             this.createNewTeamLinkLabel.Size = new System.Drawing.Size(109, 13);
             this.createNewTeamLinkLabel.TabIndex = 36;
@@ -421,12 +423,34 @@
             this.createNewTeamLinkLabel.Text = "or Create New Team";
             this.createNewTeamLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewTeamLinkLabel_LinkClicked);
             // 
+            // SeasonComboBox
+            // 
+            this.SeasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SeasonComboBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SeasonComboBox.FormattingEnabled = true;
+            this.SeasonComboBox.Location = new System.Drawing.Point(141, 71);
+            this.SeasonComboBox.Name = "SeasonComboBox";
+            this.SeasonComboBox.Size = new System.Drawing.Size(218, 25);
+            this.SeasonComboBox.TabIndex = 38;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(6, 71);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 21);
+            this.label1.TabIndex = 37;
+            this.label1.Text = "Season";
+            // 
             // EditDivisionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(813, 504);
+            this.Controls.Add(this.SeasonComboBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.createNewTeamLinkLabel);
             this.Controls.Add(this.DivNumberLabel);
             this.Controls.Add(this.EditDivisionButton);
@@ -494,5 +518,7 @@
         private System.Windows.Forms.Label nameErrorLabel;
         private System.Windows.Forms.Label DivNumberLabel;
         private System.Windows.Forms.LinkLabel createNewTeamLinkLabel;
+        private System.Windows.Forms.ComboBox SeasonComboBox;
+        private System.Windows.Forms.Label label1;
     }
 }

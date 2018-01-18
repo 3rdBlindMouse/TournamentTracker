@@ -16,6 +16,12 @@ namespace TournamentLibrary.Models
         /// unique year for Season
         /// </summary>
         public int SeasonYear { get; set; }
+       
+        /// <summary>
+        /// A description of the current season
+        /// </summary>
+        public string SeasonDescription { get; set; }
+
         /// <summary>
         /// A list of the divisions in the current Season
         /// </summary>

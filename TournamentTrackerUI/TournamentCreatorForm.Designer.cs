@@ -29,12 +29,16 @@
         private void InitializeComponent()
         {
             this.TournamentHeaderLabel = new System.Windows.Forms.Label();
-            this.LoadTournamentLabel = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.LoadTorunamentComboBox = new System.Windows.Forms.ComboBox();
-            this.CreateNewTournamentTextBox = new System.Windows.Forms.TextBox();
-            this.LoadTournamentButton = new System.Windows.Forms.Button();
-            this.CreaeNewTournamentButton = new System.Windows.Forms.Button();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.CreateNewTournamentButton = new System.Windows.Forms.Button();
+            this.yearTextBox = new System.Windows.Forms.TextBox();
+            this.descriptionTextBox = new System.Windows.Forms.TextBox();
+            this.yearLabel = new System.Windows.Forms.Label();
+            this.descriptionLabel = new System.Windows.Forms.Label();
+            this.descriptionErrorLabel = new System.Windows.Forms.Label();
+            this.yearErrorLabel = new System.Windows.Forms.Label();
+            this.nameErrorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TournamentHeaderLabel
@@ -42,81 +46,122 @@
             this.TournamentHeaderLabel.AutoSize = true;
             this.TournamentHeaderLabel.Font = new System.Drawing.Font("Segoe UI", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TournamentHeaderLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            this.TournamentHeaderLabel.Location = new System.Drawing.Point(150, 35);
+            this.TournamentHeaderLabel.Location = new System.Drawing.Point(191, 36);
             this.TournamentHeaderLabel.Name = "TournamentHeaderLabel";
-            this.TournamentHeaderLabel.Size = new System.Drawing.Size(466, 50);
+            this.TournamentHeaderLabel.Size = new System.Drawing.Size(354, 50);
             this.TournamentHeaderLabel.TabIndex = 0;
-            this.TournamentHeaderLabel.Text = "Tournament Creator/Editor";
+            this.TournamentHeaderLabel.Text = "Tournament Creator";
             // 
-            // LoadTournamentLabel
+            // nameLabel
             // 
-            this.LoadTournamentLabel.AutoSize = true;
-            this.LoadTournamentLabel.Location = new System.Drawing.Point(78, 132);
-            this.LoadTournamentLabel.Name = "LoadTournamentLabel";
-            this.LoadTournamentLabel.Size = new System.Drawing.Size(111, 17);
-            this.LoadTournamentLabel.TabIndex = 1;
-            this.LoadTournamentLabel.Text = "Load Tournament";
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Location = new System.Drawing.Point(68, 124);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(43, 17);
+            this.nameLabel.TabIndex = 2;
+            this.nameLabel.Text = "Name";
             // 
-            // label2
+            // nameTextBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(81, 183);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 17);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Create New Tournament";
+            this.nameTextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.nameTextBox.Location = new System.Drawing.Point(198, 121);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(282, 25);
+            this.nameTextBox.TabIndex = 4;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
-            // LoadTorunamentComboBox
+            // CreateNewTournamentButton
             // 
-            this.LoadTorunamentComboBox.BackColor = System.Drawing.SystemColors.Info;
-            this.LoadTorunamentComboBox.FormattingEnabled = true;
-            this.LoadTorunamentComboBox.Location = new System.Drawing.Point(262, 129);
-            this.LoadTorunamentComboBox.Name = "LoadTorunamentComboBox";
-            this.LoadTorunamentComboBox.Size = new System.Drawing.Size(282, 25);
-            this.LoadTorunamentComboBox.TabIndex = 3;
+            this.CreateNewTournamentButton.Location = new System.Drawing.Point(337, 214);
+            this.CreateNewTournamentButton.Name = "CreateNewTournamentButton";
+            this.CreateNewTournamentButton.Size = new System.Drawing.Size(75, 24);
+            this.CreateNewTournamentButton.TabIndex = 6;
+            this.CreateNewTournamentButton.Text = "Create";
+            this.CreateNewTournamentButton.UseVisualStyleBackColor = true;
+            this.CreateNewTournamentButton.Click += new System.EventHandler(this.CreateNewTournamentButton_Click);
             // 
-            // CreateNewTournamentTextBox
+            // yearTextBox
             // 
-            this.CreateNewTournamentTextBox.BackColor = System.Drawing.SystemColors.Info;
-            this.CreateNewTournamentTextBox.Location = new System.Drawing.Point(262, 180);
-            this.CreateNewTournamentTextBox.Name = "CreateNewTournamentTextBox";
-            this.CreateNewTournamentTextBox.Size = new System.Drawing.Size(282, 25);
-            this.CreateNewTournamentTextBox.TabIndex = 4;
+            this.yearTextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.yearTextBox.Location = new System.Drawing.Point(198, 152);
+            this.yearTextBox.Name = "yearTextBox";
+            this.yearTextBox.Size = new System.Drawing.Size(282, 25);
+            this.yearTextBox.TabIndex = 7;
+            this.yearTextBox.TextChanged += new System.EventHandler(this.yearTextBox_TextChanged);
             // 
-            // LoadTournamentButton
+            // descriptionTextBox
             // 
-            this.LoadTournamentButton.Location = new System.Drawing.Point(640, 129);
-            this.LoadTournamentButton.Name = "LoadTournamentButton";
-            this.LoadTournamentButton.Size = new System.Drawing.Size(75, 24);
-            this.LoadTournamentButton.TabIndex = 5;
-            this.LoadTournamentButton.Text = "Load";
-            this.LoadTournamentButton.UseVisualStyleBackColor = true;
+            this.descriptionTextBox.BackColor = System.Drawing.SystemColors.Info;
+            this.descriptionTextBox.Location = new System.Drawing.Point(198, 183);
+            this.descriptionTextBox.Name = "descriptionTextBox";
+            this.descriptionTextBox.Size = new System.Drawing.Size(282, 25);
+            this.descriptionTextBox.TabIndex = 8;
             // 
-            // CreaeNewTournamentButton
+            // yearLabel
             // 
-            this.CreaeNewTournamentButton.Location = new System.Drawing.Point(640, 180);
-            this.CreaeNewTournamentButton.Name = "CreaeNewTournamentButton";
-            this.CreaeNewTournamentButton.Size = new System.Drawing.Size(75, 24);
-            this.CreaeNewTournamentButton.TabIndex = 6;
-            this.CreaeNewTournamentButton.Text = "Create";
-            this.CreaeNewTournamentButton.UseVisualStyleBackColor = true;
+            this.yearLabel.AutoSize = true;
+            this.yearLabel.Location = new System.Drawing.Point(68, 155);
+            this.yearLabel.Name = "yearLabel";
+            this.yearLabel.Size = new System.Drawing.Size(34, 17);
+            this.yearLabel.TabIndex = 9;
+            this.yearLabel.Text = "Year";
             // 
-            // TournamentCreator
+            // descriptionLabel
+            // 
+            this.descriptionLabel.AutoSize = true;
+            this.descriptionLabel.Location = new System.Drawing.Point(68, 184);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(74, 17);
+            this.descriptionLabel.TabIndex = 10;
+            this.descriptionLabel.Text = "Description";
+            // 
+            // descriptionErrorLabel
+            // 
+            this.descriptionErrorLabel.AutoSize = true;
+            this.descriptionErrorLabel.Location = new System.Drawing.Point(486, 184);
+            this.descriptionErrorLabel.Name = "descriptionErrorLabel";
+            this.descriptionErrorLabel.Size = new System.Drawing.Size(66, 17);
+            this.descriptionErrorLabel.TabIndex = 13;
+            this.descriptionErrorLabel.Text = "(Optional)";
+            // 
+            // yearErrorLabel
+            // 
+            this.yearErrorLabel.AutoSize = true;
+            this.yearErrorLabel.Location = new System.Drawing.Point(486, 155);
+            this.yearErrorLabel.Name = "yearErrorLabel";
+            this.yearErrorLabel.Size = new System.Drawing.Size(11, 17);
+            this.yearErrorLabel.TabIndex = 12;
+            this.yearErrorLabel.Text = ".";
+            // 
+            // nameErrorLabel
+            // 
+            this.nameErrorLabel.AutoSize = true;
+            this.nameErrorLabel.Location = new System.Drawing.Point(486, 124);
+            this.nameErrorLabel.Name = "nameErrorLabel";
+            this.nameErrorLabel.Size = new System.Drawing.Size(11, 17);
+            this.nameErrorLabel.TabIndex = 11;
+            this.nameErrorLabel.Text = ".";
+            // 
+            // TournamentCreatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(770, 301);
-            this.Controls.Add(this.CreaeNewTournamentButton);
-            this.Controls.Add(this.LoadTournamentButton);
-            this.Controls.Add(this.CreateNewTournamentTextBox);
-            this.Controls.Add(this.LoadTorunamentComboBox);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.LoadTournamentLabel);
+            this.Controls.Add(this.descriptionErrorLabel);
+            this.Controls.Add(this.yearErrorLabel);
+            this.Controls.Add(this.nameErrorLabel);
+            this.Controls.Add(this.descriptionLabel);
+            this.Controls.Add(this.yearLabel);
+            this.Controls.Add(this.descriptionTextBox);
+            this.Controls.Add(this.yearTextBox);
+            this.Controls.Add(this.CreateNewTournamentButton);
+            this.Controls.Add(this.nameTextBox);
+            this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.TournamentHeaderLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "TournamentCreator";
+            this.Name = "TournamentCreatorForm";
             this.Text = "Tournament Creation";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -126,12 +171,16 @@
         #endregion
 
         private System.Windows.Forms.Label TournamentHeaderLabel;
-        private System.Windows.Forms.Label LoadTournamentLabel;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox LoadTorunamentComboBox;
-        private System.Windows.Forms.TextBox CreateNewTournamentTextBox;
-        private System.Windows.Forms.Button LoadTournamentButton;
-        private System.Windows.Forms.Button CreaeNewTournamentButton;
+        private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Button CreateNewTournamentButton;
+        private System.Windows.Forms.TextBox yearTextBox;
+        private System.Windows.Forms.TextBox descriptionTextBox;
+        private System.Windows.Forms.Label yearLabel;
+        private System.Windows.Forms.Label descriptionLabel;
+        private System.Windows.Forms.Label descriptionErrorLabel;
+        private System.Windows.Forms.Label yearErrorLabel;
+        private System.Windows.Forms.Label nameErrorLabel;
     }
 }
 

@@ -52,6 +52,8 @@
             this.DisplayTeamVenueLabel = new System.Windows.Forms.Label();
             this.DisplayTeamName = new System.Windows.Forms.Label();
             this.DisplayTeamNameLabel = new System.Windows.Forms.Label();
+            this.DivisionNameComboBox = new System.Windows.Forms.ComboBox();
+            this.DivisionNameLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TitleLabel
@@ -69,19 +71,20 @@
             // 
             this.CreateNewTeamLabel.AutoSize = true;
             this.CreateNewTeamLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateNewTeamLabel.Location = new System.Drawing.Point(40, 88);
+            this.CreateNewTeamLabel.Location = new System.Drawing.Point(40, 98);
             this.CreateNewTeamLabel.Name = "CreateNewTeamLabel";
-            this.CreateNewTeamLabel.Size = new System.Drawing.Size(281, 21);
+            this.CreateNewTeamLabel.Size = new System.Drawing.Size(48, 21);
             this.CreateNewTeamLabel.TabIndex = 1;
-            this.CreateNewTeamLabel.Text = "Create New Team or Edit Existing Team";
+            this.CreateNewTeamLabel.Text = "Team";
             // 
             // teamDropDown
             // 
+            this.teamDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.teamDropDown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.teamDropDown.FormattingEnabled = true;
-            this.teamDropDown.Location = new System.Drawing.Point(345, 85);
+            this.teamDropDown.Location = new System.Drawing.Point(175, 95);
             this.teamDropDown.Name = "teamDropDown";
-            this.teamDropDown.Size = new System.Drawing.Size(156, 29);
+            this.teamDropDown.Size = new System.Drawing.Size(218, 29);
             this.teamDropDown.TabIndex = 2;
             this.teamDropDown.SelectedValueChanged += new System.EventHandler(this.teamDropDown_SelectedValueChanged);
             // 
@@ -138,6 +141,7 @@
             // 
             // addPlayerDropdown
             // 
+            this.addPlayerDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.addPlayerDropdown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addPlayerDropdown.FormattingEnabled = true;
             this.addPlayerDropdown.Location = new System.Drawing.Point(171, 250);
@@ -158,6 +162,7 @@
             // 
             // teamCaptainDropdown
             // 
+            this.teamCaptainDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.teamCaptainDropdown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.teamCaptainDropdown.FormattingEnabled = true;
             this.teamCaptainDropdown.Location = new System.Drawing.Point(171, 314);
@@ -215,6 +220,7 @@
             // 
             // venueDropDown
             // 
+            this.venueDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.venueDropDown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.venueDropDown.FormattingEnabled = true;
             this.venueDropDown.Location = new System.Drawing.Point(171, 192);
@@ -292,12 +298,34 @@
             this.DisplayTeamNameLabel.TabIndex = 30;
             this.DisplayTeamNameLabel.Text = "Team Name";
             // 
+            // DivisionNameComboBox
+            // 
+            this.DivisionNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DivisionNameComboBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DivisionNameComboBox.FormattingEnabled = true;
+            this.DivisionNameComboBox.Location = new System.Drawing.Point(175, 66);
+            this.DivisionNameComboBox.Name = "DivisionNameComboBox";
+            this.DivisionNameComboBox.Size = new System.Drawing.Size(218, 25);
+            this.DivisionNameComboBox.TabIndex = 37;
+            // 
+            // DivisionNameLabel
+            // 
+            this.DivisionNameLabel.AutoSize = true;
+            this.DivisionNameLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DivisionNameLabel.Location = new System.Drawing.Point(40, 66);
+            this.DivisionNameLabel.Name = "DivisionNameLabel";
+            this.DivisionNameLabel.Size = new System.Drawing.Size(66, 21);
+            this.DivisionNameLabel.TabIndex = 36;
+            this.DivisionNameLabel.Text = "Division";
+            // 
             // EditTeamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(770, 420);
+            this.Controls.Add(this.DivisionNameComboBox);
+            this.Controls.Add(this.DivisionNameLabel);
             this.Controls.Add(this.DisplayCaptain);
             this.Controls.Add(this.DisplayCaptainLabel);
             this.Controls.Add(this.DisplayTeamVenue);
@@ -356,5 +384,7 @@
         private System.Windows.Forms.Label DisplayTeamVenueLabel;
         private System.Windows.Forms.Label DisplayTeamName;
         private System.Windows.Forms.Label DisplayTeamNameLabel;
+        private System.Windows.Forms.ComboBox DivisionNameComboBox;
+        private System.Windows.Forms.Label DivisionNameLabel;
     }
 }

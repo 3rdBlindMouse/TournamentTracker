@@ -19,7 +19,8 @@ namespace TournamentTrackerUI
     {
         // List of All Divisions
         //TODO sort Season out so list of divisions in selcted season.
-        private static List<DivisionModel> divs = GlobalConfig.Connection.GetAllDivisions();
+        //TODO important to get season ID
+        private static List<DivisionModel> divs = new List<DivisionModel>();
         //List of Division Names
         private static List<string> divNames = new List<string>();
         // Name of Selected Division
@@ -56,9 +57,18 @@ namespace TournamentTrackerUI
 
         public EditDivisionForm()
         {
-            InitializeComponent();           
+            InitializeComponent();
+            WireUpSeasonSelector();
             WireupDivisionSelector();
         }
+
+        private void WireUpSeasonSelector()
+        {
+            SeasonComboBox.DataSource = null;
+            SeasonComboBox.DataSource = GlobalConfig.Connection.GetAllSeasons();
+            SeasonComboBox.DisplayMember = "SeasonName";
+        }
+
         /// <summary>
         /// creates a new Division Model to use as a combobox Title
         /// Wires up Division List as datasource for DivisionNameComboBox
@@ -539,7 +549,7 @@ namespace TournamentTrackerUI
                     // Commit simple Divison Model to db et.al
                     GlobalConfig.Connection.EditDivision(model);
                     // Commit Division Skipped Dates to db et.al
-                    EditSkippedDates(model);
+                    //EditSkippedDates(model);
                     // Commit Division Teams to db et.al
                     EditTeamsModels(model);
                     // Clear Form
@@ -608,19 +618,20 @@ namespace TournamentTrackerUI
         /// </summary>
         /// <param name="model"></param>
         // TODO likely change to match with what have done with teams but having the two different variations is ok for now
-        private void EditSkippedDates(DivisionModel model)
+        private void EditSkippedDates(SkippedDatesModel model)
         {
             // Are the two lists the same size? does one of the lists contain everything in the other list?
             var skippedDatesSame = ((OriginalskippedDates.Count == skippedDates.Count) && OriginalskippedDates.All(skippedDates.Contains));
             if (skippedDatesSame != true)
             {
                 // if not remove all dates from db 
-                GlobalConfig.Connection.DeleteSkippedDates(model);
+                // TODO change
+                //GlobalConfig.Connection.DeleteSkippedDates(model);
                 // and repopulate with new data
                 foreach (DateTime date in skippedDates)
                 {
                     SkippedDatesModel skDates = new SkippedDatesModel();
-                    skDates.DivisionID = model.DivisionID;
+                    skDates.SeasonDivisionsID = model.SeasonDivisionsID;
                     skDates.DateToSkip = date;
                     GlobalConfig.Connection.CreateSkippedDates(skDates);
                 }
@@ -628,7 +639,7 @@ namespace TournamentTrackerUI
             }
 
 
-            model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
+          // model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
         }
 
         

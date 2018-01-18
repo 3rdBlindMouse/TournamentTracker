@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using TournamentLibrary;
+using TournamentTrackerUI.CreateForms;
 
 namespace TournamentTrackerUI
 {
@@ -22,8 +23,10 @@ namespace TournamentTrackerUI
             //Application.Run(new TeamCreatorForm());
             //Application.Run(new PersonCreatorForm());
             //Application.Run(new VenueCreatorForm());
-            Application.Run(new FirstForm());
-            //Application.Run(new EditDivisionForm());
+            //Application.Run(new FirstForm());
+            Application.Run(new EditDivisionForm());
+            //Application.Run(new TournamentCreatorForm());
+            //Application.Run(new CreateSeasonForm());
         }
     }
 }

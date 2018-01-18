@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -12,6 +13,8 @@ namespace TournamentTrackerUI
 {
     public partial class CreateDivisionForm : Form, ITeamRequester
     {
+        IDivisionRequester callingForm;
+        private static string method;
 
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
@@ -20,7 +23,7 @@ namespace TournamentTrackerUI
         // Teams selected by user to be in Division
         private List<TeamModel> selectedTeams = new List<TeamModel>();
         // A list of all Divisions in the season
-        private static List<DivisionModel> divs = GlobalConfig.Connection.GetAllDivisions();
+        private static List<DivisionModel> divs = new List<DivisionModel>();
         // A list of Team names used to check for duplicates
         List<string> teamNames = new List<string>();
         // A list of team numbers uded to check for duplicates
@@ -30,8 +33,35 @@ namespace TournamentTrackerUI
         bool numberValid = false;
         bool startDateValid = false;
 
-        public CreateDivisionForm()
+
+        private int seasonID;
+
+        public CreateDivisionForm(IDivisionRequester caller)
         {
+            callingForm = caller;
+
+            
+            StackFrame frame = new StackFrame(1, true);
+            method = (frame.GetMethod().Name);
+
+
+            InitializeComponent();
+            WireupTeams();
+            getTeamNames(divs);
+            getTeamNumbers(divs);
+        }
+
+
+        public CreateDivisionForm(IDivisionRequester caller, int sID)
+        {
+            callingForm = caller;
+            seasonID = sID;
+
+            StackFrame frame = new StackFrame(1, true);
+            method = (frame.GetMethod().Name);
+
+            divs = GlobalConfig.Connection.GetSeasonDivisions(seasonID);
+
             InitializeComponent();
             WireupTeams();
             getTeamNames(divs);
@@ -40,7 +70,7 @@ namespace TournamentTrackerUI
         /*
          * Have tried to put methods in order of them being called upon
          * either by default or by user actions.
-         */       
+         */
         /// <summary>
         /// WireUp Team dropdown and selectedTeams ListBox
         /// </summary>
@@ -329,10 +359,17 @@ namespace TournamentTrackerUI
                 {
                     // create a division model
                     DivisionModel model = createDivision();
-                    createSkippedDates(model);
-                    createDivisionTeams(model);
-                    updateData();            
+                    SeasonDivisionsModel sdm = createSeasonDivisionsModel(model);
+                    
+                    createSkippedDates(sdm);
+                   // createDivisionTeams(model);
+                    updateData();      
                     MessageBox.Show("Division Successfully Created");
+                    if (method == "createNewDivisionLinkLabel_LinkClicked")
+                    {
+                        this.Close();
+                        //MessageBox.Show("From Create Division Form");
+                    }
                     clearForm();    
                 }
                 else
@@ -341,12 +378,22 @@ namespace TournamentTrackerUI
                 }
             }
         }
+
+        private SeasonDivisionsModel createSeasonDivisionsModel(DivisionModel model)
+        {
+            SeasonDivisionsModel sdm = new SeasonDivisionsModel();
+            sdm.SeasonID = model.SeasonID;
+            sdm.DivisionID = model.DivisionID;
+            sdm.StartDate = model.StartDate;
+            return GlobalConfig.Connection.createSeasonDivisions(sdm);
+        }
+
         /// <summary>
         /// Grab any changes from DB (to stop duplicates being made before form closes)
         /// </summary>
         private void updateData()
         {
-            divs = GlobalConfig.Connection.GetAllDivisions();
+            divs = GlobalConfig.Connection.GetSeasonDivisions(seasonID);
             getTeamNames(divs);
             getTeamNumbers(divs);
         }
@@ -360,22 +407,24 @@ namespace TournamentTrackerUI
             DivisionModel model = new DivisionModel();
             model.DivisionName = DivisionNameTextbox.Text;
             model.DivisionNumber = int.Parse(DivisionNumberTextbox.Text);
+            model.SeasonID = seasonID;
             //model.DivisionTeams = selectedTeams;
             model.StartDate = StartDate.Value;
             // store division in Db and return ID
             GlobalConfig.Connection.CreateDivision(model);
+            callingForm.DivisionComplete(model);
             return model;
         }
         /// <summary>
         /// Create SkippedDates Model and Update DB et.al
         /// </summary>
         /// <param name="model"></param>
-        private void createSkippedDates(DivisionModel model)
+        private void createSkippedDates(SeasonDivisionsModel model)
         {
             foreach (DateTime date in skippedDates)
             {
                 SkippedDatesModel skDates = new SkippedDatesModel();
-                skDates.DivisionID = model.DivisionID;
+                skDates.SeasonDivisionsID = model.SeasonDivisionsID;
                 skDates.DateToSkip = date;
                 GlobalConfig.Connection.CreateSkippedDates(skDates);
             }

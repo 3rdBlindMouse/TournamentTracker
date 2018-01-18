@@ -84,7 +84,7 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<DivisionModel> GetAllDivisions()
+        public List<DivisionModel> GetSeasonDivisions()
         {
             throw new NotImplementedException();
         }
@@ -202,6 +202,26 @@ namespace TournamentLibrary.DataAccess
         }
 
         public void DeleteTeamCaptain()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SeasonModel> GetLastSeason()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DivisionModel> GetSeasonDivisions(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SeasonDivisionsModel createSeasonDivisions(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SeasonModel> GetAllSeasons()
         {
             throw new NotImplementedException();
         }

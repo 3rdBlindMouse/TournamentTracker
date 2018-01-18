@@ -29,8 +29,7 @@ namespace TournamentLibrary.DataAccess
                 var p = new DynamicParameters();
                 p.Add("@DivisionID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@DivisionName", model.DivisionName);
-                p.Add("@DivisionNumber", model.DivisionNumber);
-                p.Add("@StartDate", model.StartDate);
+                p.Add("@DivisionNumber", model.DivisionNumber);               
                 connection.Execute("spDivision", p, commandType: CommandType.StoredProcedure);
 
 
@@ -120,6 +119,7 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@SeasonID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@SeasonName", model.SeasonName);
                 p.Add("@SeasonYear", model.SeasonYear);
+                p.Add("@SeasonDescription", model.SeasonDescription);
 
 
                 connection.Execute("spSeason", p, commandType: CommandType.StoredProcedure);
@@ -144,7 +144,7 @@ namespace TournamentLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@SkippedDatesID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@SeasonDivisionsID", model.SeasonDivisionsID);
                 p.Add("@DateToSkip", model.DateToSkip);
                 connection.Execute("spSkippedDates", p, commandType: CommandType.StoredProcedure);
                 // grabs newly created ID from database and returns it as part of the current Person Model
@@ -258,12 +258,14 @@ namespace TournamentLibrary.DataAccess
         /// Gets a List of The Divisions in selected selection (at the moment all Divisions in the DB)
         /// </summary>
         /// <returns>A List of ALL Divisions in MySQL DB</returns>
-        public List<DivisionModel> GetAllDivisions()
+        public List<DivisionModel> GetSeasonDivisions(int id)
         {
             List<DivisionModel> output;
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
-                output = connection.Query<DivisionModel>("spGetAllDivisions").ToList();
+                var q = new DynamicParameters();
+                q.Add("@SeasonID", id);
+                output = connection.Query<DivisionModel>("spGetSeasonDivisions", q, commandType: CommandType.StoredProcedure).ToList();
 
                 foreach (DivisionModel div in output)
                 {
@@ -545,6 +547,47 @@ namespace TournamentLibrary.DataAccess
         public void DeleteTeamCaptain()
         {
             throw new NotImplementedException();
+        }
+
+        public List<SeasonModel> GetLastSeason()
+        {
+            List<SeasonModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<SeasonModel>("spGetLastSeason").ToList();
+            }
+            return output;
+        }
+
+        public SeasonDivisionsModel createSeasonDivisions(SeasonDivisionsModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@SeasonDivisionsID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@SeasonID", model.SeasonID);
+                p.Add("@DivisionID", model.DivisionID);
+                p.Add("@StartDate", model.StartDate.Date);
+                connection.Execute("spSeasonDivisions", p, commandType: CommandType.StoredProcedure);
+
+
+                // grabs newly created ID from database and returns it as part of the current Model
+                // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                var id = p.Get<int?>("SeasonDivisionsID");
+                model.SeasonDivisionsID = Convert.ToInt32(id);
+
+                return model;
+            }
+        }
+
+        public List<SeasonModel> GetAllSeasons()
+        {
+            List<SeasonModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<SeasonModel>("spGetAllSeasons").ToList();
+            }
+            return output;
         }
     }
 }

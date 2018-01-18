@@ -15,7 +15,7 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// ID of Division these dates relate to
         /// </summary>
-        public int DivisionID { get; set; }
+        public int SeasonDivisionsID { get; set; }
         /// <summary>
         /// Date to skip in current Division
         /// </summary>

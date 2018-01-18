@@ -51,6 +51,12 @@
     <Compile Include="CreateForms\CreateDivisionForm.Designer.cs">
       <DependentUpon>CreateDivisionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateForms\CreateSeasonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateForms\CreateSeasonForm.Designer.cs">
+      <DependentUpon>CreateSeasonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditForms\EditDivisionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,7 +93,9 @@
     <Compile Include="CreateForms\CreatePersonForm.Designer.cs">
       <DependentUpon>CreatePersonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RequestInterfaces\IDivisionRequester.cs" />
     <Compile Include="RequestInterfaces\IPersonRequester.cs" />
+    <Compile Include="RequestInterfaces\ISeasonRequester.cs" />
     <Compile Include="RequestInterfaces\ITeamRequester.cs" />
     <Compile Include="RequestInterfaces\IVenueRequester.cs" />
     <Compile Include="ScoreCard.cs">
@@ -118,6 +126,9 @@
     </Compile>
     <EmbeddedResource Include="CreateForms\CreateDivisionForm.resx">
       <DependentUpon>CreateDivisionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateForms\CreateSeasonForm.resx">
+      <DependentUpon>CreateSeasonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditForms\EditDivisionForm.resx">
       <DependentUpon>EditDivisionForm.cs</DependentUpon>

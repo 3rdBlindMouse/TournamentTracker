@@ -13,9 +13,11 @@ namespace TournamentLibrary.DataAccess
         List<RosterModel> CreateRoster(RosterModel model);
 
         List<PersonModel> GetAllPeople();
+        List<SeasonModel> GetLastSeason();
+
         //TODO convert GetLastPerson from list into PersonModel only
         List<PersonModel> GetLastPerson();
-        List<DivisionModel> GetAllDivisions();
+        List<DivisionModel> GetSeasonDivisions(int i);
         List<VenueModel> GetAllVenues();
 
         List<PersonModel> GetTeamMembers(TeamModel model);
@@ -41,5 +43,7 @@ namespace TournamentLibrary.DataAccess
         void EditCaptainRemove(TeamModel model);
         void EditCaptain(TeamModel model);
         void DeleteTeamCaptain();
+        SeasonDivisionsModel createSeasonDivisions(SeasonDivisionsModel model);
+        List<SeasonModel> GetAllSeasons();
     }
 }
