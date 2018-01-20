@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\SqlConnector.cs" />
+    <Compile Include="DataAccess\TextConnector.cs" />
     <Compile Include="DataAccess\TextConnectorProcessor.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="Models\CaptainModel.cs" />
@@ -63,9 +65,7 @@
     <Compile Include="Models\SeasonModel.cs" />
     <Compile Include="Models\SinglesModel.cs" />
     <Compile Include="Models\SkippedDatesModel.cs" />
-    <Compile Include="DataAccess\SqlConnector.cs" />
     <Compile Include="Models\TeamModel.cs" />
-    <Compile Include="DataAccess\TextConnector.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="Models\VenueModel.cs" />
   </ItemGroup>

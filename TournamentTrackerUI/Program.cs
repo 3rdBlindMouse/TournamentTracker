@@ -27,6 +27,7 @@ namespace TournamentTrackerUI
             Application.Run(new EditDivisionForm());
             //Application.Run(new TournamentCreatorForm());
             //Application.Run(new CreateSeasonForm());
+            
         }
     }
 }

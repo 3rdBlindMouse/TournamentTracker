@@ -39,7 +39,7 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// A List of the Dates with no games played in this Division 
         /// </summary>
-        public List<SkippedDatesModel> DivisionSkippedDates { get; set; }
+        public List<DateTime> DivisionSkippedDates { get; set; }
 
 
         /// <summary>

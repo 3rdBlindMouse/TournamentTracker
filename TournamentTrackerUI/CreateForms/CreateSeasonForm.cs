@@ -21,6 +21,8 @@ namespace TournamentTrackerUI.CreateForms
         private List<SeasonModel> thisSeasonAsList = GlobalConfig.Connection.GetLastSeason();
         private SeasonModel thisSeason = new SeasonModel();
 
+        
+
 
         private List<DivisionModel> selectedDivisions = new List<DivisionModel>();
 
@@ -29,10 +31,17 @@ namespace TournamentTrackerUI.CreateForms
             InitializeComponent();
             ConvertSeasonListToSeasonModel();
             InitializeLabels();
+
+            WireUpDivisionComboBox();
             
         }
 
-        
+        private void WireUpDivisionComboBox()
+        {
+            
+        }
+
+
 
         /// <summary>
         /// Takes the list containing the last season created (The one that called this form)

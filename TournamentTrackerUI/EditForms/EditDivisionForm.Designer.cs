@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DivisionHeaderLabel = new System.Windows.Forms.Label();
             this.DivisionNameLabel = new System.Windows.Forms.Label();
             this.DivisionNumberLabel = new System.Windows.Forms.Label();
             this.AddTeamsLabel = new System.Windows.Forms.Label();
@@ -38,7 +37,6 @@
             this.SkipDatesdateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.skipDatesAddButton = new System.Windows.Forms.Button();
             this.ExitToMainMenuButton = new System.Windows.Forms.Button();
-            this.DivisionTournamentNameLabel = new System.Windows.Forms.Label();
             this.skipDatesRemoveButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.numberErrorLabel = new System.Windows.Forms.Label();
@@ -65,19 +63,10 @@
             this.createNewTeamLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SeasonComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // DivisionHeaderLabel
-            // 
-            this.DivisionHeaderLabel.AutoSize = true;
-            this.DivisionHeaderLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivisionHeaderLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            this.DivisionHeaderLabel.Location = new System.Drawing.Point(134, 9);
-            this.DivisionHeaderLabel.Name = "DivisionHeaderLabel";
-            this.DivisionHeaderLabel.Size = new System.Drawing.Size(232, 37);
-            this.DivisionHeaderLabel.TabIndex = 0;
-            this.DivisionHeaderLabel.Text = "Edit Division(s) for";
             // 
             // DivisionNameLabel
             // 
@@ -163,17 +152,6 @@
             this.ExitToMainMenuButton.Text = "Exit to Main Menu";
             this.ExitToMainMenuButton.UseVisualStyleBackColor = true;
             this.ExitToMainMenuButton.Click += new System.EventHandler(this.ExitToMainMenuButton_Click);
-            // 
-            // DivisionTournamentNameLabel
-            // 
-            this.DivisionTournamentNameLabel.AutoSize = true;
-            this.DivisionTournamentNameLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivisionTournamentNameLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            this.DivisionTournamentNameLabel.Location = new System.Drawing.Point(403, 9);
-            this.DivisionTournamentNameLabel.Name = "DivisionTournamentNameLabel";
-            this.DivisionTournamentNameLabel.Size = new System.Drawing.Size(209, 37);
-            this.DivisionTournamentNameLabel.TabIndex = 19;
-            this.DivisionTournamentNameLabel.Text = "PlaceHolderText";
             // 
             // skipDatesRemoveButton
             // 
@@ -443,12 +421,32 @@
             this.label1.TabIndex = 37;
             this.label1.Text = "Season";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(180, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 39;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(415, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(10, 13);
+            this.label3.TabIndex = 40;
+            this.label3.Text = ".";
+            // 
             // EditDivisionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(813, 504);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.SeasonComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.createNewTeamLinkLabel);
@@ -459,7 +457,6 @@
             this.Controls.Add(this.DivisionNameComboBox);
             this.Controls.Add(this.addTeamsDropdown);
             this.Controls.Add(this.skipDatesRemoveButton);
-            this.Controls.Add(this.DivisionTournamentNameLabel);
             this.Controls.Add(this.ExitToMainMenuButton);
             this.Controls.Add(this.skipDatesAddButton);
             this.Controls.Add(this.SkipDatesdateTimePicker);
@@ -469,7 +466,6 @@
             this.Controls.Add(this.AddTeamsLabel);
             this.Controls.Add(this.DivisionNumberLabel);
             this.Controls.Add(this.DivisionNameLabel);
-            this.Controls.Add(this.DivisionHeaderLabel);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "EditDivisionForm";
@@ -482,8 +478,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label DivisionHeaderLabel;
         private System.Windows.Forms.Label DivisionNameLabel;
         private System.Windows.Forms.Label DivisionNumberLabel;
         private System.Windows.Forms.Label AddTeamsLabel;
@@ -493,7 +487,6 @@
         private System.Windows.Forms.DateTimePicker SkipDatesdateTimePicker;
         private System.Windows.Forms.Button skipDatesAddButton;
         private System.Windows.Forms.Button ExitToMainMenuButton;
-        private System.Windows.Forms.Label DivisionTournamentNameLabel;
         private System.Windows.Forms.Button skipDatesRemoveButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListBox skippedDatesListbox;
@@ -520,5 +513,7 @@
         private System.Windows.Forms.LinkLabel createNewTeamLinkLabel;
         private System.Windows.Forms.ComboBox SeasonComboBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -23,6 +23,8 @@ namespace TournamentTrackerUI
         //TODO important to get season ID
         private static List<SeasonDivisionsModel> seasonDivs = new List<SeasonDivisionsModel>();
 
+        private static SeasonDivisionsModel sdm = new SeasonDivisionsModel();
+
         private static List<DivisionModel> divs = new List<DivisionModel>();
         //List of Division Names
         private static List<string> divNames = new List<string>();
@@ -50,6 +52,15 @@ namespace TournamentTrackerUI
         private static List<TeamModel> teamsToAdd = new List<TeamModel>();
         // List to hold teams to remove from db et.al
         private static List<TeamModel> teamsToRemove = new List<TeamModel>();
+
+        private static List<DateTime> datesToAdd = new List<DateTime>();
+        private static List<DateTime> datesToRemove = new List<DateTime>();
+
+
+
+
+
+
         // Variable to allow creation of DivisionModels
         private static DivisionModel dm ;
         // Variable to allow count of teams selected in Division
@@ -172,13 +183,23 @@ namespace TournamentTrackerUI
         /// </summary>
         private void addSkipdates()
         {
-            var date = SkipDatesdateTimePicker.Value.ToString("D");
+            var date = DateTime.Parse(SkipDatesdateTimePicker.Value.ToString("D"));
             // check to see if date is already selected as a skipped date
-            if (!skippedDates.Contains(DateTime.Parse(date)))
+            if (!skippedDates.Contains(date))
             {
-                skippedDates.Add(DateTime.Parse(date));
+                var sortedDates = skippedDates.OrderBy(x => x).ToList();                
+                if (date != datesToRemove.Find(x => x.Date == date))
+                {
+                    datesToAdd.Add(date);                   
+                }
+                else
+                {
+                    datesToRemove.Remove(date);
+                }
+                skippedDates.Add(date);
                 updateSkippedDatesBox();
-            }
+
+            }           
         }
 
         /// <summary>
@@ -202,12 +223,24 @@ namespace TournamentTrackerUI
         {
             if (skippedDatesListbox.SelectedItem != null)
             {
+
                 var sortedDates = skippedDates.OrderBy(x => x).ToList();
                 var date = DateTime.Parse(skippedDatesListbox.SelectedItem.ToString());
-                skippedDates.Remove(date);
+
+                if (date != datesToAdd.Find(x => x.Date == date))
+                {
+                    datesToRemove.Add(date);
+                }
+                else
+                {
+                    datesToAdd.Remove(date);
+                }
+                skippedDates.Remove(date);                
                 updateSkippedDatesBox();
             }
         }
+
+        
         /*
          * Validations
          */
@@ -377,14 +410,14 @@ namespace TournamentTrackerUI
         /// populates the skipped dates list box
         /// which can be manipulated
         /// </summary>
-        private List<SkippedDatesModel> getSkippedDates(DivisionModel dm)
+        private List<SkippedDatesModel> getSkippedDates(SeasonDivisionsModel sdm)
         {
-            List<SkippedDatesModel> sd = GlobalConfig.Connection.GetSkippedDates(dm);
+            List<SkippedDatesModel> sd = GlobalConfig.Connection.GetSkippedDates(sdm);
             skippedDates = new List<DateTime>();
-            foreach (SkippedDatesModel sdm in sd)
+            foreach (SkippedDatesModel skm in sd)
             {
-                skippedDates.Add(sdm.DateToSkip);
-                OriginalskippedDates.Add(sdm.DateToSkip);
+                skippedDates.Add(skm.DateToSkip);
+                OriginalskippedDates.Add(skm.DateToSkip);
             }
             return sd;
         }
@@ -400,9 +433,17 @@ namespace TournamentTrackerUI
             TeamModel t = (TeamModel)teamsListBox.SelectedItem;
             if (t != null)
             {
+
+                if (t != teamsToAdd.Find(x => x.TeamID == t.TeamID))
+                {
+                    teamsToRemove.Add(t);
+                }
+                else
+                {
+                    teamsToAdd.Remove(t);
+                }
                 selectedTeams.Remove(t);
-                teamsAvailable.Add(t);
-                teamsToRemove.Add(t);
+                teamsAvailable.Add(t);               
                 WireupTeamLists(teamsAvailable, selectedTeams);
                 numberOfTeams = selectedTeams.Count;
             }
@@ -419,10 +460,19 @@ namespace TournamentTrackerUI
             TeamModel t = (TeamModel)addTeamsDropdown.SelectedItem;
             if (t != null)
             {
-               selectedTeams.Add(t);
-               teamsAvailable.Remove(t);
-                teamsToAdd.Add(t);
-               WireupTeamLists(teamsAvailable, selectedTeams);
+
+                if (t != teamsToRemove.Find(x => x.TeamID == t.TeamID))
+                {
+                    teamsToAdd.Add(t);
+                }
+                else
+                {
+                    teamsToRemove.Remove(t);
+                }
+
+                selectedTeams.Add(t);
+                teamsAvailable.Remove(t);             
+                WireupTeamLists(teamsAvailable, selectedTeams);
                 numberOfTeams = selectedTeams.Count;
             }
         }
@@ -477,10 +527,10 @@ namespace TournamentTrackerUI
             {
                 // Get/Create Division Model that has been selected
                 dm = (DivisionModel)DivisionNameComboBox.SelectedItem;
-                SeasonDivisionsModel sdm = GlobalConfig.Connection.GetSeasonDivisionModel(dm);
+                sdm = GlobalConfig.Connection.GetSeasonDivisionModel(dm);
                 //Display Division details
                 DisplayDivisionNumber(dm);
-                sdm.skippedDates = getSkippedDates(dm);
+                sdm.skippedDates = getSkippedDates(sdm);
                 updateSkippedDatesBox();
                 DisplayDivisionStartDate(sdm);
                 
@@ -546,11 +596,14 @@ namespace TournamentTrackerUI
         {
             // create a division model
             DivisionModel model = (DivisionModel)DivisionNameComboBox.SelectedItem;
+            model.SeasonID = sdm.SeasonID;
             model.DivisionName = nameTextBox.Text;
             model.DivisionNumber = int.Parse(numberTextBox.Text);
             //model.DivisionTeams = selectedTeams;
             model.StartDate = StartDate.Value;
-            // store division in Db and return ID    
+            // store division in Db and return ID  
+            model.DivisionTeams = selectedTeams;
+            model.DivisionSkippedDates = skippedDates;
             return model;
         }
         /// <summary>
@@ -565,12 +618,13 @@ namespace TournamentTrackerUI
                 //Create updated Model(s)
                 if ((ValidateDivisionName(nameTextBox)) && (ValidateDivisionNumber(numberTextBox)))
                 {
+                    
                     // Create a simple Division Model using selected Division ID and any changes on form that may or may not have been made
                     DivisionModel model = getDivisionModel();
-                    // Commit simple Divison Model to db et.al
+                    // Make changes to Division Nae and Number in DB
                     GlobalConfig.Connection.EditDivision(model);
                     // Commit Division Skipped Dates to db et.al
-                    //EditSkippedDates(model);
+                    EditSkippedDates(model);
                     // Commit Division Teams to db et.al
                     EditTeamsModels(model);
                     // Clear Form
@@ -609,10 +663,8 @@ namespace TournamentTrackerUI
         {
             foreach (TeamModel team in teamsToAdd)
             {
-                TeamModel teammodel = new TeamModel();
-                teammodel.DivisionID = model.DivisionID;
-                teammodel.TeamID = team.TeamID;
-                GlobalConfig.Connection.CreateDivisionTeams(teammodel);
+                model.DivisionTeams.Add(team);
+                GlobalConfig.Connection.CreateDivisionTeams(sdm.SeasonDivisionsID, team.TeamID);
             }
             teamsToAdd = new List<TeamModel>();
         }
@@ -625,10 +677,8 @@ namespace TournamentTrackerUI
         {
             foreach (TeamModel team in teamsToRemove)
             {
-                TeamModel teammodel = new TeamModel();
-                teammodel.DivisionID = model.DivisionID;
-                teammodel.TeamID = team.TeamID;
-                GlobalConfig.Connection.DeleteDivisionTeams(teammodel);
+                model.DivisionTeams.Remove(team);
+                GlobalConfig.Connection.DeleteDivisionTeams(sdm.SeasonDivisionsID, team.TeamID);
             }
             teamsToRemove = new List<TeamModel>();
         }
@@ -639,31 +689,52 @@ namespace TournamentTrackerUI
         /// </summary>
         /// <param name="model"></param>
         // TODO likely change to match with what have done with teams but having the two different variations is ok for now
-        private void EditSkippedDates(SkippedDatesModel model)
+        private void EditSkippedDates(DivisionModel model)
         {
-            // Are the two lists the same size? does one of the lists contain everything in the other list?
-            var skippedDatesSame = ((OriginalskippedDates.Count == skippedDates.Count) && OriginalskippedDates.All(skippedDates.Contains));
-            if (skippedDatesSame != true)
+            if (datesToAdd.Count > 0)
             {
-                // if not remove all dates from db 
-                // TODO change
-                //GlobalConfig.Connection.DeleteSkippedDates(model);
-                // and repopulate with new data
-                foreach (DateTime date in skippedDates)
-                {
-                    SkippedDatesModel skDates = new SkippedDatesModel();
-                    skDates.SeasonDivisionsID = model.SeasonDivisionsID;
-                    skDates.DateToSkip = date;
-                    GlobalConfig.Connection.CreateSkippedDates(skDates);
-                }
-
+                addDates(model);
             }
-
-
+            if (datesToRemove.Count > 0)
+            {
+                removeDates(model);
+            }
           // model.DivisionSkippedDates = GlobalConfig.Connection.GetSkippedDates(model);
         }
 
-        
+        private void removeDates(DivisionModel model)
+        {
+            // For each newly added date to skip 
+            foreach (DateTime date in datesToRemove)
+            {
+                // add date to DivisionModel list of skipped dates
+                model.DivisionSkippedDates.Remove(date);
+                // create a new skipped dates model with seasonDivisionsID and the date
+                SkippedDatesModel skm = new SkippedDatesModel(sdm.SeasonDivisionsID, date);
+                // update the DB with new date(s)
+                GlobalConfig.Connection.DeleteSkippedDates(skm);
+            }
+            // reset the dates to add list
+            datesToRemove = new List<DateTime>();
+        }
+
+        private void addDates(DivisionModel model)
+        {       
+            // For each newly added date to skip 
+            foreach (DateTime date in datesToAdd)
+            {
+            // add date to DivisionModel list of skipped dates
+            model.DivisionSkippedDates.Add(date);
+            // create a new skipped dates model with seasonDivisionsID and the date
+            SkippedDatesModel skm = new SkippedDatesModel(sdm.SeasonDivisionsID, date);
+            // update the DB with new date(s)
+            GlobalConfig.Connection.CreateSkippedDates(skm);
+            }
+            // reset the dates to add list
+            datesToAdd = new List<DateTime>();
+        }
+
+
 
         /// <summary>
         /// Resets form labels, comboxboxes, colors etc

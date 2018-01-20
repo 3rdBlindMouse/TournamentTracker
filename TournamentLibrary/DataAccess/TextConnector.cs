@@ -213,5 +213,30 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public SeasonModel GetSeason(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateDivisionTeams(int sdmID, int teamID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteDivisionTeams(int SeasonDivisionsID, int TeamID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSkippedDates(SkippedDatesModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<SkippedDatesModel> GetSkippedDates(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

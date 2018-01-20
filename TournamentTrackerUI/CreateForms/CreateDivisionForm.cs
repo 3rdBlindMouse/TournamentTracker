@@ -16,6 +16,8 @@ namespace TournamentTrackerUI
         IDivisionRequester callingForm;
         private static string method;
 
+
+        private static SeasonModel thisSeason = new SeasonModel();
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
        // A List of teams available to be selected
@@ -60,12 +62,16 @@ namespace TournamentTrackerUI
             StackFrame frame = new StackFrame(1, true);
             method = (frame.GetMethod().Name);
 
+            thisSeason = GlobalConfig.Connection.GetSeason(seasonID);
+            
+           
             divs = GlobalConfig.Connection.GetSeasonDivisions(seasonID);
 
             InitializeComponent();
             WireupTeams();
-           // getTeamNames(divs);
+            // getTeamNames(divs);
             //getTeamNumbers(divs);
+            seasonNameLabel.Text = thisSeason.SeasonName;
         }
         /*
          * Have tried to put methods in order of them being called upon
@@ -362,7 +368,7 @@ namespace TournamentTrackerUI
                     SeasonDivisionsModel sdm = createSeasonDivisionsModel(model);
                     
                     createSkippedDates(sdm);
-                   // createDivisionTeams(model);
+                    createDivisionTeams(sdm);
                     updateData();      
                     MessageBox.Show("Division Successfully Created");
                     if (method == "createNewDivisionLinkLabel_LinkClicked")
@@ -423,9 +429,9 @@ namespace TournamentTrackerUI
         {
             foreach (DateTime date in skippedDates)
             {
-                SkippedDatesModel skDates = new SkippedDatesModel();
-                skDates.SeasonDivisionsID = model.SeasonDivisionsID;
-                skDates.DateToSkip = date;
+                SkippedDatesModel skDates = new SkippedDatesModel(model.SeasonDivisionsID, date);
+                //skDates.SeasonDivisionsID = model.SeasonDivisionsID;
+                //skDates.DateToSkip = date;
                 GlobalConfig.Connection.CreateSkippedDates(skDates);
             }
             skippedDates = new List<DateTime>();
@@ -434,14 +440,12 @@ namespace TournamentTrackerUI
         /// Update DB et.al with Teams in created Division
         /// </summary>
         /// <param name="model"></param>
-        private void createDivisionTeams(DivisionModel model)
+        private void createDivisionTeams(SeasonDivisionsModel sdm)
         {
             foreach (TeamModel team in selectedTeams)
             {
-                TeamModel teammodel = new TeamModel();
-                teammodel.DivisionID = model.DivisionID;
-                teammodel.TeamID = team.TeamID;
-                GlobalConfig.Connection.CreateDivisionTeams(teammodel);
+                
+                GlobalConfig.Connection.CreateDivisionTeams(sdm.SeasonDivisionsID, team.TeamID);
             }
             selectedTeams = new List<TeamModel>();
         }

@@ -19,7 +19,7 @@ namespace TournamentLibrary.DataAccess
         List<PersonModel> GetLastPerson();
         List<DivisionModel> GetSeasonDivisions(int i);
         List<VenueModel> GetAllVenues();
-
+        
         List<PersonModel> GetTeamMembers(TeamModel model);
         
 
@@ -30,11 +30,17 @@ namespace TournamentLibrary.DataAccess
 
         DivisionModel CreateDivision(DivisionModel model);
         SkippedDatesModel CreateSkippedDates(SkippedDatesModel model);
-        List<SkippedDatesModel> GetSkippedDates(DivisionModel model);
-        void CreateDivisionTeams(TeamModel teammodel);
+        void DeleteSkippedDates(SkippedDatesModel model);
+
+
+        List<SkippedDatesModel> GetSkippedDates(SeasonDivisionsModel model);
+
+
+
+        void CreateDivisionTeams(int sdmID, int teamID);
         void EditDivision(DivisionModel model);
-        void DeleteSkippedDates(DivisionModel model);
-        void DeleteDivisionTeams(TeamModel teammodel);
+        
+        void DeleteDivisionTeams(int SeasonDivisionsID , int TeamID);
         void EditVenue(VenueModel model);
         void EditPerson(PersonModel model);
         List<CaptainModel> GetTeamCaptains(TeamModel tm);
@@ -46,5 +52,6 @@ namespace TournamentLibrary.DataAccess
         SeasonDivisionsModel createSeasonDivisions(SeasonDivisionsModel model);
         List<SeasonModel> GetAllSeasons();
         SeasonDivisionsModel GetSeasonDivisionModel(DivisionModel dm);
+        SeasonModel GetSeason(int i);
     }
 }

@@ -208,14 +208,14 @@ namespace TournamentLibrary.DataAccess
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Nothing atm</returns>
-        public void CreateDivisionTeams(TeamModel model)
+        public void CreateDivisionTeams(int sdmID, int teamID)
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@DivisionTeamsID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                p.Add("@InDivisionID", model.DivisionID);
-                p.Add("@InTeamID", model.TeamID);
+                p.Add("@InSeasonDivisionsID", sdmID);
+                p.Add("@InTeamID", teamID);
 
 
                 connection.Execute("spDivisionTeams", p, commandType: CommandType.StoredProcedure);
@@ -288,12 +288,12 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@InSeasonDivisionsID", model.SeasonDivisionsID);
                 output = connection.Query<TeamModel>("spGetDivisionTeams", p, commandType: CommandType.StoredProcedure).ToList();
 
-                foreach (TeamModel team in output)
-                {
-                    p = new DynamicParameters();
-                    p.Add("@TeamID", team.TeamID);
-                    team.TeamMembers = connection.Query<PersonModel>("spGetTeamMembers", p, commandType: CommandType.StoredProcedure).ToList();
-                }
+                //foreach (TeamModel team in output)
+                //{
+                //    p = new DynamicParameters();
+                //    p.Add("@TeamID", team.TeamID);
+                //    team.TeamMembers = connection.Query<PersonModel>("spGetRoster", p, commandType: CommandType.StoredProcedure).ToList();
+                //}
             }
             return output;
         }
@@ -353,14 +353,13 @@ namespace TournamentLibrary.DataAccess
         /// Gets a List of The SkippedDates in selected Division 
         /// </summary>
         /// <returns>A List of The SkippedDates in selected Division </returns>
-        public List<SkippedDatesModel> GetSkippedDates(DivisionModel model)
+        public List<SkippedDatesModel> GetSkippedDates(SeasonDivisionsModel model)
         {
             List<SkippedDatesModel> output;
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@DivisionID", model.DivisionID);
-                p.Add("@SeasonID", model.SeasonID);
+                p.Add("@InSeasonDivisionsID",model.SeasonDivisionsID);            
                 output = connection.Query<SkippedDatesModel>("spGetSkippedDates", p, commandType: CommandType.StoredProcedure).ToList();
             }
             return output;
@@ -409,9 +408,8 @@ namespace TournamentLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@InDivisionID", model.DivisionID);
-                p.Add("@DivisionName", model.DivisionName);
-                p.Add("@DivisionNumber", model.DivisionNumber);
-                p.Add("@StartDate", model.StartDate);
+                p.Add("@InDivisionName", model.DivisionName);
+                p.Add("@InDivisionNumber", model.DivisionNumber);        
                 connection.Execute("spEditDivision", p, commandType: CommandType.StoredProcedure);
             }
         }
@@ -497,24 +495,25 @@ namespace TournamentLibrary.DataAccess
             }
         }
 
-        public void DeleteSkippedDates(DivisionModel model)
+        public void DeleteSkippedDates(SkippedDatesModel skm)
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@InDivisionID", model.DivisionID);
+                p.Add("@InSeasonDivisionsID", skm.SeasonDivisionsID);
+                p.Add("@InDateToRemove", skm.DateToSkip);
 
                 connection.Execute("spDeleteSkippedDates", p, commandType: CommandType.StoredProcedure);
             }
         }
 
-        public void DeleteDivisionTeams(TeamModel model)
+        public void DeleteDivisionTeams(int sdID, int teamID)
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@InDivisionID", model.DivisionID);
-                p.Add("@InTeamID", model.TeamID);
+                p.Add("@InSeasonDivisionsID", sdID);
+                p.Add("@InTeamID", teamID);
 
                 connection.Execute("spDeleteDivisionTeams", p, commandType: CommandType.StoredProcedure);
             }
@@ -604,6 +603,28 @@ namespace TournamentLibrary.DataAccess
                 sm.SeasonID = model.SeasonID;
                 sm.DivisionID = model.DivisionID;
                 sm.StartDate = x.StartDate;
+            }
+            return sm;
+        }
+
+        public SeasonModel GetSeason(int id)
+        {
+            List<SeasonModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();              
+                p.Add("@InSeasonID", id);
+                output = connection.Query<SeasonModel>("spGetSeason", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            SeasonModel sm = new SeasonModel();
+            foreach (SeasonModel x in output)
+            {
+
+                sm.SeasonID = id;
+                sm.SeasonName = x.SeasonName;
+                sm.SeasonYear = x.SeasonYear;
+                sm.SeasonDescription = x.SeasonDescription;
+                
             }
             return sm;
         }

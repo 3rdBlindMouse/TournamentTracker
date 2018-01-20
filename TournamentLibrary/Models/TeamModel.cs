@@ -27,6 +27,10 @@ namespace TournamentLibrary.Models
         /// </summary>
         public int DivisionID { get; set; }
         /// <summary>
+        /// 
+        /// </summary>
+        public int DivisionTeamsID { get; set; }
+        /// <summary>
         /// Name of team
         /// </summary>
         public string TeamName { get; set; }

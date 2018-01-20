@@ -21,5 +21,17 @@ namespace TournamentLibrary.Models
         /// </summary>
         public DateTime DateToSkip { get; set; }
 
+
+        public SkippedDatesModel(int sdID, DateTime date)
+        {
+            SeasonDivisionsID = sdID;
+            DateToSkip = date;
+        }
+
+        public SkippedDatesModel()
+        {
+
+        }
+
     }
 }
