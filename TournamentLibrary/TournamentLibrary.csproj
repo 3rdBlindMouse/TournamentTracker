@@ -51,6 +51,7 @@
     <Compile Include="enums.cs" />
     <Compile Include="Models\CaptainModel.cs" />
     <Compile Include="Models\DivisionModel.cs" />
+    <Compile Include="Models\DivisionTeamsModel.cs" />
     <Compile Include="Models\DoublesModel.cs" />
     <Compile Include="Models\GameModel.cs" />
     <Compile Include="GlobalConfig.cs" />

@@ -88,8 +88,8 @@ namespace TournamentLibrary.DataAccess
                     var p = new DynamicParameters();
                     p.Add("@RosterID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                    p.Add("@PersonID", player.PersonID);
-                    p.Add("@TeamID", model.TeamID);
+                    p.Add("@InPersonID", player.PersonID);
+                    p.Add("@InDivisionTeamsID", model.DivisionTeamsID);
 
 
                     connection.Execute("spRoster", p, commandType: CommandType.StoredProcedure);
@@ -208,14 +208,14 @@ namespace TournamentLibrary.DataAccess
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Nothing atm</returns>
-        public void CreateDivisionTeams(int sdmID, int teamID)
+        public DivisionTeamsModel CreateDivisionTeams(DivisionTeamsModel model)
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@DivisionTeamsID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                p.Add("@InSeasonDivisionsID", sdmID);
-                p.Add("@InTeamID", teamID);
+                p.Add("@InSeasonDivisionsID", model.SeasonDivisionsID);
+                p.Add("@InTeamID", model.TeamID);
 
 
                 connection.Execute("spDivisionTeams", p, commandType: CommandType.StoredProcedure);
@@ -224,9 +224,9 @@ namespace TournamentLibrary.DataAccess
                 // grabs newly created ID from database and returns it as part of the current Person Model
                 // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
                 var id = p.Get<int?>("DivisionTeamsID");
-                //model.DivisionTeamsID = Convert.ToInt32(id);
+                model.DivisionTeamsID = Convert.ToInt32(id);
 
-                //return model;
+                return model;
             }
         }
         /// <summary>
@@ -240,8 +240,8 @@ namespace TournamentLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@CaptainID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                p.Add("@TeamID", model.TeamID);
-                p.Add("@PersonID", model.PersonID);
+                p.Add("@InDivisionTeamsID", model.DivisionTeamID);
+                p.Add("@InPersonID", model.PersonID);
 
                 connection.Execute("spTeamCaptains", p, commandType: CommandType.StoredProcedure);
 
@@ -478,7 +478,7 @@ namespace TournamentLibrary.DataAccess
                 foreach(PersonModel x in adds)
                 {
                     var p = new DynamicParameters();
-                    p.Add("@InTeamID", model.TeamID);
+                    p.Add("@InDivisionTeamsID", model.DivisionTeamsID);
                     p.Add("@InPersonID", x.PersonID);
                     connection.Execute("spEditRosterAdd", p, commandType: CommandType.StoredProcedure);
                 }
@@ -486,7 +486,7 @@ namespace TournamentLibrary.DataAccess
                 foreach (PersonModel y in removes)
                 {
                     var p = new DynamicParameters();
-                    p.Add("@InTeamID", model.TeamID);
+                    p.Add("@InDivisionTeamsID", model.DivisionTeamsID);
                     p.Add("@InPersonID", y.PersonID);
                     connection.Execute("spEditRosterRemove", p, commandType: CommandType.StoredProcedure);
                 }

@@ -111,6 +111,16 @@ namespace TournamentTrackerUI
         {
             // no need to do anything from this form
         }
+
+        public string DivisionName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public SeasonDivisionsModel SeasonDivision()
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }

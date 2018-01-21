@@ -9,7 +9,7 @@ namespace TournamentLibrary.Models
     public class CaptainModel
     {
         public int CaptianID { get; set; }
-        public int TeamID { get; set; }
+        public int DivisionTeamID { get; set; }
         public int PersonID { get; set; }
         public string Name { get; set; }
     }

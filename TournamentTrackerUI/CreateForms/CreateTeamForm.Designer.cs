@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.TeamNameLabel = new System.Windows.Forms.Label();
             this.teamNameTextbox = new System.Windows.Forms.TextBox();
             this.TeamVenueLabel = new System.Windows.Forms.Label();
@@ -51,18 +50,8 @@
             this.DisplayTeamVenue = new System.Windows.Forms.Label();
             this.DisplayCaptainLabel = new System.Windows.Forms.Label();
             this.DisplayCaptain = new System.Windows.Forms.Label();
+            this.HeadingLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DarkOrange;
-            this.label1.Location = new System.Drawing.Point(257, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 37);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Team Creator";
             // 
             // TeamNameLabel
             // 
@@ -284,12 +273,24 @@
             this.DisplayCaptain.TabIndex = 29;
             this.DisplayCaptain.Text = "label7";
             // 
+            // HeadingLabel
+            // 
+            this.HeadingLabel.AutoSize = true;
+            this.HeadingLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HeadingLabel.ForeColor = System.Drawing.Color.DarkOrange;
+            this.HeadingLabel.Location = new System.Drawing.Point(259, 19);
+            this.HeadingLabel.Name = "HeadingLabel";
+            this.HeadingLabel.Size = new System.Drawing.Size(177, 37);
+            this.HeadingLabel.TabIndex = 30;
+            this.HeadingLabel.Text = "Team Creator";
+            // 
             // CreateTeamForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(770, 420);
+            this.Controls.Add(this.HeadingLabel);
             this.Controls.Add(this.DisplayCaptain);
             this.Controls.Add(this.DisplayCaptainLabel);
             this.Controls.Add(this.DisplayTeamVenue);
@@ -312,7 +313,6 @@
             this.Controls.Add(this.TeamVenueLabel);
             this.Controls.Add(this.teamNameTextbox);
             this.Controls.Add(this.TeamNameLabel);
-            this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "CreateTeamForm";
             this.Text = "TeamCreator";
@@ -322,8 +322,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label TeamNameLabel;
         private System.Windows.Forms.TextBox teamNameTextbox;
         private System.Windows.Forms.Label TeamVenueLabel;
@@ -346,5 +344,6 @@
         private System.Windows.Forms.Label DisplayTeamVenue;
         private System.Windows.Forms.Label DisplayCaptainLabel;
         private System.Windows.Forms.Label DisplayCaptain;
+        private System.Windows.Forms.Label HeadingLabel;
     }
 }

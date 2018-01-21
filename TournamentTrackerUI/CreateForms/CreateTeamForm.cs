@@ -25,7 +25,7 @@ namespace TournamentTrackerUI
 
         private List<string> teamNames = new List<string>();
 
-
+        private SeasonDivisionsModel sdm = new SeasonDivisionsModel();
 
         private List<PersonModel> lastPerson;
         private CaptainModel captain;
@@ -37,7 +37,8 @@ namespace TournamentTrackerUI
             InitializeComponent();
             callingForm = caller;
             //createSampleData();
-
+            HeadingLabel.Text = callingForm.DivisionName();
+            sdm = callingForm.SeasonDivision();
 
             StackFrame frame = new StackFrame(1, true);
             method = (frame.GetMethod().Name);
@@ -167,7 +168,7 @@ namespace TournamentTrackerUI
 
 
                 model.TeamVenue = vm.VenueID;
-                createTeamAndRoster(model);
+                createTeamAndRoster(sdm, model);
                 if (method == "createNewTeamLinkLabel_LinkClicked")
                 {
                     this.Close();
@@ -210,19 +211,30 @@ namespace TournamentTrackerUI
         /// Roster shows which players play for which teams
         /// </summary>
         /// <param name="model">A TeamModel</param>
-        private void createTeamAndRoster(TeamModel model)
+        private void createTeamAndRoster(SeasonDivisionsModel SDModel, TeamModel model)
         {
-            RosterModel roster = new RosterModel();
-            roster.TeamID = model.TeamID;
-            roster.players = selectedPlayers;
+            // create simple model to save to DB Team Name 
             GlobalConfig.Connection.CreateTeam(model);
+            DivisionTeamsModel dtm = new DivisionTeamsModel();
+            dtm.SeasonDivisionsID = SDModel.SeasonDivisionsID;
+            dtm.TeamID = model.TeamID;
+            GlobalConfig.Connection.CreateDivisionTeams(dtm);
+            model.DivisionTeamsID = dtm.DivisionTeamsID;
+            RosterModel roster = new RosterModel();
+            roster.DivisionTeamsID = model.DivisionTeamsID;
+            roster.players = selectedPlayers;
+           
+            // Add SeasonDivisionsID to team model to create DivisionTeam entry in DB
+           
+            
+           
 
             callingForm.TeamComplete(model);
-            captain.TeamID = model.TeamID;
+            captain.DivisionTeamID = model.DivisionTeamsID;
 
             GlobalConfig.Connection.CreateTeamCaptain(captain);
 
-            roster.TeamID = model.TeamID;
+            roster.DivisionTeamsID = model.DivisionTeamsID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.CreateRoster(roster);
         }

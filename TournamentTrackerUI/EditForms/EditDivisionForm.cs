@@ -661,10 +661,13 @@ namespace TournamentTrackerUI
         /// <param name="model"></param>
         private void addTeams(DivisionModel model)
         {
+            DivisionTeamsModel dtm = new DivisionTeamsModel();
+            dtm.SeasonDivisionsID = sdm.SeasonDivisionsID;
             foreach (TeamModel team in teamsToAdd)
             {
+                dtm.TeamID = team.TeamID;
                 model.DivisionTeams.Add(team);
-                GlobalConfig.Connection.CreateDivisionTeams(sdm.SeasonDivisionsID, team.TeamID);
+                GlobalConfig.Connection.CreateDivisionTeams(dtm);
             }
             teamsToAdd = new List<TeamModel>();
         }
@@ -849,15 +852,23 @@ namespace TournamentTrackerUI
 
         private void createNewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CreateTeamForm teamForm = new CreateTeamForm(this);
-            teamForm.Show();
-            this.Hide();
-            teamForm.FormClosing += closeForm;
+            if (formReady() == true)
+            {
+                CreateTeamForm teamForm = new CreateTeamForm(this);
+                teamForm.Show();
+                this.Hide();
+                teamForm.FormClosing += closeForm;
+            }
         }
 
         public void closeForm(object sender, FormClosingEventArgs e)
         {
             this.Show();
+        }
+
+        public string DivisionName()
+        {
+            return dm.DivisionName;
         }
 
         public void TeamComplete(TeamModel model)
@@ -871,6 +882,11 @@ namespace TournamentTrackerUI
             SeasonModel sm = (SeasonModel)SeasonComboBox.SelectedItem;
             divs = GlobalConfig.Connection.GetSeasonDivisions(sm.SeasonID);
             WireupDivisionSelector();
+        }
+
+        public SeasonDivisionsModel SeasonDivision()
+        {
+            return sdm;
         }
     }
 }

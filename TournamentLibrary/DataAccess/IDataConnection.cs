@@ -37,7 +37,7 @@ namespace TournamentLibrary.DataAccess
 
 
 
-        void CreateDivisionTeams(int sdmID, int teamID);
+        DivisionTeamsModel CreateDivisionTeams(DivisionTeamsModel model);
         void EditDivision(DivisionModel model);
         
         void DeleteDivisionTeams(int SeasonDivisionsID , int TeamID);

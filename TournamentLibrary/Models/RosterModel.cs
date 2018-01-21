@@ -15,7 +15,7 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// ID of team
         /// </summary>
-        public int TeamID { get; set; }
+        public int DivisionTeamsID { get; set; }
         public List<PersonModel> players { get; set; }
     }
 }

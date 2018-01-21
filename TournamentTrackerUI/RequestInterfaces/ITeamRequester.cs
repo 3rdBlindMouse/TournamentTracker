@@ -10,5 +10,9 @@ namespace TournamentTrackerUI.RequestInterfaces
     public interface ITeamRequester
     {
         void TeamComplete(TeamModel model);
+        string DivisionName();
+
+        // pass the seasondivison model to the called form;
+        SeasonDivisionsModel SeasonDivision();
     }
 }

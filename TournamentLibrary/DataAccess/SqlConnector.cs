@@ -255,5 +255,10 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public DivisionTeamsModel CreateDivisionTeams(DivisionTeamsModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

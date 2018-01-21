@@ -442,10 +442,12 @@ namespace TournamentTrackerUI
         /// <param name="model"></param>
         private void createDivisionTeams(SeasonDivisionsModel sdm)
         {
+            DivisionTeamsModel dtm = new DivisionTeamsModel();
+            dtm.SeasonDivisionsID = sdm.SeasonDivisionsID;
             foreach (TeamModel team in selectedTeams)
             {
-                
-                GlobalConfig.Connection.CreateDivisionTeams(sdm.SeasonDivisionsID, team.TeamID);
+                dtm.TeamID = team.TeamID;
+                GlobalConfig.Connection.CreateDivisionTeams(dtm);
             }
             selectedTeams = new List<TeamModel>();
         }
@@ -553,23 +555,15 @@ namespace TournamentTrackerUI
             }
         }
 
+        public string DivisionName()
+        {
+            throw new NotImplementedException();
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public SeasonDivisionsModel SeasonDivision()
+        {
+            throw new NotImplementedException();
+        }
     }
     }
 

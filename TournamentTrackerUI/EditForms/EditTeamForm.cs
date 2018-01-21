@@ -209,7 +209,7 @@ namespace TournamentTrackerUI.EditForms
         private void EditTeam(TeamModel model)
         {
             RosterModel roster = new RosterModel();
-            roster.TeamID = model.TeamID;
+            roster.DivisionTeamsID = model.DivisionTeamsID;
             roster.players = selectedPlayers;
             GlobalConfig.Connection.EditTeam(model);
             GlobalConfig.Connection.EditRoster(roster, addedPeople, removedPeople);
@@ -501,7 +501,7 @@ namespace TournamentTrackerUI.EditForms
         private void DoCaptainStuff(TeamModel tm)
         {
             captains = GlobalConfig.Connection.GetTeamCaptains(tm);
-            captain = captains.Find(c => c.TeamID == tm.TeamID);
+            captain = captains.Find(c => c.DivisionTeamID == tm.DivisionTeamsID);
             if ((captain != null) && (captain.CaptianID !=0))
             {
                 DisplayCaptain.Text = selectedPlayers.Find(p => p.PersonID == captain.PersonID).FullName;
