@@ -628,6 +628,70 @@ namespace TournamentLibrary.DataAccess
             }
             return sm;
         }
+
+        public List<DivisionModel> GetAllDivisions()
+        {
+            List<DivisionModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {               
+                output = connection.Query<DivisionModel>("spGetAllDivisions").ToList();
+            }           
+            return output;
+        }
+
+        public List<DivisionModel> GetDivsNotInThisSeason(int seasonID)
+        {
+            List<DivisionModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonID", seasonID);
+                output = connection.Query<DivisionModel>("spGetDivisionsNotInThisSeason",p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public List<TeamModel> GetTeamsNotInSeason(SeasonDivisionsModel model)
+        {
+            List<TeamModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonDivisionsID", model.SeasonDivisionsID);
+                output = connection.Query<TeamModel>("spGetTeamsNotInThisSeason", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public void DeleteSeasonDivisions(int seasonID, int divisionID)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonID", seasonID);
+                p.Add("@InDivisionID", divisionID);               
+                connection.Execute("spDeleteSeasonDivisions", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public List<TeamModel> GetSeasonTeams(SeasonDivisionsModel sdm)
+        {
+            List<TeamModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonID", sdm.SeasonID);
+                output = connection.Query<TeamModel>("spGetSeasonTeams", p, commandType: CommandType.StoredProcedure).ToList();
+
+                //foreach (TeamModel team in output)
+                //{
+                //    p = new DynamicParameters();
+                //    p.Add("@TeamID", team.TeamID);
+                //    team.TeamMembers = connection.Query<PersonModel>("spGetRoster", p, commandType: CommandType.StoredProcedure).ToList();
+                //}
+            }
+            return output;
+        }
     }
 }
 

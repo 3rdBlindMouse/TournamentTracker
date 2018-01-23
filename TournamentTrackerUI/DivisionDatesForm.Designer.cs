@@ -1,6 +1,6 @@
 ﻿namespace TournamentTrackerUI
 {
-    partial class CreateDivisionForm
+    partial class DivisionDatesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,25 +33,23 @@
             this.DivisionNumberLabel = new System.Windows.Forms.Label();
             this.SkipDatesLabel = new System.Windows.Forms.Label();
             this.StartDateLabel = new System.Windows.Forms.Label();
-            this.DivisionNameTextbox = new System.Windows.Forms.TextBox();
-            this.DivisionNumberTextbox = new System.Windows.Forms.TextBox();
             this.StartDate = new System.Windows.Forms.DateTimePicker();
             this.SkipDatesdateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.skipDatesAddButton = new System.Windows.Forms.Button();
-            this.createDivisionButton = new System.Windows.Forms.Button();
             this.ExitToMainMenuButton = new System.Windows.Forms.Button();
+            this.DivisionTournamentNameLabel = new System.Windows.Forms.Label();
             this.skipDatesRemoveButton = new System.Windows.Forms.Button();
+            this.detailsListbox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.DisplayNumber = new System.Windows.Forms.Label();
-            this.DisplayName = new System.Windows.Forms.Label();
             this.skippedDatesLabel = new System.Windows.Forms.Label();
             this.selectedStartDate = new System.Windows.Forms.Label();
             this.startDateLabel2 = new System.Windows.Forms.Label();
-            this.numTeams = new System.Windows.Forms.Label();
-            this.DisplayNumberLabel = new System.Windows.Forms.Label();
-            this.DisplayNameLabel = new System.Windows.Forms.Label();
+            
+            this.name = new System.Windows.Forms.Label();
             this.skippedDatesListbox = new System.Windows.Forms.ListBox();
-            this.seasonNameLabel = new System.Windows.Forms.Label();
+            this.DivNumberLabel2 = new System.Windows.Forms.Label();
+            this.DivNameLabel2 = new System.Windows.Forms.Label();
+            this.addDatesButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +58,7 @@
             this.DivisionHeaderLabel.AutoSize = true;
             this.DivisionHeaderLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DivisionHeaderLabel.ForeColor = System.Drawing.Color.DarkOrange;
-            this.DivisionHeaderLabel.Location = new System.Drawing.Point(134, 9);
+            this.DivisionHeaderLabel.Location = new System.Drawing.Point(37, 9);
             this.DivisionHeaderLabel.Name = "DivisionHeaderLabel";
             this.DivisionHeaderLabel.Size = new System.Drawing.Size(263, 37);
             this.DivisionHeaderLabel.TabIndex = 0;
@@ -106,26 +104,6 @@
             this.StartDateLabel.TabIndex = 6;
             this.StartDateLabel.Text = "Start Date";
             // 
-            // DivisionNameTextbox
-            // 
-            this.DivisionNameTextbox.BackColor = System.Drawing.SystemColors.Info;
-            this.DivisionNameTextbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivisionNameTextbox.Location = new System.Drawing.Point(141, 78);
-            this.DivisionNameTextbox.Name = "DivisionNameTextbox";
-            this.DivisionNameTextbox.Size = new System.Drawing.Size(218, 29);
-            this.DivisionNameTextbox.TabIndex = 7;
-            this.DivisionNameTextbox.TextChanged += new System.EventHandler(this.DivisionNameTextbox_TextChanged);
-            // 
-            // DivisionNumberTextbox
-            // 
-            this.DivisionNumberTextbox.BackColor = System.Drawing.SystemColors.Info;
-            this.DivisionNumberTextbox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DivisionNumberTextbox.Location = new System.Drawing.Point(141, 124);
-            this.DivisionNumberTextbox.Name = "DivisionNumberTextbox";
-            this.DivisionNumberTextbox.Size = new System.Drawing.Size(218, 29);
-            this.DivisionNumberTextbox.TabIndex = 11;
-            this.DivisionNumberTextbox.TextChanged += new System.EventHandler(this.DivisionNumberTextbox_TextChanged);
-            // 
             // StartDate
             // 
             this.StartDate.Location = new System.Drawing.Point(141, 164);
@@ -151,16 +129,6 @@
             this.skipDatesAddButton.UseVisualStyleBackColor = true;
             this.skipDatesAddButton.Click += new System.EventHandler(this.skipDatesAddButton_Click);
             // 
-            // createDivisionButton
-            // 
-            this.createDivisionButton.Location = new System.Drawing.Point(302, 415);
-            this.createDivisionButton.Name = "createDivisionButton";
-            this.createDivisionButton.Size = new System.Drawing.Size(138, 34);
-            this.createDivisionButton.TabIndex = 17;
-            this.createDivisionButton.Text = "Create Division";
-            this.createDivisionButton.UseVisualStyleBackColor = true;
-            this.createDivisionButton.Click += new System.EventHandler(this.createDivisionButton_Click);
-            // 
             // ExitToMainMenuButton
             // 
             this.ExitToMainMenuButton.Location = new System.Drawing.Point(671, 415);
@@ -170,6 +138,17 @@
             this.ExitToMainMenuButton.Text = "Exit to Main Menu";
             this.ExitToMainMenuButton.UseVisualStyleBackColor = true;
             this.ExitToMainMenuButton.Click += new System.EventHandler(this.ExitToMainMenuButton_Click);
+            // 
+            // DivisionTournamentNameLabel
+            // 
+            this.DivisionTournamentNameLabel.AutoSize = true;
+            this.DivisionTournamentNameLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DivisionTournamentNameLabel.ForeColor = System.Drawing.Color.DarkOrange;
+            this.DivisionTournamentNameLabel.Location = new System.Drawing.Point(306, 9);
+            this.DivisionTournamentNameLabel.Name = "DivisionTournamentNameLabel";
+            this.DivisionTournamentNameLabel.Size = new System.Drawing.Size(209, 37);
+            this.DivisionTournamentNameLabel.TabIndex = 19;
+            this.DivisionTournamentNameLabel.Text = "PlaceHolderText";
             // 
             // skipDatesRemoveButton
             // 
@@ -181,47 +160,39 @@
             this.skipDatesRemoveButton.UseVisualStyleBackColor = true;
             this.skipDatesRemoveButton.Click += new System.EventHandler(this.skipDatesRemoveButton_Click);
             // 
+            // detailsListbox
+            // 
+            this.detailsListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.detailsListbox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.detailsListbox.ItemHeight = 17;
+            this.detailsListbox.Items.AddRange(new object[] {
+            "",
+            "",
+            ""});
+            this.detailsListbox.Location = new System.Drawing.Point(92, 5);
+            this.detailsListbox.Name = "detailsListbox";
+            this.detailsListbox.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.detailsListbox.Size = new System.Drawing.Size(108, 85);
+            this.detailsListbox.TabIndex = 23;
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.DisplayNumber);
-            this.panel1.Controls.Add(this.DisplayName);
             this.panel1.Controls.Add(this.skippedDatesLabel);
             this.panel1.Controls.Add(this.selectedStartDate);
-            this.panel1.Controls.Add(this.startDateLabel2);
-            this.panel1.Controls.Add(this.numTeams);
-            this.panel1.Controls.Add(this.DisplayNumberLabel);
-            this.panel1.Controls.Add(this.DisplayNameLabel);
+            this.panel1.Controls.Add(this.startDateLabel2);          
+            this.panel1.Controls.Add(this.name);
             this.panel1.Controls.Add(this.skippedDatesListbox);
-            this.panel1.Location = new System.Drawing.Point(378, 71);
+            this.panel1.Controls.Add(this.detailsListbox);
+            this.panel1.Location = new System.Drawing.Point(378, 69);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(403, 338);
-            this.panel1.TabIndex = 31;
-            // 
-            // DisplayNumber
-            // 
-            this.DisplayNumber.AutoSize = true;
-            this.DisplayNumber.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayNumber.Location = new System.Drawing.Point(68, 61);
-            this.DisplayNumber.Name = "DisplayNumber";
-            this.DisplayNumber.Size = new System.Drawing.Size(56, 17);
-            this.DisplayNumber.TabIndex = 41;
-            this.DisplayNumber.Text = "Number";
-            // 
-            // DisplayName
-            // 
-            this.DisplayName.AutoSize = true;
-            this.DisplayName.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayName.Location = new System.Drawing.Point(62, 14);
-            this.DisplayName.Name = "DisplayName";
-            this.DisplayName.Size = new System.Drawing.Size(43, 17);
-            this.DisplayName.TabIndex = 40;
-            this.DisplayName.Text = "Name";
+            this.panel1.Size = new System.Drawing.Size(191, 318);
+            this.panel1.TabIndex = 24;
             // 
             // skippedDatesLabel
             // 
             this.skippedDatesLabel.AutoSize = true;
             this.skippedDatesLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skippedDatesLabel.Location = new System.Drawing.Point(215, 121);
+            this.skippedDatesLabel.Location = new System.Drawing.Point(20, 61);
             this.skippedDatesLabel.Name = "skippedDatesLabel";
             this.skippedDatesLabel.Size = new System.Drawing.Size(92, 17);
             this.skippedDatesLabel.TabIndex = 35;
@@ -231,7 +202,7 @@
             // 
             this.selectedStartDate.AutoSize = true;
             this.selectedStartDate.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedStartDate.Location = new System.Drawing.Point(215, 88);
+            this.selectedStartDate.Location = new System.Drawing.Point(215, 39);
             this.selectedStartDate.Name = "selectedStartDate";
             this.selectedStartDate.Size = new System.Drawing.Size(0, 17);
             this.selectedStartDate.TabIndex = 34;
@@ -240,85 +211,88 @@
             // 
             this.startDateLabel2.AutoSize = true;
             this.startDateLabel2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startDateLabel2.Location = new System.Drawing.Point(215, 62);
+            this.startDateLabel2.Location = new System.Drawing.Point(20, 12);
             this.startDateLabel2.Name = "startDateLabel2";
             this.startDateLabel2.Size = new System.Drawing.Size(66, 17);
             this.startDateLabel2.TabIndex = 33;
             this.startDateLabel2.Text = "Start Date";
+           
+           
             // 
-            // numTeams
+            // name
             // 
-            this.numTeams.AutoSize = true;
-            this.numTeams.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numTeams.Location = new System.Drawing.Point(62, 73);
-            this.numTeams.Name = "numTeams";
-            this.numTeams.Size = new System.Drawing.Size(0, 17);
-            this.numTeams.TabIndex = 31;
-            // 
-            // DisplayNumberLabel
-            // 
-            this.DisplayNumberLabel.AutoSize = true;
-            this.DisplayNumberLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayNumberLabel.Location = new System.Drawing.Point(6, 61);
-            this.DisplayNumberLabel.Name = "DisplayNumberLabel";
-            this.DisplayNumberLabel.Size = new System.Drawing.Size(56, 17);
-            this.DisplayNumberLabel.TabIndex = 28;
-            this.DisplayNumberLabel.Text = "Number";
-            // 
-            // DisplayNameLabel
-            // 
-            this.DisplayNameLabel.AutoSize = true;
-            this.DisplayNameLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayNameLabel.Location = new System.Drawing.Point(6, 15);
-            this.DisplayNameLabel.Name = "DisplayNameLabel";
-            this.DisplayNameLabel.Size = new System.Drawing.Size(43, 17);
-            this.DisplayNameLabel.TabIndex = 26;
-            this.DisplayNameLabel.Text = "Name";
+            this.name.AutoSize = true;
+            this.name.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.name.Location = new System.Drawing.Point(62, 5);
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(0, 17);
+            this.name.TabIndex = 27;
             // 
             // skippedDatesListbox
             // 
-            this.skippedDatesListbox.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skippedDatesListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.skippedDatesListbox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.skippedDatesListbox.FormattingEnabled = true;
             this.skippedDatesListbox.HorizontalScrollbar = true;
-            this.skippedDatesListbox.Location = new System.Drawing.Point(218, 142);
+            this.skippedDatesListbox.ItemHeight = 17;
+            this.skippedDatesListbox.Location = new System.Drawing.Point(23, 83);
             this.skippedDatesListbox.Name = "skippedDatesListbox";
-            this.skippedDatesListbox.Size = new System.Drawing.Size(180, 186);
+            this.skippedDatesListbox.Size = new System.Drawing.Size(182, 119);
             this.skippedDatesListbox.TabIndex = 24;
             // 
-            // seasonNameLabel
+            // DivNumberLabel2
             // 
-            this.seasonNameLabel.AutoSize = true;
-            this.seasonNameLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.seasonNameLabel.ForeColor = System.Drawing.Color.ForestGreen;
-            this.seasonNameLabel.Location = new System.Drawing.Point(403, 9);
-            this.seasonNameLabel.Name = "seasonNameLabel";
-            this.seasonNameLabel.Size = new System.Drawing.Size(23, 37);
-            this.seasonNameLabel.TabIndex = 34;
-            this.seasonNameLabel.Text = ".";
+            this.DivNumberLabel2.AutoSize = true;
+            this.DivNumberLabel2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DivNumberLabel2.Location = new System.Drawing.Point(137, 127);
+            this.DivNumberLabel2.Name = "DivNumberLabel2";
+            this.DivNumberLabel2.Size = new System.Drawing.Size(128, 21);
+            this.DivNumberLabel2.TabIndex = 26;
+            this.DivNumberLabel2.Text = "Division Number";
             // 
-            // CreateDivisionForm
+            // DivNameLabel2
+            // 
+            this.DivNameLabel2.AutoSize = true;
+            this.DivNameLabel2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DivNameLabel2.Location = new System.Drawing.Point(137, 81);
+            this.DivNameLabel2.Name = "DivNameLabel2";
+            this.DivNameLabel2.Size = new System.Drawing.Size(121, 21);
+            this.DivNameLabel2.TabIndex = 25;
+            this.DivNameLabel2.Text = "DivNameLabel2";
+            // 
+            // addDatesButton
+            // 
+            this.addDatesButton.Location = new System.Drawing.Point(215, 313);
+            this.addDatesButton.Name = "addDatesButton";
+            this.addDatesButton.Size = new System.Drawing.Size(138, 34);
+            this.addDatesButton.TabIndex = 27;
+            this.addDatesButton.Text = "Add Dates";
+            this.addDatesButton.UseVisualStyleBackColor = true;
+            this.addDatesButton.Click += new System.EventHandler(this.addDatesButton_Click);
+            // 
+            // DivisionDatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(793, 461);
-            this.Controls.Add(this.seasonNameLabel);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.ExitToMainMenuButton);
+            this.ClientSize = new System.Drawing.Size(592, 461);
+            this.Controls.Add(this.addDatesButton);
+            this.Controls.Add(this.DivNumberLabel2);
+            this.Controls.Add(this.DivNameLabel2);
             this.Controls.Add(this.skipDatesRemoveButton);
-            this.Controls.Add(this.createDivisionButton);
+            this.Controls.Add(this.DivisionTournamentNameLabel);
+            this.Controls.Add(this.ExitToMainMenuButton);
             this.Controls.Add(this.skipDatesAddButton);
             this.Controls.Add(this.SkipDatesdateTimePicker);
             this.Controls.Add(this.StartDate);
-            this.Controls.Add(this.DivisionNumberTextbox);
-            this.Controls.Add(this.DivisionNameTextbox);
             this.Controls.Add(this.StartDateLabel);
             this.Controls.Add(this.SkipDatesLabel);
             this.Controls.Add(this.DivisionNumberLabel);
             this.Controls.Add(this.DivisionNameLabel);
             this.Controls.Add(this.DivisionHeaderLabel);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "CreateDivisionForm";
+            this.Name = "DivisionDatesForm";
             this.Text = "DivisionCreator";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -334,24 +308,21 @@
         private System.Windows.Forms.Label DivisionNumberLabel;
         private System.Windows.Forms.Label SkipDatesLabel;
         private System.Windows.Forms.Label StartDateLabel;
-        private System.Windows.Forms.TextBox DivisionNameTextbox;
-        private System.Windows.Forms.TextBox DivisionNumberTextbox;
         private System.Windows.Forms.DateTimePicker StartDate;
         private System.Windows.Forms.DateTimePicker SkipDatesdateTimePicker;
         private System.Windows.Forms.Button skipDatesAddButton;
-        private System.Windows.Forms.Button createDivisionButton;
         private System.Windows.Forms.Button ExitToMainMenuButton;
+        private System.Windows.Forms.Label DivisionTournamentNameLabel;
         private System.Windows.Forms.Button skipDatesRemoveButton;
+        private System.Windows.Forms.ListBox detailsListbox;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label skippedDatesLabel;
+        private System.Windows.Forms.ListBox skippedDatesListbox;
+        private System.Windows.Forms.Label name;
         private System.Windows.Forms.Label selectedStartDate;
         private System.Windows.Forms.Label startDateLabel2;
-        private System.Windows.Forms.Label numTeams;
-        private System.Windows.Forms.Label DisplayNumberLabel;
-        private System.Windows.Forms.Label DisplayNameLabel;
-        private System.Windows.Forms.ListBox skippedDatesListbox;
-        private System.Windows.Forms.Label DisplayNumber;
-        private System.Windows.Forms.Label DisplayName;
-        private System.Windows.Forms.Label seasonNameLabel;
+        private System.Windows.Forms.Label skippedDatesLabel;
+        private System.Windows.Forms.Label DivNumberLabel2;
+        private System.Windows.Forms.Label DivNameLabel2;
+        private System.Windows.Forms.Button addDatesButton;
     }
 }

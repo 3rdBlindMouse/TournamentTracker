@@ -260,5 +260,30 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public List<DivisionModel> GetAllDivisions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DivisionModel> GetDivsNotInThisSeason(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetTeamsNotInSeason(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSeasonDivisions(int seasonID, int divisionID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<TeamModel> GetSeasonTeams(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

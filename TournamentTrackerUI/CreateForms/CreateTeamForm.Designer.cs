@@ -33,14 +33,7 @@
             this.TeamVenueLabel = new System.Windows.Forms.Label();
             this.AddPlayerLabel = new System.Windows.Forms.Label();
             this.addPlayerDropdown = new System.Windows.Forms.ComboBox();
-            this.CreateNewPlayerLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.teamCaptainDropdown = new System.Windows.Forms.ComboBox();
-            this.TeamCaptainLabel = new System.Windows.Forms.Label();
-            this.AddPlayerButton = new System.Windows.Forms.Button();
             this.createTeamButton = new System.Windows.Forms.Button();
-            this.removePlayerButton = new System.Windows.Forms.Button();
-            this.teamMemberListBox = new System.Windows.Forms.ListBox();
-            this.captainSelectButton = new System.Windows.Forms.Button();
             this.venueDropDown = new System.Windows.Forms.ComboBox();
             this.exitButton = new System.Windows.Forms.Button();
             this.createNewVenueLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -48,8 +41,6 @@
             this.DisplayTeamName = new System.Windows.Forms.Label();
             this.DisplayTeamVenueLabel = new System.Windows.Forms.Label();
             this.DisplayTeamVenue = new System.Windows.Forms.Label();
-            this.DisplayCaptainLabel = new System.Windows.Forms.Label();
-            this.DisplayCaptain = new System.Windows.Forms.Label();
             this.HeadingLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -103,46 +94,6 @@
             this.addPlayerDropdown.Size = new System.Drawing.Size(165, 29);
             this.addPlayerDropdown.TabIndex = 9;
             // 
-            // CreateNewPlayerLinkLabel
-            // 
-            this.CreateNewPlayerLinkLabel.AutoSize = true;
-            this.CreateNewPlayerLinkLabel.Location = new System.Drawing.Point(214, 236);
-            this.CreateNewPlayerLinkLabel.Name = "CreateNewPlayerLinkLabel";
-            this.CreateNewPlayerLinkLabel.Size = new System.Drawing.Size(113, 13);
-            this.CreateNewPlayerLinkLabel.TabIndex = 10;
-            this.CreateNewPlayerLinkLabel.TabStop = true;
-            this.CreateNewPlayerLinkLabel.Text = "or Create New Player";
-            this.CreateNewPlayerLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CreateNewPlayerLinkLabel_LinkClicked);
-            // 
-            // teamCaptainDropdown
-            // 
-            this.teamCaptainDropdown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teamCaptainDropdown.FormattingEnabled = true;
-            this.teamCaptainDropdown.Location = new System.Drawing.Point(162, 259);
-            this.teamCaptainDropdown.Name = "teamCaptainDropdown";
-            this.teamCaptainDropdown.Size = new System.Drawing.Size(165, 29);
-            this.teamCaptainDropdown.TabIndex = 12;
-            // 
-            // TeamCaptainLabel
-            // 
-            this.TeamCaptainLabel.AutoSize = true;
-            this.TeamCaptainLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TeamCaptainLabel.Location = new System.Drawing.Point(31, 262);
-            this.TeamCaptainLabel.Name = "TeamCaptainLabel";
-            this.TeamCaptainLabel.Size = new System.Drawing.Size(105, 21);
-            this.TeamCaptainLabel.TabIndex = 11;
-            this.TeamCaptainLabel.Text = "Team Captain";
-            // 
-            // AddPlayerButton
-            // 
-            this.AddPlayerButton.Location = new System.Drawing.Point(343, 188);
-            this.AddPlayerButton.Name = "AddPlayerButton";
-            this.AddPlayerButton.Size = new System.Drawing.Size(112, 36);
-            this.AddPlayerButton.TabIndex = 13;
-            this.AddPlayerButton.Text = "Add Player -->";
-            this.AddPlayerButton.UseVisualStyleBackColor = true;
-            this.AddPlayerButton.Click += new System.EventHandler(this.AddPlayerButton_Click);
-            // 
             // createTeamButton
             // 
             this.createTeamButton.Location = new System.Drawing.Point(354, 374);
@@ -152,34 +103,6 @@
             this.createTeamButton.Text = "Create Team";
             this.createTeamButton.UseVisualStyleBackColor = true;
             this.createTeamButton.Click += new System.EventHandler(this.createTeamButton_Click);
-            // 
-            // removePlayerButton
-            // 
-            this.removePlayerButton.Location = new System.Drawing.Point(343, 247);
-            this.removePlayerButton.Name = "removePlayerButton";
-            this.removePlayerButton.Size = new System.Drawing.Size(112, 36);
-            this.removePlayerButton.TabIndex = 17;
-            this.removePlayerButton.Text = "<---Remove Player";
-            this.removePlayerButton.UseVisualStyleBackColor = true;
-            this.removePlayerButton.Click += new System.EventHandler(this.removePlayerButton_Click);
-            // 
-            // teamMemberListBox
-            // 
-            this.teamMemberListBox.FormattingEnabled = true;
-            this.teamMemberListBox.Location = new System.Drawing.Point(486, 185);
-            this.teamMemberListBox.Name = "teamMemberListBox";
-            this.teamMemberListBox.Size = new System.Drawing.Size(235, 173);
-            this.teamMemberListBox.TabIndex = 18;
-            // 
-            // captainSelectButton
-            // 
-            this.captainSelectButton.Location = new System.Drawing.Point(252, 300);
-            this.captainSelectButton.Name = "captainSelectButton";
-            this.captainSelectButton.Size = new System.Drawing.Size(75, 37);
-            this.captainSelectButton.TabIndex = 19;
-            this.captainSelectButton.Text = "Select Captain";
-            this.captainSelectButton.UseVisualStyleBackColor = true;
-            this.captainSelectButton.Click += new System.EventHandler(this.captainSelectButton_Click);
             // 
             // venueDropDown
             // 
@@ -253,26 +176,6 @@
             this.DisplayTeamVenue.TabIndex = 27;
             this.DisplayTeamVenue.Text = "label5";
             // 
-            // DisplayCaptainLabel
-            // 
-            this.DisplayCaptainLabel.AutoSize = true;
-            this.DisplayCaptainLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayCaptainLabel.Location = new System.Drawing.Point(475, 140);
-            this.DisplayCaptainLabel.Name = "DisplayCaptainLabel";
-            this.DisplayCaptainLabel.Size = new System.Drawing.Size(88, 17);
-            this.DisplayCaptainLabel.TabIndex = 28;
-            this.DisplayCaptainLabel.Text = "Team Captain";
-            // 
-            // DisplayCaptain
-            // 
-            this.DisplayCaptain.AutoSize = true;
-            this.DisplayCaptain.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DisplayCaptain.Location = new System.Drawing.Point(569, 140);
-            this.DisplayCaptain.Name = "DisplayCaptain";
-            this.DisplayCaptain.Size = new System.Drawing.Size(43, 17);
-            this.DisplayCaptain.TabIndex = 29;
-            this.DisplayCaptain.Text = "label7";
-            // 
             // HeadingLabel
             // 
             this.HeadingLabel.AutoSize = true;
@@ -291,8 +194,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(770, 420);
             this.Controls.Add(this.HeadingLabel);
-            this.Controls.Add(this.DisplayCaptain);
-            this.Controls.Add(this.DisplayCaptainLabel);
             this.Controls.Add(this.DisplayTeamVenue);
             this.Controls.Add(this.DisplayTeamVenueLabel);
             this.Controls.Add(this.DisplayTeamName);
@@ -300,14 +201,7 @@
             this.Controls.Add(this.createNewVenueLinkLabel);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.venueDropDown);
-            this.Controls.Add(this.captainSelectButton);
-            this.Controls.Add(this.teamMemberListBox);
-            this.Controls.Add(this.removePlayerButton);
             this.Controls.Add(this.createTeamButton);
-            this.Controls.Add(this.AddPlayerButton);
-            this.Controls.Add(this.teamCaptainDropdown);
-            this.Controls.Add(this.TeamCaptainLabel);
-            this.Controls.Add(this.CreateNewPlayerLinkLabel);
             this.Controls.Add(this.addPlayerDropdown);
             this.Controls.Add(this.AddPlayerLabel);
             this.Controls.Add(this.TeamVenueLabel);
@@ -327,14 +221,7 @@
         private System.Windows.Forms.Label TeamVenueLabel;
         private System.Windows.Forms.Label AddPlayerLabel;
         private System.Windows.Forms.ComboBox addPlayerDropdown;
-        private System.Windows.Forms.LinkLabel CreateNewPlayerLinkLabel;
-        private System.Windows.Forms.ComboBox teamCaptainDropdown;
-        private System.Windows.Forms.Label TeamCaptainLabel;
-        private System.Windows.Forms.Button AddPlayerButton;
         private System.Windows.Forms.Button createTeamButton;
-        private System.Windows.Forms.Button removePlayerButton;
-        private System.Windows.Forms.ListBox teamMemberListBox;
-        private System.Windows.Forms.Button captainSelectButton;
         private System.Windows.Forms.ComboBox venueDropDown;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.LinkLabel createNewVenueLinkLabel;
@@ -342,8 +229,6 @@
         private System.Windows.Forms.Label DisplayTeamName;
         private System.Windows.Forms.Label DisplayTeamVenueLabel;
         private System.Windows.Forms.Label DisplayTeamVenue;
-        private System.Windows.Forms.Label DisplayCaptainLabel;
-        private System.Windows.Forms.Label DisplayCaptain;
         private System.Windows.Forms.Label HeadingLabel;
     }
 }

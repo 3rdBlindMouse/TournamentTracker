@@ -43,6 +43,7 @@
             this.divisionsListBox = new System.Windows.Forms.ListBox();
             this.divisionsGroupBox = new System.Windows.Forms.GroupBox();
             this.teamsGroupBox = new System.Windows.Forms.GroupBox();
+            this.teamsForLabel = new System.Windows.Forms.Label();
             this.teamsDivisionComboBox = new System.Windows.Forms.ComboBox();
             this.teamsListBox = new System.Windows.Forms.ListBox();
             this.teamsComboBox = new System.Windows.Forms.ComboBox();
@@ -61,6 +62,7 @@
             this.displayDescriptionLabel = new System.Windows.Forms.Label();
             this.displayYearLabel = new System.Windows.Forms.Label();
             this.displayNameLabel = new System.Windows.Forms.Label();
+            this.divisionLabel = new System.Windows.Forms.Label();
             this.divisionsGroupBox.SuspendLayout();
             this.teamsGroupBox.SuspendLayout();
             this.playersGroupBox.SuspendLayout();
@@ -189,6 +191,7 @@
             this.addDivisionButton.TabIndex = 11;
             this.addDivisionButton.Text = "--->";
             this.addDivisionButton.UseVisualStyleBackColor = true;
+            this.addDivisionButton.Click += new System.EventHandler(this.addDivisionButton_Click);
             // 
             // removeDivisionButton
             // 
@@ -201,6 +204,7 @@
             this.removeDivisionButton.TabIndex = 12;
             this.removeDivisionButton.Text = "<---";
             this.removeDivisionButton.UseVisualStyleBackColor = true;
+            this.removeDivisionButton.Click += new System.EventHandler(this.removeDivisionButton_Click);
             // 
             // divisionsListBox
             // 
@@ -228,6 +232,8 @@
             // 
             // teamsGroupBox
             // 
+            this.teamsGroupBox.Controls.Add(this.divisionLabel);
+            this.teamsGroupBox.Controls.Add(this.teamsForLabel);
             this.teamsGroupBox.Controls.Add(this.teamsDivisionComboBox);
             this.teamsGroupBox.Controls.Add(this.teamsListBox);
             this.teamsGroupBox.Controls.Add(this.teamsComboBox);
@@ -236,10 +242,19 @@
             this.teamsGroupBox.Controls.Add(this.addTeamButton);
             this.teamsGroupBox.Location = new System.Drawing.Point(21, 300);
             this.teamsGroupBox.Name = "teamsGroupBox";
-            this.teamsGroupBox.Size = new System.Drawing.Size(506, 213);
+            this.teamsGroupBox.Size = new System.Drawing.Size(506, 236);
             this.teamsGroupBox.TabIndex = 15;
             this.teamsGroupBox.TabStop = false;
             this.teamsGroupBox.Text = "Team(s)";
+            // 
+            // teamsForLabel
+            // 
+            this.teamsForLabel.AutoSize = true;
+            this.teamsForLabel.Location = new System.Drawing.Point(289, 18);
+            this.teamsForLabel.Name = "teamsForLabel";
+            this.teamsForLabel.Size = new System.Drawing.Size(80, 16);
+            this.teamsForLabel.TabIndex = 15;
+            this.teamsForLabel.Text = "Teams For :";
             // 
             // teamsDivisionComboBox
             // 
@@ -251,15 +266,16 @@
             this.teamsDivisionComboBox.Size = new System.Drawing.Size(211, 24);
             this.teamsDivisionComboBox.TabIndex = 14;
             this.teamsDivisionComboBox.Text = "Select Division";
+            this.teamsDivisionComboBox.SelectedValueChanged += new System.EventHandler(this.teamsDivisionComboBox_SelectedValueChanged);
             // 
             // teamsListBox
             // 
             this.teamsListBox.FormattingEnabled = true;
             this.teamsListBox.ItemHeight = 16;
-            this.teamsListBox.Location = new System.Drawing.Point(292, 22);
+            this.teamsListBox.Location = new System.Drawing.Point(292, 68);
             this.teamsListBox.Margin = new System.Windows.Forms.Padding(4);
             this.teamsListBox.Name = "teamsListBox";
-            this.teamsListBox.Size = new System.Drawing.Size(207, 180);
+            this.teamsListBox.Size = new System.Drawing.Size(207, 164);
             this.teamsListBox.TabIndex = 13;
             // 
             // teamsComboBox
@@ -284,6 +300,7 @@
             this.removeTeamButton.TabIndex = 12;
             this.removeTeamButton.Text = "<---";
             this.removeTeamButton.UseVisualStyleBackColor = true;
+            this.removeTeamButton.Click += new System.EventHandler(this.removeTeamButton_Click);
             // 
             // createNewTeamLinkLabel
             // 
@@ -296,6 +313,7 @@
             this.createNewTeamLinkLabel.TabIndex = 9;
             this.createNewTeamLinkLabel.TabStop = true;
             this.createNewTeamLinkLabel.Text = "or Create New Team";
+            this.createNewTeamLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewTeamLinkLabel_LinkClicked);
             // 
             // addTeamButton
             // 
@@ -308,6 +326,7 @@
             this.addTeamButton.TabIndex = 11;
             this.addTeamButton.Text = "--->";
             this.addTeamButton.UseVisualStyleBackColor = true;
+            this.addTeamButton.Click += new System.EventHandler(this.addTeamButton_Click);
             // 
             // playersGroupBox
             // 
@@ -447,6 +466,15 @@
             this.displayNameLabel.TabIndex = 19;
             this.displayNameLabel.Text = ".";
             // 
+            // divisionLabel
+            // 
+            this.divisionLabel.AutoSize = true;
+            this.divisionLabel.Location = new System.Drawing.Point(291, 42);
+            this.divisionLabel.Name = "divisionLabel";
+            this.divisionLabel.Size = new System.Drawing.Size(80, 16);
+            this.divisionLabel.TabIndex = 16;
+            this.divisionLabel.Text = "Teams For :";
+            // 
             // CreateSeasonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -518,5 +546,7 @@
         private System.Windows.Forms.Label displayDescriptionLabel;
         private System.Windows.Forms.Label displayYearLabel;
         private System.Windows.Forms.Label displayNameLabel;
+        private System.Windows.Forms.Label teamsForLabel;
+        private System.Windows.Forms.Label divisionLabel;
     }
 }

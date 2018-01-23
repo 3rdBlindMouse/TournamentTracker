@@ -121,6 +121,11 @@ namespace TournamentTrackerUI
         {
             throw new NotImplementedException();
         }
+
+        public void DivisionComplete(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
     
 }
