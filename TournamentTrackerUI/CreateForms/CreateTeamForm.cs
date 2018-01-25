@@ -124,13 +124,13 @@ namespace TournamentTrackerUI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CreateNewPlayerLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            CreatePersonForm personForm = new CreatePersonForm(this);
-            personForm.Show();
-            this.Hide();
-            personForm.FormClosing += personForm_FormClosing;
-        }
+        //private void CreateNewPlayerLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        //{
+        //    CreatePersonForm personForm = new CreatePersonForm(this);
+        //    personForm.Show();
+        //    this.Hide();
+        //    personForm.FormClosing += personForm_FormClosing;
+        //}
         /// <summary>
         /// when child form (createTeamPlayerForm) closes
         /// parent form (TeamCreatorForm) is made visible

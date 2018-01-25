@@ -31,8 +31,6 @@
             this.TeamNameLabel = new System.Windows.Forms.Label();
             this.teamNameTextbox = new System.Windows.Forms.TextBox();
             this.TeamVenueLabel = new System.Windows.Forms.Label();
-            this.AddPlayerLabel = new System.Windows.Forms.Label();
-            this.addPlayerDropdown = new System.Windows.Forms.ComboBox();
             this.createTeamButton = new System.Windows.Forms.Button();
             this.venueDropDown = new System.Windows.Forms.ComboBox();
             this.exitButton = new System.Windows.Forms.Button();
@@ -74,25 +72,6 @@
             this.TeamVenueLabel.Size = new System.Drawing.Size(96, 21);
             this.TeamVenueLabel.TabIndex = 6;
             this.TeamVenueLabel.Text = "Team Venue";
-            // 
-            // AddPlayerLabel
-            // 
-            this.AddPlayerLabel.AutoSize = true;
-            this.AddPlayerLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddPlayerLabel.Location = new System.Drawing.Point(31, 198);
-            this.AddPlayerLabel.Name = "AddPlayerLabel";
-            this.AddPlayerLabel.Size = new System.Drawing.Size(85, 21);
-            this.AddPlayerLabel.TabIndex = 8;
-            this.AddPlayerLabel.Text = "Add Player";
-            // 
-            // addPlayerDropdown
-            // 
-            this.addPlayerDropdown.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addPlayerDropdown.FormattingEnabled = true;
-            this.addPlayerDropdown.Location = new System.Drawing.Point(162, 195);
-            this.addPlayerDropdown.Name = "addPlayerDropdown";
-            this.addPlayerDropdown.Size = new System.Drawing.Size(165, 29);
-            this.addPlayerDropdown.TabIndex = 9;
             // 
             // createTeamButton
             // 
@@ -202,8 +181,6 @@
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.venueDropDown);
             this.Controls.Add(this.createTeamButton);
-            this.Controls.Add(this.addPlayerDropdown);
-            this.Controls.Add(this.AddPlayerLabel);
             this.Controls.Add(this.TeamVenueLabel);
             this.Controls.Add(this.teamNameTextbox);
             this.Controls.Add(this.TeamNameLabel);
@@ -219,8 +196,6 @@
         private System.Windows.Forms.Label TeamNameLabel;
         private System.Windows.Forms.TextBox teamNameTextbox;
         private System.Windows.Forms.Label TeamVenueLabel;
-        private System.Windows.Forms.Label AddPlayerLabel;
-        private System.Windows.Forms.ComboBox addPlayerDropdown;
         private System.Windows.Forms.Button createTeamButton;
         private System.Windows.Forms.ComboBox venueDropDown;
         private System.Windows.Forms.Button exitButton;

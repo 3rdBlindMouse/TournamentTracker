@@ -430,35 +430,35 @@ namespace TournamentTrackerUI.EditForms
         /// <param name="e"></param>
         private void teamDropDown_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (teamDropDown.SelectedValue != null)
-            {
-                teamNames.Clear();
-                tm = (TeamModel)teamDropDown.SelectedValue;
-                if (tm.TeamID != -1)
-                {
+            //if (teamDropDown.SelectedValue != null)
+            //{
+            //    teamNames.Clear();
+            //    tm = (DivisionTeamsModel)teamDropDown.SelectedValue;
+            //    if (tm.TeamID != -1)
+            //    {
 
                     
-                    selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
-                    originalTeamName = tm.TeamName;
-                    getTeamNames();
-                    teamNameTextbox.Text = tm.TeamName;
-                    DisplayTeamName.Text = tm.TeamName;
-                    // Find captain and display details
-                    DoCaptainStuff(tm);
-                    // Display cyrrent teams Venue in Display and as VenueBox selectedItem
-                    DoVenueStuff(tm);
-                    // Populate Teams Members ListBox
-                    DoTeamMemberStuff(tm);
-                    // Do form and list stuff
+            //        selectedPlayers = GlobalConfig.Connection.GetTeamMembers(tm);
+            //        originalTeamName = tm.TeamName;
+            //        getTeamNames();
+            //        teamNameTextbox.Text = tm.TeamName;
+            //        DisplayTeamName.Text = tm.TeamName;
+            //        // Find captain and display details
+            //        DoCaptainStuff(tm);
+            //        // Display cyrrent teams Venue in Display and as VenueBox selectedItem
+            //        DoVenueStuff(tm);
+            //        // Populate Teams Members ListBox
+            //        DoTeamMemberStuff(tm);
+            //        // Do form and list stuff
                     
-                    addedPeople.Clear();
-                    removedPeople.Clear();
-                    WireUpPlayerDropDown();
-                    WireUpTeamMembers();
-                    WireUpCaptainDropDown();
+            //        addedPeople.Clear();
+            //        removedPeople.Clear();
+            //        WireUpPlayerDropDown();
+            //        WireUpTeamMembers();
+            //        WireUpCaptainDropDown();
                    
-                }
-            }
+            //   }
+           // }
         }
 
         private void getTeamNames()
@@ -477,12 +477,12 @@ namespace TournamentTrackerUI.EditForms
         /// Populate teamMemberListBox
         /// </summary>
         /// <param name="tm"></param>
-        private void DoTeamMemberStuff(TeamModel tm)
-        {
-            teamMemberListBox.DataSource = null;
-            teamMemberListBox.DataSource = GlobalConfig.Connection.GetTeamMembers(tm);
-            teamMemberListBox.DisplayMember = "FullName";
-        }
+        //private void DoTeamMemberStuff(TeamModel tm)
+        //{
+        //    teamMemberListBox.DataSource = null;
+        //    teamMemberListBox.DataSource = GlobalConfig.Connection.GetTeamMembers(tm);
+        //    teamMemberListBox.DisplayMember = "FullName";
+        //}
         /// <summary>
         /// Populate VenueDropDown and Display Selected Team Venue
         /// </summary>

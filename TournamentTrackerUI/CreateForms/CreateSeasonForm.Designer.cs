@@ -43,6 +43,7 @@
             this.divisionsListBox = new System.Windows.Forms.ListBox();
             this.divisionsGroupBox = new System.Windows.Forms.GroupBox();
             this.teamsGroupBox = new System.Windows.Forms.GroupBox();
+            this.divisionLabel = new System.Windows.Forms.Label();
             this.teamsForLabel = new System.Windows.Forms.Label();
             this.teamsDivisionComboBox = new System.Windows.Forms.ComboBox();
             this.teamsListBox = new System.Windows.Forms.ListBox();
@@ -62,7 +63,6 @@
             this.displayDescriptionLabel = new System.Windows.Forms.Label();
             this.displayYearLabel = new System.Windows.Forms.Label();
             this.displayNameLabel = new System.Windows.Forms.Label();
-            this.divisionLabel = new System.Windows.Forms.Label();
             this.divisionsGroupBox.SuspendLayout();
             this.teamsGroupBox.SuspendLayout();
             this.playersGroupBox.SuspendLayout();
@@ -247,6 +247,15 @@
             this.teamsGroupBox.TabStop = false;
             this.teamsGroupBox.Text = "Team(s)";
             // 
+            // divisionLabel
+            // 
+            this.divisionLabel.AutoSize = true;
+            this.divisionLabel.Location = new System.Drawing.Point(291, 42);
+            this.divisionLabel.Name = "divisionLabel";
+            this.divisionLabel.Size = new System.Drawing.Size(80, 16);
+            this.divisionLabel.TabIndex = 16;
+            this.divisionLabel.Text = "Teams For :";
+            // 
             // teamsForLabel
             // 
             this.teamsForLabel.AutoSize = true;
@@ -353,6 +362,7 @@
             this.playersTeamComboBox.Size = new System.Drawing.Size(211, 24);
             this.playersTeamComboBox.TabIndex = 14;
             this.playersTeamComboBox.Text = "Select Team";
+            this.playersTeamComboBox.SelectedValueChanged += new System.EventHandler(this.playersTeamComboBox_SelectedValueChanged);
             // 
             // playersListBox
             // 
@@ -386,6 +396,7 @@
             this.removePlayerButtton.TabIndex = 12;
             this.removePlayerButtton.Text = "<---";
             this.removePlayerButtton.UseVisualStyleBackColor = true;
+            this.removePlayerButtton.Click += new System.EventHandler(this.removePlayerButtton_Click);
             // 
             // createNewPlayerLinkLabel
             // 
@@ -398,6 +409,7 @@
             this.createNewPlayerLinkLabel.TabIndex = 9;
             this.createNewPlayerLinkLabel.TabStop = true;
             this.createNewPlayerLinkLabel.Text = "or Create New Player";
+            this.createNewPlayerLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewPlayerLinkLabel_LinkClicked);
             // 
             // addPlayerButton
             // 
@@ -410,6 +422,7 @@
             this.addPlayerButton.TabIndex = 11;
             this.addPlayerButton.Text = "--->";
             this.addPlayerButton.UseVisualStyleBackColor = true;
+            this.addPlayerButton.Click += new System.EventHandler(this.addPlayerButton_Click);
             // 
             // yearLabel
             // 
@@ -465,15 +478,6 @@
             this.displayNameLabel.Size = new System.Drawing.Size(11, 16);
             this.displayNameLabel.TabIndex = 19;
             this.displayNameLabel.Text = ".";
-            // 
-            // divisionLabel
-            // 
-            this.divisionLabel.AutoSize = true;
-            this.divisionLabel.Location = new System.Drawing.Point(291, 42);
-            this.divisionLabel.Name = "divisionLabel";
-            this.divisionLabel.Size = new System.Drawing.Size(80, 16);
-            this.divisionLabel.TabIndex = 16;
-            this.divisionLabel.Text = "Teams For :";
             // 
             // CreateSeasonForm
             // 

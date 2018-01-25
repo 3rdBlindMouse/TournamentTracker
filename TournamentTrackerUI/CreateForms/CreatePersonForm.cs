@@ -31,9 +31,10 @@ namespace TournamentTrackerUI
         {
             InitializeComponent();
             callingForm = caller;
+            
 
             wireUpComparePeopleList();
-
+            
             StackFrame frame = new StackFrame(1, true);
             method = (frame.GetMethod().Name);
 

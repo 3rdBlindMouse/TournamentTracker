@@ -43,48 +43,28 @@ namespace TournamentLibrary.DataAccess
 
             }
         }
-       
-        public List<RosterModel> CreateRoster(RosterModel model)
-        {
-            throw new NotImplementedException();
-        }
 
         public SeasonModel CreateSeason(SeasonModel model)
         {
             throw new NotImplementedException();
         }
 
-        public SkippedDatesModel CreateSkippedDates(SkippedDatesModel model)
+        public VenueModel CreateVenue(VenueModel model)
         {
             throw new NotImplementedException();
         }
 
         public TeamModel CreateTeam(TeamModel model)
         {
-            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString("tournament")))
-            {
-                var p = new DynamicParameters();
-                p.Add("@TeamID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                p.Add("@TeamName", model.TeamName);
-                //p.Add("@TeamVenue", model.TeamVenue);
+            throw new NotImplementedException();
+        }
 
-
-                connection.Execute("spTeam", p, commandType: CommandType.StoredProcedure);
-
-                // grabs newly created ID from database and returns it as part of the current Person Model
-                model.TeamID = p.Get<int>("@TeamID");
-
-
-                return model;
-            }
-            }
-
-        public VenueModel CreateVenue(VenueModel model)
+        public CaptainModel CreateTeamCaptain(CaptainModel model)
         {
             throw new NotImplementedException();
         }
 
-        public List<DivisionModel> GetSeasonDivisions()
+        public List<RosterModel> CreateRoster(RosterModel model)
         {
             throw new NotImplementedException();
         }
@@ -94,7 +74,17 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<TeamModel> GetDivisionTeams()
+        public List<SeasonModel> GetLastSeason()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetLastPerson()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DivisionModel> GetSeasonDivisions(int i)
         {
             throw new NotImplementedException();
         }
@@ -104,24 +94,7 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public PersonModel GetLastPerson()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SkippedDatesModel> GetSkippedDates(DivisionModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-       
-
-        List<PersonModel> IDataConnection.GetLastPerson()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CreateDivisionTeams(int sdmID, int teamID)
+        public List<PersonModel> GetTeamMembers(DivisionTeamsModel model)
         {
             throw new NotImplementedException();
         }
@@ -131,22 +104,42 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public DivisionModel CreateDivision(DivisionModel model)
         {
             throw new NotImplementedException();
         }
 
-        public List<TeamModel> GetDivisionTeams(DivisionModel model)
+        public SkippedDatesModel CreateSkippedDates(SkippedDatesModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteSkippedDates(DivisionModel model)
+        public void DeleteSkippedDates(SkippedDatesModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteDivisionTeams(TeamModel teammodel)
+        public List<SkippedDatesModel> GetSkippedDates(SeasonDivisionsModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DivisionTeamsModel CreateDivisionTeams(DivisionTeamsModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteDivisionTeams(int SeasonDivisionsID, int TeamID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DivisionModel> GetAllDivisions()
         {
             throw new NotImplementedException();
         }
@@ -157,21 +150,6 @@ namespace TournamentLibrary.DataAccess
         }
 
         public void EditPerson(PersonModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<PersonModel> GetTeamMembers(TeamModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CaptainModel CreateTeamCaptain(CaptainModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CaptainModel GetTeamCaptain(TeamModel tm)
         {
             throw new NotImplementedException();
         }
@@ -201,17 +179,12 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public List<DivisionModel> GetDivsNotInThisSeason(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteTeamCaptain()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SeasonModel> GetLastSeason()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<DivisionModel> GetSeasonDivisions(int i)
         {
             throw new NotImplementedException();
         }
@@ -231,42 +204,7 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model)
-        {
-            throw new NotImplementedException();
-        }
-
         public SeasonModel GetSeason(int i)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteDivisionTeams(int SeasonDivisionsID, int TeamID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteSkippedDates(SkippedDatesModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<SkippedDatesModel> GetSkippedDates(SeasonDivisionsModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DivisionTeamsModel CreateDivisionTeams(DivisionTeamsModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<DivisionModel> GetAllDivisions()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<DivisionModel> GetDivsNotInThisSeason(int seasonID)
         {
             throw new NotImplementedException();
         }
@@ -281,7 +219,42 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<TeamModel> GetSeasonTeams(SeasonDivisionsModel sdm)
+        public List<DivisionTeamsModel> GetSeasonTeams(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetSeasonPlayers(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetPlayersNotInThisSeason(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateSDTP(int sid, int dTid, int pid)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<DivisionModel> IDataConnection.GetDivsNotInThisSeason(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeletePlayerFromRoster(int pid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteSDTP(int sid, int pid)
         {
             throw new NotImplementedException();
         }
