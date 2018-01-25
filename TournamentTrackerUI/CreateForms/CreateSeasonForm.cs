@@ -157,14 +157,14 @@ namespace TournamentTrackerUI.CreateForms
             wireUpTeamsDivisionComboBox();
             WireUpDivisionComboBox();
             wireUpTeamsComboBox(sdm);
-            if (divisionsListBox.Items.Count == 0)
+            wireUpPlayersTeamComboBox();
+            wireUpPlayersListBox();
+            if (teamsDivisionComboBox.Items.Count == 0)
             {
                 teamsComboBox.DataSource = null;
 
-                if (teamsListBox.Items.Count > 0)
-                {
-                    teamsListBox.DataSource = null;
-                }
+                teamsListBox.DataSource = null;
+
                 playersTeamComboBox.DataSource = null;
                 playersComboBox.DataSource = null;
                 if (playersListBox.Items.Count > 0)

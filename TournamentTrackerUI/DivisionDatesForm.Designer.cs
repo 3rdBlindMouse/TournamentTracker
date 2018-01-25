@@ -39,12 +39,10 @@
             this.ExitToMainMenuButton = new System.Windows.Forms.Button();
             this.DivisionTournamentNameLabel = new System.Windows.Forms.Label();
             this.skipDatesRemoveButton = new System.Windows.Forms.Button();
-            this.detailsListbox = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.skippedDatesLabel = new System.Windows.Forms.Label();
             this.selectedStartDate = new System.Windows.Forms.Label();
             this.startDateLabel2 = new System.Windows.Forms.Label();
-            
             this.name = new System.Windows.Forms.Label();
             this.skippedDatesListbox = new System.Windows.Forms.ListBox();
             this.DivNumberLabel2 = new System.Windows.Forms.Label();
@@ -160,39 +158,23 @@
             this.skipDatesRemoveButton.UseVisualStyleBackColor = true;
             this.skipDatesRemoveButton.Click += new System.EventHandler(this.skipDatesRemoveButton_Click);
             // 
-            // detailsListbox
-            // 
-            this.detailsListbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.detailsListbox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.detailsListbox.ItemHeight = 17;
-            this.detailsListbox.Items.AddRange(new object[] {
-            "",
-            "",
-            ""});
-            this.detailsListbox.Location = new System.Drawing.Point(92, 5);
-            this.detailsListbox.Name = "detailsListbox";
-            this.detailsListbox.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.detailsListbox.Size = new System.Drawing.Size(108, 85);
-            this.detailsListbox.TabIndex = 23;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.skippedDatesLabel);
             this.panel1.Controls.Add(this.selectedStartDate);
-            this.panel1.Controls.Add(this.startDateLabel2);          
+            this.panel1.Controls.Add(this.startDateLabel2);
             this.panel1.Controls.Add(this.name);
             this.panel1.Controls.Add(this.skippedDatesListbox);
-            this.panel1.Controls.Add(this.detailsListbox);
             this.panel1.Location = new System.Drawing.Point(378, 69);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(191, 318);
+            this.panel1.Size = new System.Drawing.Size(257, 318);
             this.panel1.TabIndex = 24;
             // 
             // skippedDatesLabel
             // 
             this.skippedDatesLabel.AutoSize = true;
             this.skippedDatesLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skippedDatesLabel.Location = new System.Drawing.Point(20, 61);
+            this.skippedDatesLabel.Location = new System.Drawing.Point(20, 69);
             this.skippedDatesLabel.Name = "skippedDatesLabel";
             this.skippedDatesLabel.Size = new System.Drawing.Size(92, 17);
             this.skippedDatesLabel.TabIndex = 35;
@@ -202,10 +184,11 @@
             // 
             this.selectedStartDate.AutoSize = true;
             this.selectedStartDate.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedStartDate.Location = new System.Drawing.Point(215, 39);
+            this.selectedStartDate.Location = new System.Drawing.Point(20, 41);
             this.selectedStartDate.Name = "selectedStartDate";
-            this.selectedStartDate.Size = new System.Drawing.Size(0, 17);
+            this.selectedStartDate.Size = new System.Drawing.Size(125, 17);
             this.selectedStartDate.TabIndex = 34;
+            this.selectedStartDate.Text = "Choose a Start Date";
             // 
             // startDateLabel2
             // 
@@ -216,8 +199,6 @@
             this.startDateLabel2.Size = new System.Drawing.Size(66, 17);
             this.startDateLabel2.TabIndex = 33;
             this.startDateLabel2.Text = "Start Date";
-           
-           
             // 
             // name
             // 
@@ -235,9 +216,9 @@
             this.skippedDatesListbox.FormattingEnabled = true;
             this.skippedDatesListbox.HorizontalScrollbar = true;
             this.skippedDatesListbox.ItemHeight = 17;
-            this.skippedDatesListbox.Location = new System.Drawing.Point(23, 83);
+            this.skippedDatesListbox.Location = new System.Drawing.Point(23, 89);
             this.skippedDatesListbox.Name = "skippedDatesListbox";
-            this.skippedDatesListbox.Size = new System.Drawing.Size(182, 119);
+            this.skippedDatesListbox.Size = new System.Drawing.Size(182, 204);
             this.skippedDatesListbox.TabIndex = 24;
             // 
             // DivNumberLabel2
@@ -275,7 +256,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(592, 461);
+            this.ClientSize = new System.Drawing.Size(667, 461);
             this.Controls.Add(this.addDatesButton);
             this.Controls.Add(this.DivNumberLabel2);
             this.Controls.Add(this.DivNameLabel2);
@@ -314,7 +295,6 @@
         private System.Windows.Forms.Button ExitToMainMenuButton;
         private System.Windows.Forms.Label DivisionTournamentNameLabel;
         private System.Windows.Forms.Button skipDatesRemoveButton;
-        private System.Windows.Forms.ListBox detailsListbox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ListBox skippedDatesListbox;
         private System.Windows.Forms.Label name;
