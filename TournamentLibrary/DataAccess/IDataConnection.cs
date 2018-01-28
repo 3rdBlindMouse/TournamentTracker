@@ -64,5 +64,6 @@ namespace TournamentLibrary.DataAccess
         void CreateSDTP(int sid, int dTid, int pid);
         void DeletePlayerFromRoster(int pid);
         void DeleteSDTP(int sid, int pid);
+        void CreateSDTP(int sid, int did, int sDid, int dTid, int tid, int rid, int pid);
     }
 }

@@ -126,6 +126,7 @@ namespace TournamentTrackerUI
             }
 
             model.skippedDates = GlobalConfig.Connection.GetSkippedDates(model);
+            skippedDates.Clear();
             this.Close();
 
             callingForm.DatesComplete(model);

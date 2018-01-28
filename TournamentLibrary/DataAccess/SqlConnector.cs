@@ -258,5 +258,10 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void CreateSDTP(int sid, int did, int sDid, int dTid, int tid, int rid, int pid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -165,7 +165,11 @@ namespace TournamentTrackerUI
                // model.TeamCaptain = captain.PersonID;
 
                 model.TeamVenue = vm.VenueID;
-                createTeamAndRoster(sdm, model);
+                //TODO make this into 2 methods better yet remove the roster part
+                //createTeamAndRoster(sdm, model);
+                GlobalConfig.Connection.CreateTeam(model);
+                callingForm.TeamComplete(model);
+
                 if (method == "createNewTeamLinkLabel_LinkClicked")
                 {
                     this.Close();
@@ -208,33 +212,33 @@ namespace TournamentTrackerUI
         /// Roster shows which players play for which teams
         /// </summary>
         /// <param name="model">A TeamModel</param>
-        private void createTeamAndRoster(SeasonDivisionsModel SDModel, TeamModel model)
-        {
-            // create simple model to save to DB Team Name 
-            GlobalConfig.Connection.CreateTeam(model);
-            DivisionTeamsModel dtm = new DivisionTeamsModel();
-            dtm.SeasonDivisionsID = SDModel.SeasonDivisionsID;
-            dtm.TeamID = model.TeamID;
-            GlobalConfig.Connection.CreateDivisionTeams(dtm);
-            model.DivisionTeamsID = dtm.DivisionTeamsID;
-            RosterModel roster = new RosterModel();
-            roster.DivisionTeamsID = model.DivisionTeamsID;
-          //  roster.players = selectedPlayers;
-           
-            // Add SeasonDivisionsID to team model to create DivisionTeam entry in DB
-           
-            
-           
+        //private void createTeamAndRoster(SeasonDivisionsModel SDModel, TeamModel model)
+        //{
+        //    // create simple model to save to DB Team Name 
+        //    GlobalConfig.Connection.CreateTeam(model);
+        //    DivisionTeamsModel dtm = new DivisionTeamsModel();
+        //    dtm.SeasonDivisionsID = SDModel.SeasonDivisionsID;
+        //    dtm.TeamID = model.TeamID;
+        //    GlobalConfig.Connection.CreateDivisionTeams(dtm);
+        //    model.DivisionTeamsID = dtm.DivisionTeamsID;
+        //    RosterModel roster = new RosterModel();
+        //    roster.DivisionTeamsID = model.DivisionTeamsID;
+        //    //  roster.players = selectedPlayers;
 
-            callingForm.TeamComplete(model);
-          //  captain.DivisionTeamID = model.DivisionTeamsID;
+        //    // Add SeasonDivisionsID to team model to create DivisionTeam entry in DB
 
-         //   GlobalConfig.Connection.CreateTeamCaptain(captain);
 
-            roster.DivisionTeamsID = model.DivisionTeamsID;
-          //  roster.players = selectedPlayers;
-            GlobalConfig.Connection.CreateRoster(roster);
-        }
+
+
+        //    callingForm.TeamComplete(model);
+        //  //  captain.DivisionTeamID = model.DivisionTeamsID;
+
+        // //   GlobalConfig.Connection.CreateTeamCaptain(captain);
+
+        //    roster.DivisionTeamsID = model.DivisionTeamsID;
+        //  //  roster.players = selectedPlayers;
+        //   // GlobalConfig.Connection.CreateRoster(roster);
+        //}
 
         private bool validateForm()
         {
@@ -257,6 +261,7 @@ namespace TournamentTrackerUI
             if ((vm.VenueID == -1) || (vm == null))
             {
                 MessageBox.Show("Please Select A Venue");
+                output = false;
             }
 
 

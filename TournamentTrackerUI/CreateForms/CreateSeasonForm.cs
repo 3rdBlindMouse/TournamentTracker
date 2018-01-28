@@ -254,12 +254,14 @@ namespace TournamentTrackerUI.CreateForms
         /// <param name="model"></param>
         public void TeamComplete(TeamModel model)
         {
+            dtm = new DivisionTeamsModel();
             dtm.SeasonDivisionsID = seasonID;
             dtm.TeamID = model.TeamID;
             //selectedTeams.Add(model);
             GlobalConfig.Connection.CreateDivisionTeams(dtm);
             wireupTeamsListBox();
-            teamsListBox.Items.Add(model.TeamName);
+            wireUpPlayersTeamComboBox();
+            //teamsListBox.Items.Add(model.TeamName);
         }
         /// <summary>
         /// Wires up Teams List Box to display selected teams names
@@ -285,7 +287,7 @@ namespace TournamentTrackerUI.CreateForms
                 if (tm != null)
                 {
                     //selectedTeams.Add(tm);
-                    DivisionTeamsModel dtm = new DivisionTeamsModel();
+                    dtm = new DivisionTeamsModel();
                     dtm.SeasonDivisionsID = sdm.SeasonDivisionsID;
                     dtm.TeamID = tm.TeamID;
                     GlobalConfig.Connection.CreateDivisionTeams(dtm);
@@ -390,7 +392,10 @@ namespace TournamentTrackerUI.CreateForms
                 if (pm != null)
                 {
                     int Sid = seasonID;
+                    int Did = sdm.DivisionID;
+                    int SDid = sdm.SeasonDivisionsID;
                     int DTid = dtm.DivisionTeamsID;
+                    int Tid = dtm.TeamID;                  
                     int Pid = pm.PersonID;
                     teamMembers.Clear();
                     teamMembers.Add(pm);
@@ -399,8 +404,9 @@ namespace TournamentTrackerUI.CreateForms
                     rm.DivisionTeamsID = dtm.DivisionTeamsID;
                     rm.players = teamMembers;
                     GlobalConfig.Connection.CreateRoster(rm);
+                    int Rid = rm.RosterID;
                     // creat ean entry in DB with SeasonID, DivisionteamsID and PlayerID
-                    GlobalConfig.Connection.CreateSDTP(Sid, DTid, Pid);
+                    GlobalConfig.Connection.CreateSDTP(Sid, Did, SDid, DTid, Tid ,Rid, Pid);
                     dtm = (DivisionTeamsModel)playersTeamComboBox.SelectedItem;
 
                     teamMembers.Clear();

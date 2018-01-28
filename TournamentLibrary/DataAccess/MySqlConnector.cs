@@ -770,6 +770,22 @@ namespace TournamentLibrary.DataAccess
                 connection.Execute("spDeleteSDTPlayer", p, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public void CreateSDTP(int sid, int did, int sDid, int dTid, int tid, int rid, int pid)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonID", sid);
+                p.Add("@InDivisionID", did);
+                p.Add("@InSeasonDivisionsID", sDid);
+                p.Add("@InDivisionTeamsID", dTid);
+                p.Add("@InTeamID", tid);
+                p.Add("@InRosterID", rid);
+                p.Add("@InPersonID", pid);
+                connection.Execute("spSeasonDivisionTeamPlayers", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
 
