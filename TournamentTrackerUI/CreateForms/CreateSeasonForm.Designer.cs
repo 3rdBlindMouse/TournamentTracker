@@ -164,7 +164,7 @@
             this.divisionsComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.divisionsComboBox.Name = "divisionsComboBox";
             this.divisionsComboBox.Size = new System.Drawing.Size(211, 24);
-            this.divisionsComboBox.TabIndex = 8;
+            this.divisionsComboBox.TabIndex = 1;
             this.divisionsComboBox.Text = "Select Division(s)";
             // 
             // createNewDivisionLinkLabel
@@ -175,7 +175,7 @@
             this.createNewDivisionLinkLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.createNewDivisionLinkLabel.Name = "createNewDivisionLinkLabel";
             this.createNewDivisionLinkLabel.Size = new System.Drawing.Size(144, 16);
-            this.createNewDivisionLinkLabel.TabIndex = 9;
+            this.createNewDivisionLinkLabel.TabIndex = 2;
             this.createNewDivisionLinkLabel.TabStop = true;
             this.createNewDivisionLinkLabel.Text = "or Create New Division";
             this.createNewDivisionLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewDivisionLinkLabel_LinkClicked);
@@ -188,7 +188,7 @@
             this.addDivisionButton.Margin = new System.Windows.Forms.Padding(4);
             this.addDivisionButton.Name = "addDivisionButton";
             this.addDivisionButton.Size = new System.Drawing.Size(53, 28);
-            this.addDivisionButton.TabIndex = 11;
+            this.addDivisionButton.TabIndex = 3;
             this.addDivisionButton.Text = "--->";
             this.addDivisionButton.UseVisualStyleBackColor = true;
             this.addDivisionButton.Click += new System.EventHandler(this.addDivisionButton_Click);
@@ -201,7 +201,7 @@
             this.removeDivisionButton.Margin = new System.Windows.Forms.Padding(4);
             this.removeDivisionButton.Name = "removeDivisionButton";
             this.removeDivisionButton.Size = new System.Drawing.Size(53, 28);
-            this.removeDivisionButton.TabIndex = 12;
+            this.removeDivisionButton.TabIndex = 4;
             this.removeDivisionButton.Text = "<---";
             this.removeDivisionButton.UseVisualStyleBackColor = true;
             this.removeDivisionButton.Click += new System.EventHandler(this.removeDivisionButton_Click);
@@ -214,7 +214,7 @@
             this.divisionsListBox.Margin = new System.Windows.Forms.Padding(4);
             this.divisionsListBox.Name = "divisionsListBox";
             this.divisionsListBox.Size = new System.Drawing.Size(207, 84);
-            this.divisionsListBox.TabIndex = 13;
+            this.divisionsListBox.TabIndex = 5;
             // 
             // divisionsGroupBox
             // 
@@ -273,7 +273,7 @@
             this.teamsDivisionComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.teamsDivisionComboBox.Name = "teamsDivisionComboBox";
             this.teamsDivisionComboBox.Size = new System.Drawing.Size(211, 24);
-            this.teamsDivisionComboBox.TabIndex = 14;
+            this.teamsDivisionComboBox.TabIndex = 6;
             this.teamsDivisionComboBox.Text = "Select Division";
             this.teamsDivisionComboBox.SelectedValueChanged += new System.EventHandler(this.teamsDivisionComboBox_SelectedValueChanged);
             // 
@@ -285,7 +285,7 @@
             this.teamsListBox.Margin = new System.Windows.Forms.Padding(4);
             this.teamsListBox.Name = "teamsListBox";
             this.teamsListBox.Size = new System.Drawing.Size(207, 164);
-            this.teamsListBox.TabIndex = 13;
+            this.teamsListBox.TabIndex = 11;
             // 
             // teamsComboBox
             // 
@@ -295,7 +295,7 @@
             this.teamsComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.teamsComboBox.Name = "teamsComboBox";
             this.teamsComboBox.Size = new System.Drawing.Size(211, 24);
-            this.teamsComboBox.TabIndex = 8;
+            this.teamsComboBox.TabIndex = 7;
             this.teamsComboBox.Text = "Select Team(s)";
             // 
             // removeTeamButton
@@ -306,7 +306,7 @@
             this.removeTeamButton.Margin = new System.Windows.Forms.Padding(4);
             this.removeTeamButton.Name = "removeTeamButton";
             this.removeTeamButton.Size = new System.Drawing.Size(53, 28);
-            this.removeTeamButton.TabIndex = 12;
+            this.removeTeamButton.TabIndex = 10;
             this.removeTeamButton.Text = "<---";
             this.removeTeamButton.UseVisualStyleBackColor = true;
             this.removeTeamButton.Click += new System.EventHandler(this.removeTeamButton_Click);
@@ -319,7 +319,7 @@
             this.createNewTeamLinkLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.createNewTeamLinkLabel.Name = "createNewTeamLinkLabel";
             this.createNewTeamLinkLabel.Size = new System.Drawing.Size(132, 16);
-            this.createNewTeamLinkLabel.TabIndex = 9;
+            this.createNewTeamLinkLabel.TabIndex = 8;
             this.createNewTeamLinkLabel.TabStop = true;
             this.createNewTeamLinkLabel.Text = "or Create New Team";
             this.createNewTeamLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewTeamLinkLabel_LinkClicked);
@@ -332,7 +332,7 @@
             this.addTeamButton.Margin = new System.Windows.Forms.Padding(4);
             this.addTeamButton.Name = "addTeamButton";
             this.addTeamButton.Size = new System.Drawing.Size(53, 28);
-            this.addTeamButton.TabIndex = 11;
+            this.addTeamButton.TabIndex = 9;
             this.addTeamButton.Text = "--->";
             this.addTeamButton.UseVisualStyleBackColor = true;
             this.addTeamButton.Click += new System.EventHandler(this.addTeamButton_Click);
@@ -360,7 +360,7 @@
             this.playersTeamComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.playersTeamComboBox.Name = "playersTeamComboBox";
             this.playersTeamComboBox.Size = new System.Drawing.Size(211, 24);
-            this.playersTeamComboBox.TabIndex = 14;
+            this.playersTeamComboBox.TabIndex = 12;
             this.playersTeamComboBox.Text = "Select Team";
             this.playersTeamComboBox.SelectedValueChanged += new System.EventHandler(this.playersTeamComboBox_SelectedValueChanged);
             // 
@@ -372,7 +372,7 @@
             this.playersListBox.Margin = new System.Windows.Forms.Padding(4);
             this.playersListBox.Name = "playersListBox";
             this.playersListBox.Size = new System.Drawing.Size(207, 180);
-            this.playersListBox.TabIndex = 13;
+            this.playersListBox.TabIndex = 15;
             // 
             // playersComboBox
             // 
@@ -382,7 +382,7 @@
             this.playersComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.playersComboBox.Name = "playersComboBox";
             this.playersComboBox.Size = new System.Drawing.Size(211, 24);
-            this.playersComboBox.TabIndex = 8;
+            this.playersComboBox.TabIndex = 13;
             this.playersComboBox.Text = "Select Player(s)";
             // 
             // removePlayerButtton
@@ -406,7 +406,7 @@
             this.createNewPlayerLinkLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.createNewPlayerLinkLabel.Name = "createNewPlayerLinkLabel";
             this.createNewPlayerLinkLabel.Size = new System.Drawing.Size(135, 16);
-            this.createNewPlayerLinkLabel.TabIndex = 9;
+            this.createNewPlayerLinkLabel.TabIndex = 14;
             this.createNewPlayerLinkLabel.TabStop = true;
             this.createNewPlayerLinkLabel.Text = "or Create New Player";
             this.createNewPlayerLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.createNewPlayerLinkLabel_LinkClicked);

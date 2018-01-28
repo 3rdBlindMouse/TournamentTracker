@@ -13,7 +13,7 @@ namespace TournamentLibrary.DataAccess
         List<RosterModel> CreateRoster(RosterModel model);
 
         List<PersonModel> GetAllPeople();
-        List<SeasonModel> GetLastSeason();
+        SeasonModel GetLastSeason();
 
         //TODO convert GetLastPerson from list into PersonModel only
         List<PersonModel> GetLastPerson();
@@ -64,6 +64,6 @@ namespace TournamentLibrary.DataAccess
         void CreateSDTP(int sid, int dTid, int pid);
         void DeletePlayerFromRoster(int pid);
         void DeleteSDTP(int sid, int pid);
-        void CreateSDTP(int sid, int did, int sDid, int dTid, int tid, int rid, int pid);
+        void CreateSDTP(sdtpModel sdtp);
     }
 }

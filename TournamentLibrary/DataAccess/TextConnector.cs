@@ -42,6 +42,11 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public void CreateSDTP(sdtpModel sdtp)
+        {
+            throw new NotImplementedException();
+        }
+
         public SeasonModel CreateSeason(SeasonModel model)
         {
             throw new NotImplementedException();
@@ -238,6 +243,11 @@ namespace TournamentLibrary.DataAccess
         }
 
         List<DivisionModel> IDataConnection.GetDivsNotInThisSeason(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
+        SeasonModel IDataConnection.GetLastSeason()
         {
             throw new NotImplementedException();
         }

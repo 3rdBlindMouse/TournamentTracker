@@ -545,14 +545,25 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public List<SeasonModel> GetLastSeason()
+        public SeasonModel GetLastSeason()
         {
-            List<SeasonModel> output;
+            List<SeasonModel> output = new List<SeasonModel>();
+            SeasonModel model = new SeasonModel(); ;
+
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 output = connection.Query<SeasonModel>("spGetLastSeason").ToList();
             }
-            return output;
+
+            foreach (SeasonModel sm in output)
+            {
+                model.SeasonID = sm.SeasonID;
+                model.SeasonName = sm.SeasonName;
+                model.SeasonYear = sm.SeasonYear;
+                model.SeasonDescription = sm.SeasonDescription;
+            }
+
+            return model;
         }
 
         public SeasonDivisionsModel createSeasonDivisions(SeasonDivisionsModel model)
@@ -771,18 +782,18 @@ namespace TournamentLibrary.DataAccess
             }
         }
 
-        public void CreateSDTP(int sid, int did, int sDid, int dTid, int tid, int rid, int pid)
+        public void CreateSDTP(sdtpModel sdtp)
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
-                p.Add("@InSeasonID", sid);
-                p.Add("@InDivisionID", did);
-                p.Add("@InSeasonDivisionsID", sDid);
-                p.Add("@InDivisionTeamsID", dTid);
-                p.Add("@InTeamID", tid);
-                p.Add("@InRosterID", rid);
-                p.Add("@InPersonID", pid);
+                p.Add("@InSeasonID", sdtp.SeasonID);
+                p.Add("@InDivisionID", sdtp.DivisionID);
+                p.Add("@InSeasonDivisionsID", sdtp.SeasonDivisionsID);
+                p.Add("@InDivisionTeamsID", sdtp.DivisionTeamsID);
+                p.Add("@InTeamID", sdtp.TeamID);
+                p.Add("@InRosterID", sdtp.RosterID);
+                p.Add("@InPersonID", sdtp.PersonID);
                 connection.Execute("spSeasonDivisionTeamPlayers", p, commandType: CommandType.StoredProcedure);
             }
         }

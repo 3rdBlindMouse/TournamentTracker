@@ -60,6 +60,7 @@
     <Compile Include="Models\PairModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
     <Compile Include="Models\RosterModel.cs" />
+    <Compile Include="Models\sdtpModel.cs" />
     <Compile Include="Models\SeasonDivisionsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RoundModel.cs" />

@@ -58,7 +58,7 @@
             this.nameLabel.Location = new System.Drawing.Point(68, 124);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(43, 17);
-            this.nameLabel.TabIndex = 2;
+            this.nameLabel.TabIndex = 0;
             this.nameLabel.Text = "Name";
             // 
             // nameTextBox
@@ -67,7 +67,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(198, 121);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(282, 25);
-            this.nameTextBox.TabIndex = 4;
+            this.nameTextBox.TabIndex = 1;
             this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
             // CreateNewTournamentButton
@@ -75,7 +75,7 @@
             this.CreateNewTournamentButton.Location = new System.Drawing.Point(337, 214);
             this.CreateNewTournamentButton.Name = "CreateNewTournamentButton";
             this.CreateNewTournamentButton.Size = new System.Drawing.Size(75, 24);
-            this.CreateNewTournamentButton.TabIndex = 6;
+            this.CreateNewTournamentButton.TabIndex = 4;
             this.CreateNewTournamentButton.Text = "Create";
             this.CreateNewTournamentButton.UseVisualStyleBackColor = true;
             this.CreateNewTournamentButton.Click += new System.EventHandler(this.CreateNewTournamentButton_Click);
@@ -86,7 +86,7 @@
             this.yearTextBox.Location = new System.Drawing.Point(198, 152);
             this.yearTextBox.Name = "yearTextBox";
             this.yearTextBox.Size = new System.Drawing.Size(282, 25);
-            this.yearTextBox.TabIndex = 7;
+            this.yearTextBox.TabIndex = 2;
             this.yearTextBox.TextChanged += new System.EventHandler(this.yearTextBox_TextChanged);
             // 
             // descriptionTextBox
@@ -95,7 +95,7 @@
             this.descriptionTextBox.Location = new System.Drawing.Point(198, 183);
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(282, 25);
-            this.descriptionTextBox.TabIndex = 8;
+            this.descriptionTextBox.TabIndex = 3;
             // 
             // yearLabel
             // 
@@ -103,7 +103,7 @@
             this.yearLabel.Location = new System.Drawing.Point(68, 155);
             this.yearLabel.Name = "yearLabel";
             this.yearLabel.Size = new System.Drawing.Size(34, 17);
-            this.yearLabel.TabIndex = 9;
+            this.yearLabel.TabIndex = 0;
             this.yearLabel.Text = "Year";
             // 
             // descriptionLabel
@@ -112,7 +112,7 @@
             this.descriptionLabel.Location = new System.Drawing.Point(68, 184);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(74, 17);
-            this.descriptionLabel.TabIndex = 10;
+            this.descriptionLabel.TabIndex = 0;
             this.descriptionLabel.Text = "Description";
             // 
             // descriptionErrorLabel
@@ -121,7 +121,7 @@
             this.descriptionErrorLabel.Location = new System.Drawing.Point(486, 184);
             this.descriptionErrorLabel.Name = "descriptionErrorLabel";
             this.descriptionErrorLabel.Size = new System.Drawing.Size(66, 17);
-            this.descriptionErrorLabel.TabIndex = 13;
+            this.descriptionErrorLabel.TabIndex = 0;
             this.descriptionErrorLabel.Text = "(Optional)";
             // 
             // yearErrorLabel
@@ -130,7 +130,7 @@
             this.yearErrorLabel.Location = new System.Drawing.Point(486, 155);
             this.yearErrorLabel.Name = "yearErrorLabel";
             this.yearErrorLabel.Size = new System.Drawing.Size(11, 17);
-            this.yearErrorLabel.TabIndex = 12;
+            this.yearErrorLabel.TabIndex = 0;
             this.yearErrorLabel.Text = ".";
             // 
             // nameErrorLabel
@@ -139,7 +139,7 @@
             this.nameErrorLabel.Location = new System.Drawing.Point(486, 124);
             this.nameErrorLabel.Name = "nameErrorLabel";
             this.nameErrorLabel.Size = new System.Drawing.Size(11, 17);
-            this.nameErrorLabel.TabIndex = 11;
+            this.nameErrorLabel.TabIndex = 0;
             this.nameErrorLabel.Text = ".";
             // 
             // TournamentCreatorForm
