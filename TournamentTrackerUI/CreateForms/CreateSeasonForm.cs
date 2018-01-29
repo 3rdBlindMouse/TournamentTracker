@@ -24,18 +24,21 @@ namespace TournamentTrackerUI.CreateForms
         private static DivisionModel dm = new DivisionModel();
         private static TeamModel TeamModel = new TeamModel();
 
-        List<DivisionModel> divs = new List<DivisionModel>();
+        
 
         private static SeasonDivisionsModel sdm = new SeasonDivisionsModel();
-       // private List<DivisionModel> selectedDivisions = new List<DivisionModel>();
+        private List<DivisionModel> selectedDivisions = new List<DivisionModel>();
+        private List<DivisionModel> allDivisions = GlobalConfig.Connection.GetAllDivisions();
         private static DivisionTeamsModel dtm = new DivisionTeamsModel();
 
         //private List<TeamModel> selectedTeams = new List<TeamModel>();
         private static List<PersonModel> allPlayers = GlobalConfig.Connection.GetAllPeople();
         private static List<PersonModel> seasonPlayers = new List<PersonModel>();
-
+        private static List<TeamModel> allTeams = GlobalConfig.Connection.GetAllTeams();
         private static List<PersonModel> teamMembers = new List<PersonModel>();
 
+
+        private static List<TeamModel> selectedTeams = new List<TeamModel>();
         /// <summary>
         /// Season Division Team Player Model, will hold the IDs to make DB searching a bit easier.
         /// Will populate as user progesses through form.
@@ -76,8 +79,9 @@ namespace TournamentTrackerUI.CreateForms
         /// </summary>
         private void WireUpDivisionComboBox()
         {
+            var divs = allDivisions.Where(p => selectedDivisions.All(p2 => p2.DivisionID != p.DivisionID));
             divisionsComboBox.DataSource = null;
-            divisionsComboBox.DataSource = GlobalConfig.Connection.GetAllDivisions();
+            divisionsComboBox.DataSource = divs.ToList();
             // Each season can have any division from any other season
             //divisionsComboBox.DataSource = GlobalConfig.Connection.GetDivsNotInThisSeason(seasonID);
             divisionsComboBox.DisplayMember = "DivisionName";
@@ -128,6 +132,7 @@ namespace TournamentTrackerUI.CreateForms
         private void addDivisionButton_Click(object sender, EventArgs e)
         {
             dm = (DivisionModel)(divisionsComboBox.SelectedItem);
+            selectedDivisions.Add(dm);
             sdtp.DivisionID = dm.DivisionID;
             DivisionDatesForm ddf = new DivisionDatesForm(this, seasonID, dm);
             ddf.Show();
@@ -138,8 +143,12 @@ namespace TournamentTrackerUI.CreateForms
         private void removeDivisionButton_Click(object sender, EventArgs e)
         {
             dm = (DivisionModel)(divisionsListBox.SelectedItem);
+            
+
+            selectedDivisions = selectedDivisions.Where(x => x.DivisionID != dm.DivisionID).ToList();
+
             sdtp.DivisionID = 0;
-            //selectedDivisions.Remove(DivModel);
+            
             GlobalConfig.Connection.DeleteSeasonDivisions(seasonID, dm.DivisionID);
             wireUpDivisionListBox();
             wireUpTeamsDivisionComboBox();
@@ -166,8 +175,7 @@ namespace TournamentTrackerUI.CreateForms
         /// </summary>
         /// <param name="model"></param>
         public void DatesComplete(SeasonDivisionsModel model)
-        {
-            //selectedDivisions.Add(DivModel);
+        {          
             wireUpDivisionListBox();
             wireUpTeamsDivisionComboBox();
             WireUpDivisionComboBox();
@@ -210,14 +218,11 @@ namespace TournamentTrackerUI.CreateForms
         /// <param name="model"></param>
         private void wireUpTeamsComboBox(SeasonDivisionsModel model)
         {
-            List<TeamModel> availableTeams = GlobalConfig.Connection.GetTeamsNotInSeason(model);
-            List<TeamModel> selectedTeams = GlobalConfig.Connection.GetDivisionTeams(sdm);
-            // take the list of Available teams and removes those selected in a division
-            // return that list and populate the divisionComboBox
-            var result = availableTeams.Where(p => selectedTeams.All(p2 => p2.TeamID != p.TeamID));
+
+            var teams = allTeams.Where(p => selectedTeams.All(p2 => p2.TeamID != p.TeamID));
 
             teamsComboBox.DataSource = null;
-            teamsComboBox.DataSource = result.ToList();
+            teamsComboBox.DataSource = teams.ToList();
             teamsComboBox.DisplayMember = "TeamName";
         }
         /// <summary>
@@ -281,7 +286,7 @@ namespace TournamentTrackerUI.CreateForms
                 TeamModel tm = (TeamModel)teamsComboBox.SelectedItem;
                 if (tm != null)
                 {
-                    //selectedTeams.Add(tm);
+                    selectedTeams.Add(tm);
                     dtm = new DivisionTeamsModel();
                     dtm.SeasonDivisionsID = sdtp.SeasonDivisionsID;
                     dtm.DivisionID = dm.DivisionID;
@@ -297,7 +302,7 @@ namespace TournamentTrackerUI.CreateForms
 
         private void wireUpPlayersTeamComboBox()
         {
-            playersTeamComboBox.DataSource = null;
+            playersTeamComboBox.DataSource = null;           
             playersTeamComboBox.DataSource = GlobalConfig.Connection.GetSeasonTeams(sdm);
             playersTeamComboBox.DisplayMember = "TeamName";
         }
@@ -307,16 +312,17 @@ namespace TournamentTrackerUI.CreateForms
             TeamModel tm = (TeamModel)(teamsListBox.SelectedItem);
             if (tm != null)
             {
-                //selectedTeams.Remove(tm);
+                selectedTeams = selectedTeams.Where(x => x.TeamID != tm.TeamID).ToList();
+                wireUpTeamsComboBox(sdm);
                 GlobalConfig.Connection.DeleteDivisionTeams(sdm.SeasonDivisionsID, tm.TeamID);
                 sdtp.DivisionTeamsID = 0;
                 sdtp.TeamID = 0;
                 wireupTeamsListBox();
-                wireUpTeamsComboBox(sdm);
+                
                 wireUpPlayersTeamComboBox();
 
 
-                if (teamsListBox.Items.Count == 0)
+                if (selectedTeams.Count == 0)
                 {
 
                     playersTeamComboBox.DataSource = null;
