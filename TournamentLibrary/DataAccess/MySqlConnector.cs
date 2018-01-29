@@ -215,6 +215,7 @@ namespace TournamentLibrary.DataAccess
                 var p = new DynamicParameters();
                 p.Add("@DivisionTeamsID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@InSeasonDivisionsID", model.SeasonDivisionsID);
+                p.Add("@InDivisionID", model.DivisionID);
                 p.Add("@InTeamID", model.TeamID);
 
 

@@ -5,33 +5,28 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
 using TournamentLibrary;
 using TournamentLibrary.Models;
 using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI
 {
-    public partial class CreateDivisionForm : Form, ITeamRequester
+    public partial class CreateDivisionForm : Form
     {
         IDivisionRequester callingForm;
         private static string method;
         private static SeasonModel thisSeason = new SeasonModel();
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
-       // A List of teams available to be selected
-       // private static List<TeamModel> availableTeams = GlobalConfig.Connection.GetAllTeams();
-        // Teams selected by user to be in Division
-       // private List<TeamModel> selectedTeams = new List<TeamModel>();
+ 
         // A list of all Divisions in the season
         private static List<DivisionModel> divs = new List<DivisionModel>();
 
         private static List<string> divNames = new List<string>();
 
         private static List<int> divNumbers = new List<int>();
-        // A list of Team names used to check for duplicates
-        // List<string> teamNames = new List<string>();
-        // A list of team numbers uded to check for duplicates
-        // List<int> teamNumbers = new List<int>();
+        
         // name and number validator variables
         bool nameValid = false;
         bool numberValid = false;
@@ -70,47 +65,10 @@ namespace TournamentTrackerUI
             divs = GlobalConfig.Connection.GetSeasonDivisions(thisSeason.SeasonID);
 
             InitializeComponent();
-           // WireupTeams();
-            // getTeamNames(divs);
-            //getTeamNumbers(divs);
+           
             seasonNameLabel.Text = thisSeason.SeasonName;
         }
-        /*
-         * Have tried to put methods in order of them being called upon
-         * either by default or by user actions.
-         */
-        /// <summary>
-        /// WireUp Team dropdown and selectedTeams ListBox
-        /// </summary>
-        //private void WireupTeams()
-        //{
-        //    AddSelectTitle();
-        //    addTeamsDropdown.DataSource = null;
-        //    addTeamsDropdown.DataSource = availableTeams.OrderBy(t => t.TeamName).ToList();
-        //    addTeamsDropdown.DisplayMember = "TeamName";
-
-        //    teamsListBox.DataSource = null;
-        //    teamsListBox.DataSource = selectedTeams.OrderBy(t => t.TeamName).ToList(); ;
-        //    teamsListBox.DisplayMember = "TeamName";
-
-        //    DisplayNumTeams.Text = selectedTeams.Count.ToString();
-        //}
-        /// <summary>
-        /// Adds a "Select team" to addTeams dropdown
-        /// </summary>
-        //private void AddSelectTitle()
-        //{
-        //    int index = availableTeams.FindIndex(item => item.TeamID == -1);
-        //    if (index >= 0)
-        //    {
-        //        // element exists, do what you need
-        //    }
-        //    else
-        //    {
-        //        TeamModel t = new TeamModel(" Select Team ", -1);
-        //        availableTeams.Insert(0, t);
-        //    }
-        //}
+       
         /// <summary>
         /// Creates a list of Team Names in selected Divisions
         /// </summary>
@@ -266,6 +224,13 @@ namespace TournamentTrackerUI
             if(selectedStartDate.Text != "")
             {
                 startDateValid = true;
+                SkipDatesdateTimePicker.MinDate = StartDate.Value;
+                SkipDatesdateTimePicker.MaxDate = StartDate.Value.AddDays(364);
+            }
+            else
+            {
+                MessageBox.Show("Please Select a Start Date");
+                startDateValid = false;
             }
         }
         /// <summary>
@@ -273,12 +238,19 @@ namespace TournamentTrackerUI
         /// </summary>
         private void addSkipdates()
         {
-            var date = SkipDatesdateTimePicker.Value.ToString("D");
-            // check to see if date is already selected as a skipped date
-            if (!skippedDates.Contains(DateTime.Parse(date)))
+            if (selectedStartDate.Text == "")
             {
-                skippedDates.Add(DateTime.Parse(date));
-                updateSkippedDatesBox();                         
+                MessageBox.Show("Please Select a Start Date");
+            }
+            else
+            {
+                var date = SkipDatesdateTimePicker.Value.ToString("D");
+                // check to see if date is already selected as a skipped date
+                if (!skippedDates.Contains(DateTime.Parse(date)))
+                {
+                    skippedDates.Add(DateTime.Parse(date));
+                    updateSkippedDatesBox();
+                }
             }
         }
         /// <summary>
@@ -319,43 +291,7 @@ namespace TournamentTrackerUI
         {
             removeSkippedDates();
         }
-        /// <summary>
-        /// Add team to selected teams List, remove Team from teamsDropdown
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void addTeamButton_Click(object sender, EventArgs e)
-        //{
-        //    TeamModel t = (TeamModel)addTeamsDropdown.SelectedItem;
-        //    if ((t != null) && (t.TeamID != -1))             
-        //    {
-        //        availableTeams.Remove(t);
-        //        selectedTeams.Add(t);
-        //        WireupTeams();
-        //    }
-        //}
-        /// <summary>
-        /// Add team to teamsDropdown, remove team from selected teams list
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //private void removeTeamButton_Click(object sender, EventArgs e)
-        //{
-        //    TeamModel t = (TeamModel)teamsListBox.SelectedItem;
-        //    if (t != null)
-        //    {
-        //        selectedTeams.Remove(t);
-        //        availableTeams.Add(t);
-        //        WireupTeams();
-        //    }
-        //}
-        /// <summary>
-        /// If form is valid(name and number valid)
-        /// create Division Model, Skipped Dates Model
-        /// Update DB et. al with Division, Division(Skipped Dates), and Division(Teams) Details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+       
         private void createDivisionButton_Click(object sender, EventArgs e)
         {
             { 
@@ -419,11 +355,11 @@ namespace TournamentTrackerUI
             model.DivisionName = DivisionNameTextbox.Text;
             model.DivisionNumber = int.Parse(DivisionNumberTextbox.Text);
             model.SeasonID = thisSeason.SeasonID;
-            //model.DivisionTeams = selectedTeams;
+            
             model.StartDate = StartDate.Value;
             // store division in Db and return ID
             GlobalConfig.Connection.CreateDivision(model);
-            
+           
             return model;
         }
         /// <summary>
@@ -444,21 +380,7 @@ namespace TournamentTrackerUI
             sdm.skippedDates = skModels;
             skippedDates = new List<DateTime>();
         }
-        /// <summary>
-        /// Update DB et.al with Teams in created Division
-        /// </summary>
-        /// <param name="model"></param>
-        private void createDivisionTeams(SeasonDivisionsModel sdm)
-        {
-            DivisionTeamsModel dtm = new DivisionTeamsModel();
-            dtm.SeasonDivisionsID = sdm.SeasonDivisionsID;
-            //foreach (TeamModel team in selectedTeams)
-            //{
-            //    dtm.TeamID = team.TeamID;
-            //    GlobalConfig.Connection.CreateDivisionTeams(dtm);
-            //}
-            //selectedTeams = new List<TeamModel>();
-        }
+        
         /// <summary>
         /// Clear data from Form
         /// </summary>
@@ -475,37 +397,14 @@ namespace TournamentTrackerUI
             }
             DisplayName.Text = "";
             DisplayNumber.Text = "";
-            //DisplayNumTeams.Text = "";
-            //if (teamsListBox.Items.Count > 0)
-            //{
-            //    teamsListBox.DataSource = null;
-            //    teamsListBox.Items.Clear();
-            //}
-            //addTeamsDropdown.DataSource = null;
-            //addTeamsDropdown.DataSource = GlobalConfig.Connection.GetAllTeams();
-            //addTeamsDropdown.DisplayMember = "TeamName";
+            
         }
-        /// <summary>
-       /// Opens a new Create Team Form
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
-        private void createNewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            CreateTeamForm teamForm = new CreateTeamForm(this);
-            teamForm.Show();
-            this.Hide();
-            teamForm.FormClosing += closeForm;
-        }
+       
         /// <summary>
         /// When new Create team form has team successfully created
         /// </summary>
         /// <param name="model"></param>
-        public void TeamComplete(TeamModel model)
-        {
-           // selectedTeams.Add(model);
-           // WireupTeams();
-        }
+       
         private void ExitToMainMenuButton_Click(object sender, EventArgs e)
         {
             this.Close();

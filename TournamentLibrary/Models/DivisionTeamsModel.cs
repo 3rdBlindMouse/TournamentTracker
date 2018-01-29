@@ -10,6 +10,7 @@ namespace TournamentLibrary.Models
     {
         public int DivisionTeamsID { get; set; }
         public int SeasonDivisionsID { get; set; }
+        public int DivisionID { get; set; }
         public int TeamID { get; set; }
         public string TeamName { get; private set; }
     }

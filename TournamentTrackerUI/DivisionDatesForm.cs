@@ -45,18 +45,27 @@ namespace TournamentTrackerUI
         private void UpdateStartDate()
         {
             selectedStartDate.Text = StartDate.Value.ToString("D");
+            SkipDatesdateTimePicker.MinDate = StartDate.Value;
+            SkipDatesdateTimePicker.MaxDate = StartDate.Value.AddDays(364);
         }
         /// <summary>
         /// Updates display to show selected date(s) to skip
         /// </summary>
         private void addSkipdates()
         {
-            var date = SkipDatesdateTimePicker.Value.ToString("D");
-            // check to see if date is already selected as a skipped date
-            if (!skippedDates.Contains(DateTime.Parse(date)))
+            if (selectedStartDate.Text != "Choose a Start Date")
             {
-                skippedDates.Add(DateTime.Parse(date));
-                updateSkippedDatesBox();
+                var date = SkipDatesdateTimePicker.Value.ToString("D");
+                // check to see if date is already selected as a skipped date
+                if (!skippedDates.Contains(DateTime.Parse(date)))
+                {
+                    skippedDates.Add(DateTime.Parse(date));
+                    updateSkippedDatesBox();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please Select a Start Date");
             }
         }
 
