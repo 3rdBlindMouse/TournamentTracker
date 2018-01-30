@@ -19,14 +19,16 @@ namespace TournamentTrackerUI
         // A list to hold dates to be skipped
         private static List<DateTime> skippedDates = new List<DateTime>();
         private static DivisionModel division = new DivisionModel();
+        private static SeasonDivisionsModel sdm = new SeasonDivisionsModel();
         private static int seasonID;
 
-        public DivisionDatesForm(IDivisionDatesRequester caller, int sID, DivisionModel dModel)
+        public DivisionDatesForm(IDivisionDatesRequester caller, SeasonDivisionsModel sd, DivisionModel dm)
         {
             callingForm = caller;
             InitializeComponent();
-            division = dModel;
-            seasonID = sID;
+            sdm = sd;
+            division = dm;
+            seasonID = sdm.SeasonID;
             WireUpLabels();
         }
 
@@ -118,27 +120,25 @@ namespace TournamentTrackerUI
         private void addDatesButton_Click(object sender, EventArgs e)
         {
             // create a new SeasonDivisionsModel
-            SeasonDivisionsModel model = new SeasonDivisionsModel();
-            model.SeasonID = seasonID;
-            model.DivisionID = division.DivisionID;
-            model.StartDate = StartDate.Value;
+            
+            sdm.StartDate = StartDate.Value;
             // store division in Db and return ID
-            GlobalConfig.Connection.createSeasonDivisions(model);
+            //GlobalConfig.Connection.createSeasonDivisions(model);
 
 
             foreach (DateTime date in skippedDates)
             {
                 SkippedDatesModel skDates = new SkippedDatesModel();
-                skDates.SeasonDivisionsID = model.SeasonDivisionsID;
+                skDates.SeasonDivisionsID = sdm.SeasonDivisionsID;
                 skDates.DateToSkip = date;
                 GlobalConfig.Connection.CreateSkippedDates(skDates);
             }
 
-            model.skippedDates = GlobalConfig.Connection.GetSkippedDates(model);
+            sdm.skippedDates = GlobalConfig.Connection.GetSkippedDates(sdm);
             skippedDates.Clear();
             this.Close();
 
-            callingForm.DatesComplete(model);
+            callingForm.DatesComplete(sdm);
         }
     }
 }

@@ -134,7 +134,13 @@ namespace TournamentTrackerUI.CreateForms
             dm = (DivisionModel)(divisionsComboBox.SelectedItem);
             selectedDivisions.Add(dm);
             sdtp.DivisionID = dm.DivisionID;
-            DivisionDatesForm ddf = new DivisionDatesForm(this, seasonID, dm);
+            sdm.DivisionID = dm.DivisionID;
+            sdm.SeasonID = season.SeasonID;
+            GlobalConfig.Connection.createSeasonDivisions(sdm);
+            sdtp.SeasonDivisionsID = sdm.SeasonDivisionsID;
+
+            DivisionDatesForm ddf = new DivisionDatesForm(this, sdm, dm);
+            
             ddf.Show();
             this.Hide();
             ddf.FormClosing += closeForm;
@@ -153,7 +159,7 @@ namespace TournamentTrackerUI.CreateForms
             wireUpDivisionListBox();
             wireUpTeamsDivisionComboBox();
             WireUpDivisionComboBox();
-            wireUpTeamsComboBox(sdm);
+            wireUpTeamsComboBox();
             wireUpPlayersTeamComboBox();
             wireUpPlayersListBox();
             if (teamsDivisionComboBox.Items.Count == 0)
@@ -201,13 +207,8 @@ namespace TournamentTrackerUI.CreateForms
             DivisionModel dm = (DivisionModel)teamsDivisionComboBox.SelectedItem;
             if (dm != null)
             {
-                divisionLabel.Text = dm.DivisionName;
-                sdm = GlobalConfig.Connection.GetSeasonDivisionModel(dm);
-
-                sdtp.DivisionID = sdm.DivisionID;
-                sdtp.SeasonDivisionsID = sdm.SeasonDivisionsID;
-
-                wireUpTeamsComboBox(sdm);
+                divisionLabel.Text = dm.DivisionName;                
+                wireUpTeamsComboBox();
                 wireupTeamsListBox();
             }
         }
@@ -216,7 +217,7 @@ namespace TournamentTrackerUI.CreateForms
         /// already selected in the current season
         /// </summary>
         /// <param name="model"></param>
-        private void wireUpTeamsComboBox(SeasonDivisionsModel model)
+        private void wireUpTeamsComboBox()
         {
 
             var teams = allTeams.Where(p => selectedTeams.All(p2 => p2.TeamID != p.TeamID));
@@ -268,7 +269,8 @@ namespace TournamentTrackerUI.CreateForms
         /// </summary>
         private void wireupTeamsListBox()
         {
-
+            dm = (DivisionModel)teamsDivisionComboBox.SelectedItem;
+            sdm = GlobalConfig.Connection.GetSeasonDivisionModel(dm);
             teamsListBox.DataSource = null;
             teamsListBox.DataSource = GlobalConfig.Connection.GetDivisionTeams(sdm);
             teamsListBox.DisplayMember = "TeamName";
@@ -288,13 +290,13 @@ namespace TournamentTrackerUI.CreateForms
                 {
                     selectedTeams.Add(tm);
                     dtm = new DivisionTeamsModel();
-                    dtm.SeasonDivisionsID = sdtp.SeasonDivisionsID;
+                    dtm.SeasonDivisionsID = sdm.SeasonDivisionsID;
                     dtm.DivisionID = dm.DivisionID;
                     dtm.TeamID = tm.TeamID;
                     GlobalConfig.Connection.CreateDivisionTeams(dtm);
                     sdtp.DivisionTeamsID = dtm.DivisionTeamsID;
                     wireupTeamsListBox();
-                    wireUpTeamsComboBox(sdm);
+                    wireUpTeamsComboBox();
                     wireUpPlayersTeamComboBox();
                 }
             }
@@ -313,7 +315,7 @@ namespace TournamentTrackerUI.CreateForms
             if (tm != null)
             {
                 selectedTeams = selectedTeams.Where(x => x.TeamID != tm.TeamID).ToList();
-                wireUpTeamsComboBox(sdm);
+                wireUpTeamsComboBox();
                 GlobalConfig.Connection.DeleteDivisionTeams(sdm.SeasonDivisionsID, tm.TeamID);
                 sdtp.DivisionTeamsID = 0;
                 sdtp.TeamID = 0;
@@ -405,14 +407,15 @@ namespace TournamentTrackerUI.CreateForms
                     rm.DivisionTeamsID = dtm.DivisionTeamsID;
                     rm.players = teamMembers;
                     GlobalConfig.Connection.CreateRoster(rm);
-                    
-                   
-                    
 
 
+
+
+                    sdtp.SeasonID = season.SeasonID;
                     sdtp.PersonID = pm.PersonID;
                     sdtp.DivisionTeamsID = dtm.DivisionTeamsID;
                     sdtp.RosterID = rm.RosterID;
+                    sdtp.SeasonDivisionsID = dtm.SeasonDivisionsID;
                     sdtp.TeamID = dtm.TeamID;
                     sdtp.DivisionID = dtm.DivisionID;
                     
