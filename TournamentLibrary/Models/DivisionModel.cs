@@ -55,7 +55,7 @@ namespace TournamentLibrary.Models
 
         public DivisionModel()
         {
-
+            DivisionSkippedDates = new List<DateTime>();
         }
     }
     

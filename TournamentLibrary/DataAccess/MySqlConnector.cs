@@ -733,14 +733,15 @@ namespace TournamentLibrary.DataAccess
             return output;
         }
 
-        public List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID)
+        public List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionID, int teamID)
         {
             List<PersonModel> output;
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@InSeasonID", seasonID);
-                p.Add("@InDivisionTeamsID", divisionTeamsID);
+                p.Add("@InDivisionID", divisionID);
+                p.Add("@InTeamID", teamID);
                 output = connection.Query<PersonModel>("spGetSeasonDivisionTeamMembers", p, commandType: CommandType.StoredProcedure).ToList();
 
                 //}
@@ -796,6 +797,31 @@ namespace TournamentLibrary.DataAccess
                 p.Add("@InRosterID", sdtp.RosterID);
                 p.Add("@InPersonID", sdtp.PersonID);
                 connection.Execute("spSeasonDivisionTeamPlayers", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public List<sdtpModel> GetSdtps(int seasonID)
+        {
+            List<sdtpModel> output;
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonID", seasonID);
+                output = connection.Query<sdtpModel>("spGetSdtps", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public void AddStartDate(SeasonDivisionsModel sdm)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("InSeasonDivisionsID", sdm.SeasonDivisionsID);
+                p.Add("@InStartDate", sdm.StartDate);
+
+                connection.Execute("spAddStartDate", p, commandType: CommandType.StoredProcedure);
             }
         }
     }

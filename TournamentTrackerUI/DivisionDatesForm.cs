@@ -122,6 +122,7 @@ namespace TournamentTrackerUI
             // create a new SeasonDivisionsModel
             
             sdm.StartDate = StartDate.Value;
+            GlobalConfig.Connection.AddStartDate(sdm);
             // store division in Db and return ID
             //GlobalConfig.Connection.createSeasonDivisions(model);
 
@@ -136,9 +137,8 @@ namespace TournamentTrackerUI
 
             sdm.skippedDates = GlobalConfig.Connection.GetSkippedDates(sdm);
             skippedDates.Clear();
-            this.Close();
-
             callingForm.DatesComplete(sdm);
+            this.Close();
         }
     }
 }

@@ -12,19 +12,20 @@ using System.Windows.Forms;
 using TournamentLibrary;
 using TournamentLibrary.DataAccess;
 using TournamentLibrary.Models;
+using TournamentLibrary.RoundRobinGenerator;
 using TournamentTrackerUI.RequestInterfaces;
 
 namespace TournamentTrackerUI.CreateForms
 {
     public partial class CreateSeasonForm : Form, IDivisionRequester, IDivisionDatesRequester, ITeamRequester, IPersonRequester
-    {       
+    {
         private SeasonModel season = GlobalConfig.Connection.GetLastSeason();
         //variable to hold this seasons seasonID
 
         private static DivisionModel dm = new DivisionModel();
         private static TeamModel TeamModel = new TeamModel();
 
-        
+
 
         private static SeasonDivisionsModel sdm = new SeasonDivisionsModel();
         private List<DivisionModel> selectedDivisions = new List<DivisionModel>();
@@ -48,7 +49,7 @@ namespace TournamentTrackerUI.CreateForms
 
         public CreateSeasonForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
             InitializeLabels();
             seasonID = season.SeasonID;
             sdtp.SeasonID = seasonID;
@@ -62,7 +63,7 @@ namespace TournamentTrackerUI.CreateForms
 
             wireUpPlayersComboBox();
         }
-  
+
         /// <summary>
         /// Show Details of Current Season at top of form
         /// </summary>
@@ -140,7 +141,7 @@ namespace TournamentTrackerUI.CreateForms
             sdtp.SeasonDivisionsID = sdm.SeasonDivisionsID;
 
             DivisionDatesForm ddf = new DivisionDatesForm(this, sdm, dm);
-            
+
             ddf.Show();
             this.Hide();
             ddf.FormClosing += closeForm;
@@ -149,12 +150,12 @@ namespace TournamentTrackerUI.CreateForms
         private void removeDivisionButton_Click(object sender, EventArgs e)
         {
             dm = (DivisionModel)(divisionsListBox.SelectedItem);
-            
+
 
             selectedDivisions = selectedDivisions.Where(x => x.DivisionID != dm.DivisionID).ToList();
 
             sdtp.DivisionID = 0;
-            
+
             GlobalConfig.Connection.DeleteSeasonDivisions(seasonID, dm.DivisionID);
             wireUpDivisionListBox();
             wireUpTeamsDivisionComboBox();
@@ -181,10 +182,11 @@ namespace TournamentTrackerUI.CreateForms
         /// </summary>
         /// <param name="model"></param>
         public void DatesComplete(SeasonDivisionsModel model)
-        {          
+        {
+            sdm.StartDate = model.StartDate;
             wireUpDivisionListBox();
             wireUpTeamsDivisionComboBox();
-            WireUpDivisionComboBox();
+            WireUpDivisionComboBox();          
         }
         /// <summary>
         /// WiresUp Division Combo Box associated with the Team section of the form
@@ -207,7 +209,7 @@ namespace TournamentTrackerUI.CreateForms
             DivisionModel dm = (DivisionModel)teamsDivisionComboBox.SelectedItem;
             if (dm != null)
             {
-                divisionLabel.Text = dm.DivisionName;                
+                divisionLabel.Text = dm.DivisionName;
                 wireUpTeamsComboBox();
                 wireupTeamsListBox();
             }
@@ -304,7 +306,7 @@ namespace TournamentTrackerUI.CreateForms
 
         private void wireUpPlayersTeamComboBox()
         {
-            playersTeamComboBox.DataSource = null;           
+            playersTeamComboBox.DataSource = null;
             playersTeamComboBox.DataSource = GlobalConfig.Connection.GetSeasonTeams(sdm);
             playersTeamComboBox.DisplayMember = "TeamName";
         }
@@ -320,7 +322,7 @@ namespace TournamentTrackerUI.CreateForms
                 sdtp.DivisionTeamsID = 0;
                 sdtp.TeamID = 0;
                 wireupTeamsListBox();
-                
+
                 wireUpPlayersTeamComboBox();
 
 
@@ -375,7 +377,7 @@ namespace TournamentTrackerUI.CreateForms
         {
             DivisionTeamsModel dtm = (DivisionTeamsModel)playersTeamComboBox.SelectedItem;
             RosterModel rm = new RosterModel();
-            rm.DivisionTeamsID = dtm.DivisionTeamsID;          
+            rm.DivisionTeamsID = dtm.DivisionTeamsID;
             sdtp.PersonID = model.PersonID;
             teamMembers.Add(model);
             rm.players = teamMembers;
@@ -418,22 +420,22 @@ namespace TournamentTrackerUI.CreateForms
                     sdtp.SeasonDivisionsID = dtm.SeasonDivisionsID;
                     sdtp.TeamID = dtm.TeamID;
                     sdtp.DivisionID = dtm.DivisionID;
-                    
+
                     //dtm = (DivisionTeamsModel)playersTeamComboBox.SelectedItem;
 
                     teamMembers.Clear();
                     teamMembers = GlobalConfig.Connection.GetTeamMembers(dtm);
-                    
+
 
                     // creat ean entry in DB with SeasonID, DivisionteamsID and PlayerID
                     GlobalConfig.Connection.CreateSDTP(sdtp);
-                    
+
                     wireUpPlayersListBox();
                     wireUpPlayersComboBox();
                 }
             }
         }
-       
+
 
         private void playersTeamComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -467,7 +469,13 @@ namespace TournamentTrackerUI.CreateForms
                 wireUpPlayersComboBox();
             }
         }
-    }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //RoundRobin robin = new RoundRobin(seasonID);
+            RoundRobin robin = new RoundRobin(13);
         }
+    }
+}
+
     

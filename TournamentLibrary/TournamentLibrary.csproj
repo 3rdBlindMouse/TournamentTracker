@@ -68,6 +68,7 @@
     <Compile Include="Models\SinglesModel.cs" />
     <Compile Include="Models\SkippedDatesModel.cs" />
     <Compile Include="Models\TeamModel.cs" />
+    <Compile Include="RoundRobinGenerator\RoundRobin.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="Models\VenueModel.cs" />
   </ItemGroup>

@@ -21,7 +21,7 @@ namespace TournamentLibrary.DataAccess
         List<VenueModel> GetAllVenues();
         
         List<PersonModel> GetTeamMembers(DivisionTeamsModel model);
-        
+        List<sdtpModel> GetSdtps(int seasonID);
 
         List<TeamModel> GetAllTeams();
         List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model);
@@ -60,10 +60,11 @@ namespace TournamentLibrary.DataAccess
         List<DivisionTeamsModel> GetSeasonTeams(SeasonDivisionsModel sdm);
         List<PersonModel> GetSeasonPlayers(SeasonDivisionsModel sdm);
         List<PersonModel> GetPlayersNotInThisSeason(SeasonDivisionsModel sdm);
-        List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID);
+        List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID, int teamID);
         void CreateSDTP(int sid, int dTid, int pid);
         void DeletePlayerFromRoster(int pid);
         void DeleteSDTP(int sid, int pid);
         void CreateSDTP(sdtpModel sdtp);
+        void AddStartDate(SeasonDivisionsModel sdm);
     }
 }

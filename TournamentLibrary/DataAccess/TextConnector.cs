@@ -12,6 +12,11 @@ namespace TournamentLibrary.DataAccess
         // PersonModel.csv will always be this file/name (note fullpath not locked in) 
         private const string PersonFile = "PersonModel.csv";
 
+        public void AddStartDate(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
+
         public DivisionModel CreateDivision(DivisionModel model)
         {
             throw new NotImplementedException();
@@ -192,6 +197,11 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public List<sdtpModel> GetSdtps(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
         public SeasonModel GetSeason(int i)
         {
             throw new NotImplementedException();
@@ -208,6 +218,11 @@ namespace TournamentLibrary.DataAccess
         }
 
         public List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID, int teamID)
         {
             throw new NotImplementedException();
         }
