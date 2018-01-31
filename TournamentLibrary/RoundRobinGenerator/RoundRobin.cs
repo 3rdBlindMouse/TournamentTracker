@@ -11,7 +11,7 @@ namespace TournamentLibrary.RoundRobinGenerator
 
         private static int numOfTeams;
 
-        private static Team[] teamsArray = new Team[numOfTeams];
+        
 
         // A list to hold teams from each division
         private static List<TeamModel> teams = new List<TeamModel>();
@@ -20,99 +20,92 @@ namespace TournamentLibrary.RoundRobinGenerator
         private static List<DivisionModel> divs = new List<DivisionModel>();
         // A list of all the IDs in active season
         private static List<sdtpModel> sdtps = new List<sdtpModel>();
-
+        // A dictionary to hold the division teams
+        private static Dictionary<SeasonDivisionsModel, TeamModel[]> divTeams = new Dictionary<SeasonDivisionsModel, TeamModel[]>();
+        // need this just to have available could be any size as they change as needed
+        private static TeamModel[] teamsArray = new TeamModel[1];
 
     public RoundRobin(int sID)
         {
             seasonID = sID;
             sdtps = GlobalConfig.Connection.GetSdtps(seasonID);
 
-            doDivisionStuff(sdtps);
-           
+            doDivisionStuff();
 
-
-
-            teamsArray = GenerateTeams(teamsArray);
-            //PrintTeamList(teamsArray);
-            GenerateGames(teamsArray);
+            //GenerateGames(teamsArray);
             //Array.Reverse(teamsArray);
 
             //PrintTeamList(teamsArray);
             //generateGames(teamsArray);
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
-        private void doDivisionStuff(List<sdtpModel> sdtps)
-        {
-            //foreach(sdtpModel s in sdtps)
-            //{
-                divs = GlobalConfig.Connection.GetSeasonDivisions(seasonID);
-                foreach(DivisionModel d in divs)
+        private void doDivisionStuff()
+        {       
+            divs = GlobalConfig.Connection.GetSeasonDivisions(seasonID);
+            foreach(DivisionModel d in divs)
+            {
+                SeasonDivisionsModel sdm = GlobalConfig.Connection.GetSeasonDivisionModel(d);                  
+                // Do team Stuff
+                d.DivisionTeams = GlobalConfig.Connection.GetDivisionTeams(sdm);
+                int arraySize = d.DivisionTeams.Count;
+                teamsArray = new TeamModel[arraySize];
+
+                if ((arraySize % 2) == 1)
                 {
-                    SeasonDivisionsModel sdm = GlobalConfig.Connection.GetSeasonDivisionModel(d);                  
-                    // Do team Stuff
-                    d.DivisionTeams = GlobalConfig.Connection.GetDivisionTeams(sdm);
-                    foreach(TeamModel team in d.DivisionTeams)
-                    {
-                        team.TeamMembers = GlobalConfig.Connection.GetSeasonDivisionTeamMembers(seasonID, d.DivisionID, team.TeamID);
-                    }
-                    // add skipped dates to divisionModel
-                    List<SkippedDatesModel> skDates = GlobalConfig.Connection.GetSkippedDates(sdm);
-                        foreach(SkippedDatesModel sk in skDates)
-                        {
-                        d.DivisionSkippedDates.Add(sk.DateToSkip);
-
-                        }
-                    
+                    TeamModel bye = new TeamModel("Bye", 0);
+                    teamsArray = new TeamModel[arraySize + 1];                   
+                    teamsArray[arraySize] = bye;
                 }
-            //}
+                    int i = 0;
+                foreach (TeamModel team in d.DivisionTeams)
+                {                  
+                    team.TeamMembers = GlobalConfig.Connection.GetSeasonDivisionTeamMembers(seasonID, d.DivisionID, team.TeamID);
+                    teamsArray[i] = team;                        
+                    i++;  
+                }
+                // add skipped dates to divisionModel
+                List<SkippedDatesModel> skDates = GlobalConfig.Connection.GetSkippedDates(sdm);
+                foreach(SkippedDatesModel sk in skDates)
+                {
+                d.DivisionSkippedDates.Add(sk.DateToSkip);                   
+                }
+                sdm.skippedDates = skDates;
+                divTeams.Add(sdm, teamsArray);
+
+                GenerateGames(teamsArray);
+            }
+
         }
 
-        private Team[] GenerateTeams(Team[] teamsArray)
-        {
-            int numOfTeams = teamsArray.Length;
-            if ((numOfTeams % 2) == 1)
-            {
-                teamsArray = new Team[numOfTeams + 1];
-                Team bye = new Team(teamsArray.Length - 1, "--BYE-");
-                teamsArray[numOfTeams] = bye;
-            }
-            for (int i = 0; i < numOfTeams; i++)
-            {
-                Team team = new Team(i + 1, "Team " + ((i + 1).ToString()));
-                teamsArray[i] = team;
-            }
 
-            return teamsArray;
-        }
-
-        private static void PrintTeamList(Team[] teamsArray)
+        private static void PrintTeamList(TeamModel[] teamsArray)
         {
-            foreach (Team team in teamsArray)
+            foreach (TeamModel team in teamsArray)
             {
-                Console.WriteLine(team.teamName);
+                Console.WriteLine(team.TeamName);
             }
 
             for (int i = 0; i < teamsArray.Length; i++)
             {
-                Console.WriteLine($"Team Array position {i} : {teamsArray[i].teamName}");
+                Console.WriteLine($"Team Array position {i} : {teamsArray[i].TeamName}");
             }
         }
         /*
          * Maintains the value and index of the last value in the array, while rotating the remaining values
          */
-        private static Team[] RotateTeams(Team[] teamsArray)
+        private static TeamModel[] RotateTeams(TeamModel[] teamsArray)
         {
             // capture last value in array 
-            Team lastPosition = teamsArray[teamsArray.Length - 1];
+            TeamModel lastPosition = teamsArray[teamsArray.Length - 1];
             // create a smaller array to hold remaining values
-            Team[] smallerTeamArray = new Team[teamsArray.Length - 1];
+            TeamModel[] smallerTeamArray = new TeamModel[teamsArray.Length - 1];
             for (int i = 0; i < smallerTeamArray.Length; i++)
             {
                 smallerTeamArray[i] = teamsArray[i];
             }
             // create a temporary smaller array to rotate values
-            Team[] tempTeamsArray = new Team[smallerTeamArray.Length];
+            TeamModel[] tempTeamsArray = new TeamModel[smallerTeamArray.Length];
             // choose how many positions to rotate
             int rotate = 1;
             // populate temp array with rotated values
@@ -132,7 +125,7 @@ namespace TournamentLibrary.RoundRobinGenerator
 
         }
 
-        private static void GenerateGames(Team[] teams)
+        private static void GenerateGames(TeamModel[] teams)
         {
             int numberOfTeams = teams.Length;
             int numberofGamesPerRound = numberOfTeams / 2;
@@ -146,7 +139,7 @@ namespace TournamentLibrary.RoundRobinGenerator
                 {
 
                     //Console.WriteLine($"Round {a + 1}");
-                    Console.WriteLine($"{teams[g].teamName} PLAYS {teams[numberOfTeams - 1 - g].teamName} ");
+                    Console.WriteLine($"{teams[g].TeamName} PLAYS {teams[numberOfTeams - 1 - g].TeamName} ");
 
                 }
                 RotateTeams(teams);
@@ -157,16 +150,6 @@ namespace TournamentLibrary.RoundRobinGenerator
 
 }
 
-class Team
-{
-    public int teamId { get; set; }
-    public string teamName { get; set; }
 
-    public Team(int id, string name)
-    {
-        this.teamId = id;
-        this.teamName = name;
-    }
-}
 
 

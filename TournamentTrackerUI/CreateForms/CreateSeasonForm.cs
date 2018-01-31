@@ -473,7 +473,7 @@ namespace TournamentTrackerUI.CreateForms
         private void button1_Click(object sender, EventArgs e)
         {
             //RoundRobin robin = new RoundRobin(seasonID);
-            RoundRobin robin = new RoundRobin(13);
+            RoundRobin robin = new RoundRobin(1);
         }
     }
 }
