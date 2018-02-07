@@ -32,6 +32,9 @@ namespace TournamentLibrary.Models
         /// A list of the Rounds that make up this Division
         /// </summary>
         public List<RoundModel> DivisionRounds { get; set; }
+
+        public List<GameModel> DivisionGames { get; set; }
+
         /// <summary>
         /// A List of the Teams in this Division
         /// </summary>

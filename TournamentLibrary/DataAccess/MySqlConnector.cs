@@ -767,7 +767,7 @@ namespace TournamentLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@InPersonID", pid);
-                
+
                 connection.Execute("spDeletePlayerFromRoster", p, commandType: CommandType.StoredProcedure);
             }
         }
@@ -823,6 +823,87 @@ namespace TournamentLibrary.DataAccess
 
                 connection.Execute("spAddStartDate", p, commandType: CommandType.StoredProcedure);
             }
+        }
+
+        public RoundModel CreateRound(RoundModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@RoundID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@InSeasonDivisionsID", model.SeasonDivisionsID);
+                p.Add("@InRoundDate", model.RoundDate);
+                p.Add("@InRoundNumber", model.RoundNumber);
+                connection.Execute("spRounds", p, commandType: CommandType.StoredProcedure);
+
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                var id = p.Get<int?>("RoundID");
+                model.RoundID = Convert.ToInt32(id);
+
+                return model;
+            }
+        }
+
+        public RoundModel getRoundModel(SeasonDivisionsModel sdm, int g)
+        {
+            List<RoundModel> output;
+            RoundModel model = new RoundModel();
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonDivisionsID", sdm.SeasonDivisionsID);
+                p.Add("@InRoundNumber", g);
+                output = connection.Query<RoundModel>("spGetRoundModel", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            foreach (RoundModel r in output)
+            {
+                model = r;
+            }
+            return model;
+        }
+
+        public GameModel CreateGame(GameModel model)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@GameID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                p.Add("@InGameDate", model.GameDate);
+                p.Add("@InHomeTeam", model.HomeTeam.TeamID);
+                p.Add("@InAwayTeam", model.AwayTeam.TeamID);
+                p.Add("@InRoundID", model.RoundID);
+                connection.Execute("spGame", p, commandType: CommandType.StoredProcedure);
+
+
+                // grabs newly created ID from database and returns it as part of the current Person Model
+                // https://stackoverflow.com/questions/13151861/fetch-last-inserted-id-form-stored-procedure-in-mysql
+                var id = p.Get<int?>("GameID");
+                model.RoundID = Convert.ToInt32(id);
+
+                return model;
+            }
+        }
+
+        public TeamModel GetBye()
+        {
+            List<TeamModel> output;
+            TeamModel model = new TeamModel();
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                
+                output = connection.Query<TeamModel>("spGetBye", commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            foreach (TeamModel t in output)
+            {
+                model = t;
+            }
+            return model;
         }
     }
 }

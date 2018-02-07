@@ -66,5 +66,9 @@ namespace TournamentLibrary.DataAccess
         void DeleteSDTP(int sid, int pid);
         void CreateSDTP(sdtpModel sdtp);
         void AddStartDate(SeasonDivisionsModel sdm);
+        RoundModel CreateRound(RoundModel rm);
+        RoundModel getRoundModel(SeasonDivisionsModel sdm, int g);
+        GameModel CreateGame(GameModel game);
+        TeamModel GetBye();
     }
 }

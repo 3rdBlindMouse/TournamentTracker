@@ -180,7 +180,7 @@ namespace TournamentTrackerUI.CreateForms
         /// <summary>
         /// When dates have been successfully added to Division "frame"
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model"></param>t
         public void DatesComplete(SeasonDivisionsModel model)
         {
             sdm.StartDate = model.StartDate;
@@ -472,8 +472,8 @@ namespace TournamentTrackerUI.CreateForms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //RoundRobin robin = new RoundRobin(seasonID);
-            RoundRobin robin = new RoundRobin(1);
+            RoundRobin robin = new RoundRobin(seasonID);
+            //RoundRobin robin = new RoundRobin(1);
         }
     }
 }

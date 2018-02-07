@@ -15,7 +15,7 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// ID of Division this Round is part of
         /// </summary>
-        public int DivisionID { get; set; }
+        public int SeasonDivisionsID { get; set; }
         /// <summary>
         /// Number of the Current Round
         /// </summary>

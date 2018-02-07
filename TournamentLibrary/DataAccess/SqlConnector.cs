@@ -288,5 +288,30 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void CreateRound(RoundModel rm)
+        {
+            throw new NotImplementedException();
+        }
+
+        RoundModel IDataConnection.CreateRound(RoundModel rm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoundModel getRoundModel(SeasonDivisionsModel sdm, int g)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameModel CreateGame(GameModel game)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TeamModel GetBye()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

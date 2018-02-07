@@ -27,12 +27,22 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public GameModel CreateGame(GameModel game)
+        {
+            throw new NotImplementedException();
+        }
+
         public PersonModel CreatePerson(PersonModel model)
         {
             throw new NotImplementedException();
         }
 
         public List<RosterModel> CreateRoster(RosterModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoundModel CreateRound(RoundModel rm)
         {
             throw new NotImplementedException();
         }
@@ -172,6 +182,11 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public TeamModel GetBye()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model)
         {
             throw new NotImplementedException();
@@ -193,6 +208,11 @@ namespace TournamentLibrary.DataAccess
         }
 
         public List<PersonModel> GetPlayersNotInThisSeason(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoundModel getRoundModel(SeasonDivisionsModel sdm, int g)
         {
             throw new NotImplementedException();
         }
