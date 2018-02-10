@@ -873,8 +873,8 @@ namespace TournamentLibrary.DataAccess
                 var p = new DynamicParameters();
                 p.Add("@GameID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@InGameDate", model.GameDate);
-                p.Add("@InHomeTeam", model.HomeTeam.TeamID);
-                p.Add("@InAwayTeam", model.AwayTeam.TeamID);
+                p.Add("@InHomeTeam", model.HomeTeamModel.TeamID);
+                p.Add("@InAwayTeam", model.AwayTeamModel.TeamID);
                 p.Add("@InRoundID", model.RoundID);
                 connection.Execute("spGame", p, commandType: CommandType.StoredProcedure);
 
@@ -904,6 +904,93 @@ namespace TournamentLibrary.DataAccess
                 model = t;
             }
             return model;
+        }
+
+        public bool Login(int userID, string password)
+        {
+            int count = 0;
+            bool login = false;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+               
+                p.Add("@InUserID", userID);
+                p.Add("@InPassword", password);
+              
+                var c  = connection.ExecuteScalar("spCheckLogin", p, commandType: CommandType.StoredProcedure);
+                count = Convert.ToInt32(c);
+                if(count != 0)
+                {
+                    login = true;
+                }
+            }
+            return login;
+           
+        }
+
+        public List<DateTime> GetGameDatesForSdtp(int sdtpID)
+        {
+            List<DateTime> output;
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSdtpID", sdtpID);
+                output = connection.Query<DateTime>("spGetGameDatesForSdtp",p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            return output;
+        }
+
+        public List<GameModel> GetGameModels(int sdtpID)
+        {
+            List<GameModel> output;
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSdtpID", sdtpID);
+                output = connection.Query<GameModel>("spGetGameModelsForSdtp", p, commandType: CommandType.StoredProcedure).ToList();
+            }            
+            return output;
+        }
+
+        public sdtpModel GetSdtpModel(int sdtpID)
+        {
+            List<sdtpModel> output;
+            sdtpModel sdtp = new sdtpModel();
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSdtpID", sdtpID);
+               
+                output = connection.Query<sdtpModel>("spGetSdtpModel", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            foreach(sdtpModel model in output)
+            {
+                sdtp = model;
+            }
+            return sdtp;
+        }
+
+        public DivisionTeamsModel GetDivisionTeamModel(int seasonDivisionsID, int teamID)
+        {
+            List<DivisionTeamsModel> output;
+            DivisionTeamsModel dtm = new DivisionTeamsModel();
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonDivisionsID", seasonDivisionsID);
+                p.Add("@InTeamID", teamID);
+
+                output = connection.Query<DivisionTeamsModel>("spGetDivisionTeamModel", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            foreach (DivisionTeamsModel model in output)
+            {
+                dtm = model;
+            }
+            return dtm;
         }
     }
 }

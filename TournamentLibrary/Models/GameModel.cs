@@ -23,11 +23,13 @@ namespace TournamentLibrary.Models
         /// <summary>
         /// Home Team
         /// </summary>
-        public TeamModel HomeTeam { get; set; }
+        public TeamModel HomeTeamModel { get; set; }
+        public int HomeTeam { get; set; }
         /// <summary>
         /// Away Team
         /// </summary>
-        public TeamModel  AwayTeam { get; set; }
+        public TeamModel  AwayTeamModel { get; set; }
+        public int AwayTeam { get; set; }
         /// <summary>
         /// List of home team's players
         /// </summary>

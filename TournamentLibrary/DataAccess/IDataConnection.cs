@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TournamentLibrary.Models;
 
 namespace TournamentLibrary.DataAccess
@@ -18,18 +19,24 @@ namespace TournamentLibrary.DataAccess
         //TODO convert GetLastPerson from list into PersonModel only
         List<PersonModel> GetLastPerson();
         List<DivisionModel> GetSeasonDivisions(int i);
+        List<DateTime> GetGameDatesForSdtp(int sdtpID);
         List<VenueModel> GetAllVenues();
         
         List<PersonModel> GetTeamMembers(DivisionTeamsModel model);
-        List<sdtpModel> GetSdtps(int seasonID);
-
-        List<TeamModel> GetAllTeams();
-        List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model);
 
         
 
+        List<sdtpModel> GetSdtps(int seasonID);
+
+        List<TeamModel> GetAllTeams();
+        bool Login(int userID, string password);
+        List<TeamModel> GetDivisionTeams(SeasonDivisionsModel model);
+        List<GameModel> GetGameModels(int sdtpID);
+
+
         DivisionModel CreateDivision(DivisionModel model);
         SkippedDatesModel CreateSkippedDates(SkippedDatesModel model);
+        sdtpModel GetSdtpModel(int sdtpID);
         void DeleteSkippedDates(SkippedDatesModel model);
 
 
@@ -57,6 +64,7 @@ namespace TournamentLibrary.DataAccess
         SeasonModel GetSeason(int i);
         List<TeamModel> GetTeamsNotInSeason(SeasonDivisionsModel model);
         void DeleteSeasonDivisions(int seasonID, int divisionID);
+        DivisionTeamsModel GetDivisionTeamModel(int seasonDivisionsID, int teamID);
         List<DivisionTeamsModel> GetSeasonTeams(SeasonDivisionsModel sdm);
         List<PersonModel> GetSeasonPlayers(SeasonDivisionsModel sdm);
         List<PersonModel> GetPlayersNotInThisSeason(SeasonDivisionsModel sdm);

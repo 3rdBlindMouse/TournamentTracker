@@ -313,5 +313,30 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public bool Login(int userID, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DateTime> GetGameDatesForSdtp(int sdtpID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<GameModel> GetGameModels(int sdtpID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public sdtpModel GetSdtpModel(int gameID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DivisionTeamsModel GetDivisionTeamModel(int seasonDivisionsID, int teamID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

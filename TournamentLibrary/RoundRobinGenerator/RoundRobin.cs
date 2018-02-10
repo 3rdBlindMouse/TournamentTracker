@@ -92,9 +92,9 @@ namespace TournamentLibrary.RoundRobinGenerator
                     game.GameDate = rm.RoundDate;
                     //Console.WriteLine($"Round {a + 1}");
                     Console.WriteLine($"{teams[g].TeamName} PLAYS {teams[numberOfTeams - 1 - g].TeamName} ");
-                    game.HomeTeam = teams[g];
+                    game.HomeTeamModel = teams[g];
                     game.HomeTeamPlayers = teams[g].TeamMembers;
-                    game.AwayTeam = teams[numberOfTeams - 1 - g];
+                    game.AwayTeamModel = teams[numberOfTeams - 1 - g];
                     game.AwayTeamPlayers = teams[numberOfTeams - 1 - g].TeamMembers;
                     
                     roundGames.Add(game);
