@@ -48,7 +48,7 @@ namespace TournamentTrackerUI
 
             public void closeForm(object sender, FormClosingEventArgs e)
             {
-                this.Show();
+                this.Close();
             }
 
         

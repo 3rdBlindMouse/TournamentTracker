@@ -338,5 +338,15 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public List<PersonModel> GetSeasonPlayers(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateLogin(int sdtpID, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

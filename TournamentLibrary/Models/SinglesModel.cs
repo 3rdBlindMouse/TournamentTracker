@@ -36,5 +36,15 @@ namespace TournamentLibrary.Models
         /// Score value for winning a singles game
         /// </summary>
         public int SinglesScoreValue { get; set; }
+
+
+        public PersonModel HomeTeamPlayer1 { get; set; }
+        public PersonModel HomeTeamPlayer2 { get; set; }
+        public PersonModel HomeTeamPlayer3 { get; set; }
+        public PersonModel HomeTeamPlayer4 { get; set; }
+        public PersonModel HomeTeamPlayer5 { get; set; }
+        public PersonModel HomeTeamPlayer6 { get; set; }
+        public PersonModel HomeTeamPlayer7 { get; set; }
+        public PersonModel HomeTeamPlayer8 { get; set; }
     }
 }

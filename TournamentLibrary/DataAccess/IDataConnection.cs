@@ -67,6 +67,7 @@ namespace TournamentLibrary.DataAccess
         DivisionTeamsModel GetDivisionTeamModel(int seasonDivisionsID, int teamID);
         List<DivisionTeamsModel> GetSeasonTeams(SeasonDivisionsModel sdm);
         List<PersonModel> GetSeasonPlayers(SeasonDivisionsModel sdm);
+        List<PersonModel> GetSeasonPlayers(int seasonID);
         List<PersonModel> GetPlayersNotInThisSeason(SeasonDivisionsModel sdm);
         List<PersonModel> GetSeasonDivisionTeamMembers(int seasonID, int divisionTeamsID, int teamID);
         void CreateSDTP(int sid, int dTid, int pid);
@@ -78,5 +79,6 @@ namespace TournamentLibrary.DataAccess
         RoundModel getRoundModel(SeasonDivisionsModel sdm, int g);
         GameModel CreateGame(GameModel game);
         TeamModel GetBye();
+        void CreateLogin(int sdtpID, string password);
     }
 }

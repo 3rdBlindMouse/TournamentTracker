@@ -44,6 +44,8 @@
             this.newVenueButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LoginButton = new System.Windows.Forms.Button();
+            this.createLoginButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,34 +72,37 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.Red;
             this.button3.Location = new System.Drawing.Point(199, 11);
             this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(112, 35);
             this.button3.TabIndex = 2;
             this.button3.Text = "Edit Existing";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.Yellow;
             this.button1.Location = new System.Drawing.Point(199, 56);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 35);
             this.button1.TabIndex = 4;
             this.button1.Text = "Edit Existing";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // newDivisionButton
             // 
+            this.newDivisionButton.BackColor = System.Drawing.Color.Red;
             this.newDivisionButton.Location = new System.Drawing.Point(7, 56);
             this.newDivisionButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.newDivisionButton.Name = "newDivisionButton";
             this.newDivisionButton.Size = new System.Drawing.Size(112, 35);
             this.newDivisionButton.TabIndex = 3;
             this.newDivisionButton.Text = "Create New";
-            this.newDivisionButton.UseVisualStyleBackColor = true;
+            this.newDivisionButton.UseVisualStyleBackColor = false;
             this.newDivisionButton.Click += new System.EventHandler(this.newDivisionButton_Click);
             // 
             // label2
@@ -112,24 +117,26 @@
             // 
             // button5
             // 
+            this.button5.BackColor = System.Drawing.Color.Red;
             this.button5.Location = new System.Drawing.Point(199, 101);
             this.button5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(112, 35);
             this.button5.TabIndex = 6;
             this.button5.Text = "Edit Existing";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // newTeamButton
             // 
+            this.newTeamButton.BackColor = System.Drawing.Color.Red;
             this.newTeamButton.Location = new System.Drawing.Point(7, 101);
             this.newTeamButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.newTeamButton.Name = "newTeamButton";
             this.newTeamButton.Size = new System.Drawing.Size(112, 35);
             this.newTeamButton.TabIndex = 5;
             this.newTeamButton.Text = "Create New";
-            this.newTeamButton.UseVisualStyleBackColor = true;
+            this.newTeamButton.UseVisualStyleBackColor = false;
             this.newTeamButton.Click += new System.EventHandler(this.newTeamButton_Click);
             // 
             // label3
@@ -176,13 +183,14 @@
             // 
             // EditVenueFormButton
             // 
+            this.EditVenueFormButton.BackColor = System.Drawing.Color.Yellow;
             this.EditVenueFormButton.Location = new System.Drawing.Point(199, 191);
             this.EditVenueFormButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.EditVenueFormButton.Name = "EditVenueFormButton";
             this.EditVenueFormButton.Size = new System.Drawing.Size(112, 35);
             this.EditVenueFormButton.TabIndex = 10;
             this.EditVenueFormButton.Text = "Edit Existing";
-            this.EditVenueFormButton.UseVisualStyleBackColor = true;
+            this.EditVenueFormButton.UseVisualStyleBackColor = false;
             this.EditVenueFormButton.Click += new System.EventHandler(this.button9_Click);
             // 
             // newVenueButton
@@ -229,11 +237,35 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // LoginButton
+            // 
+            this.LoginButton.AutoEllipsis = true;
+            this.LoginButton.Location = new System.Drawing.Point(366, 294);
+            this.LoginButton.Name = "LoginButton";
+            this.LoginButton.Size = new System.Drawing.Size(112, 35);
+            this.LoginButton.TabIndex = 1;
+            this.LoginButton.Text = "Login";
+            this.LoginButton.UseVisualStyleBackColor = true;
+            this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
+            // 
+            // createLoginButton
+            // 
+            this.createLoginButton.AutoEllipsis = true;
+            this.createLoginButton.Location = new System.Drawing.Point(174, 294);
+            this.createLoginButton.Name = "createLoginButton";
+            this.createLoginButton.Size = new System.Drawing.Size(112, 35);
+            this.createLoginButton.TabIndex = 2;
+            this.createLoginButton.Text = "Create Login";
+            this.createLoginButton.UseVisualStyleBackColor = true;
+            this.createLoginButton.Click += new System.EventHandler(this.createLoginButton_Click);
+            // 
             // FirstForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 369);
+            this.Controls.Add(this.createLoginButton);
+            this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -263,5 +295,7 @@
         private System.Windows.Forms.Button newVenueButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button LoginButton;
+        private System.Windows.Forms.Button createLoginButton;
     }
 }

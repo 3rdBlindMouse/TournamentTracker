@@ -37,18 +37,19 @@ namespace TournamentTrackerUI
         //TODO create a new season form
         private void newSeasonButton_Click(object sender, EventArgs e)
         {
-            CreateSeasonForm seasonForm = new CreateSeasonForm();
-            seasonForm.Show();
+            TournamentCreatorForm tcForm = new TournamentCreatorForm();
+            tcForm.Show();
             this.Hide();
-            seasonForm.FormClosing += closeForm;
+            tcForm.FormClosing += closeForm;
         }
 
         private void newTeamButton_Click(object sender, EventArgs e)
         {
-            CreateTeamForm teamForm = new CreateTeamForm(this);
-            teamForm.Show();
-            this.Hide();
-            teamForm.FormClosing += closeForm;
+            // TODO fix this
+            //CreateTeamForm teamForm = new CreateTeamForm(this);
+            //teamForm.Show();
+            //this.Hide();
+            //teamForm.FormClosing += closeForm;
         }
 
         private void newVenueButton_Click(object sender, EventArgs e)
@@ -125,6 +126,20 @@ namespace TournamentTrackerUI
         public void DivisionComplete(SeasonDivisionsModel model)
         {
             throw new NotImplementedException();
+        }
+
+        private void LoginButton_Click(object sender, EventArgs e)
+        {
+            loginForm lf = new loginForm();
+            lf.Show();
+            //this.Hide();
+            lf.FormClosing += closeForm;
+        }
+
+        private void createLoginButton_Click(object sender, EventArgs e)
+        {
+            CreateNewLogin newLogin = new CreateNewLogin();
+            newLogin.Show();
         }
     }
     

@@ -742,6 +742,7 @@
             this.T1ConfirmteamButton.TabIndex = 27;
             this.T1ConfirmteamButton.Text = "Confirm Team";
             this.T1ConfirmteamButton.UseVisualStyleBackColor = true;
+            this.T1ConfirmteamButton.Click += new System.EventHandler(this.T1ConfirmteamButton_Click);
             // 
             // T2ConfirmteamButton
             // 

@@ -32,6 +32,11 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public void CreateLogin(int sdtpID, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public PersonModel CreatePerson(PersonModel model)
         {
             throw new NotImplementedException();
@@ -268,6 +273,11 @@ namespace TournamentLibrary.DataAccess
         }
 
         public List<PersonModel> GetSeasonPlayers(SeasonDivisionsModel sdm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetSeasonPlayers(int seasonID)
         {
             throw new NotImplementedException();
         }

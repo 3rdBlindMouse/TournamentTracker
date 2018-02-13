@@ -43,6 +43,8 @@ namespace TournamentLibrary.Models
         /// </summary>
         public TeamModel Team { get; set; }
 
+        public int SdtpID { get; set; }
+
         public string FullName
         {
             get
@@ -65,6 +67,7 @@ namespace TournamentLibrary.Models
             Sex = sex;
             DateOfBirth = dateOfBirth;
         }
+
 
         /// <summary>
         /// this contructor is used to add "Select Player" at top of combobox in EditPersonForm

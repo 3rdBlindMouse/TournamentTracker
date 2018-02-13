@@ -23,12 +23,12 @@ namespace TournamentTrackerUI
             //Application.Run(new TeamCreatorForm());
             //Application.Run(new PersonCreatorForm());
             //Application.Run(new VenueCreatorForm());
-            //Application.Run(new FirstForm());
+            Application.Run(new FirstForm());
             //Application.Run(new EditDivisionForm());
             //Application.Run(new TournamentCreatorForm());
             //Application.Run(new CreateSeasonForm());
             //Application.Run(new CreateDivisionForm());
-            Application.Run(new loginForm());
+            //Application.Run(new loginForm());
         }
     }
 }

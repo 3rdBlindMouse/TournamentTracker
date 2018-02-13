@@ -992,6 +992,30 @@ namespace TournamentLibrary.DataAccess
             }
             return dtm;
         }
+
+        public List<PersonModel> GetSeasonPlayers(int seasonID)
+        {
+            List<PersonModel> output;
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InSeasonID", seasonID);
+                output = connection.Query<PersonModel>("spGetSeasonPlayers", p, commandType: CommandType.StoredProcedure).ToList();
+                //}
+            }
+            return output;
+        }
+
+        public void CreateLogin(int sdtpID, string password)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("InSdtpID", sdtpID);
+                p.Add("@InPassword", password);
+                connection.Execute("spCreateLogin", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
 
