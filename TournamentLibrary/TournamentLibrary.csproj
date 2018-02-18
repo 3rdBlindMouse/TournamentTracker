@@ -49,6 +49,7 @@
     <Compile Include="DataAccess\TextConnector.cs" />
     <Compile Include="DataAccess\TextConnectorProcessor.cs" />
     <Compile Include="enums.cs" />
+    <Compile Include="Models\AwayTeamPlayersModel.cs" />
     <Compile Include="Models\CaptainModel.cs" />
     <Compile Include="Models\DivisionModel.cs" />
     <Compile Include="Models\DivisionTeamsModel.cs" />
@@ -57,8 +58,10 @@
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="DataAccess\IDataConnection.cs" />
     <Compile Include="DataAccess\MySqlConnector.cs" />
+    <Compile Include="Models\HomeTeamPlayersModel.cs" />
     <Compile Include="Models\PairModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
+    <Compile Include="Models\PlayersModel.cs" />
     <Compile Include="Models\RosterModel.cs" />
     <Compile Include="Models\sdtpModel.cs" />
     <Compile Include="Models\SeasonDivisionsModel.cs" />

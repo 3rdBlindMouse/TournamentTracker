@@ -1031,7 +1031,7 @@ namespace TournamentLibrary.DataAccess
             }
         }
 
-        public void AddPlayers(GameModel thisGame)
+        public void AddHomePlayers(GameModel thisGame)
         {
             using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
             {
@@ -1049,7 +1049,65 @@ namespace TournamentLibrary.DataAccess
                 connection.Execute("spAddHomeTeamPlayers", p, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public HomeTeamPlayersModel GetHomeTeamPlayers(GameModel Gmodel)
+        {
+            List<HomeTeamPlayersModel> output;
+
+            HomeTeamPlayersModel model = new HomeTeamPlayersModel();
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InGameID", Gmodel.GameID);
+                output = connection.Query<HomeTeamPlayersModel>("spGetHomeTeamPlayers", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            foreach(HomeTeamPlayersModel m in output)
+            {
+                model = m;
+            }
+            return model;
+        }
+
+        public AwayTeamPlayersModel GetAwayTeamPlayers(GameModel Gmodel)
+        {
+            List<AwayTeamPlayersModel> output;
+
+            AwayTeamPlayersModel model = new AwayTeamPlayersModel();
+
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@InGameID", Gmodel.GameID);
+                output = connection.Query<AwayTeamPlayersModel>("spGetAwayTeamPlayers", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+            foreach (AwayTeamPlayersModel m in output)
+            {
+                model = m;
+            }
+            return model;
+        }
+
+        public void AddAwayPlayers(GameModel thisGame)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("InGameID", thisGame.GameID);
+                p.Add("InAwayTeamPlayer1", thisGame.AwayTeamPlayer1.PersonID);
+                p.Add("InAwayTeamPlayer2", thisGame.AwayTeamPlayer2.PersonID);
+                p.Add("InAwayTeamPlayer3", thisGame.AwayTeamPlayer3.PersonID);
+                p.Add("InAwayTeamPlayer4", thisGame.AwayTeamPlayer4.PersonID);
+                p.Add("InAwayTeamPlayer5", thisGame.AwayTeamPlayer5.PersonID);
+                p.Add("InAwayTeamPlayer6", thisGame.AwayTeamPlayer6.PersonID);
+                p.Add("InAwayTeamPlayer7", thisGame.AwayTeamPlayer7.PersonID);
+                p.Add("InAwayTeamPlayer8", thisGame.AwayTeamPlayer8.PersonID);
+
+                connection.Execute("spAddAwayTeamPlayers", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
+    
 }
 
 

@@ -349,7 +349,32 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
-        public void AddPlayers(GameModel thisGame)
+        public void AddHomePlayers(GameModel thisGame)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetHomeTeamPlayers(int gameID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameModel GetHomeTeamPlayers(GameModel gameID)
+        {
+            throw new NotImplementedException();
+        }
+
+        HomeTeamPlayersModel IDataConnection.GetHomeTeamPlayers(GameModel gameID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public AwayTeamPlayersModel GetAwayTeamPlayers(GameModel thisGame)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddAwayPlayers(GameModel thisGame)
         {
             throw new NotImplementedException();
         }

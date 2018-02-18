@@ -100,6 +100,7 @@
             this.getOtherTeamsButton = new System.Windows.Forms.Button();
             this.HomeTeamNameLabel = new System.Windows.Forms.Label();
             this.AwayTeamNamelabel = new System.Windows.Forms.Label();
+            this.getAwayTeamButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.P12GroupBox.SuspendLayout();
@@ -756,12 +757,13 @@
             // 
             // getOtherTeamsButton
             // 
-            this.getOtherTeamsButton.Location = new System.Drawing.Point(313, 88);
+            this.getOtherTeamsButton.Location = new System.Drawing.Point(362, 79);
             this.getOtherTeamsButton.Name = "getOtherTeamsButton";
-            this.getOtherTeamsButton.Size = new System.Drawing.Size(105, 23);
+            this.getOtherTeamsButton.Size = new System.Drawing.Size(75, 36);
             this.getOtherTeamsButton.TabIndex = 29;
-            this.getOtherTeamsButton.Text = "Get Other Teams";
+            this.getOtherTeamsButton.Text = "Get HomeTeam";
             this.getOtherTeamsButton.UseVisualStyleBackColor = true;
+            this.getOtherTeamsButton.Click += new System.EventHandler(this.getOtherTeamsButton_Click);
             // 
             // HomeTeamNameLabel
             // 
@@ -783,12 +785,23 @@
             this.AwayTeamNamelabel.TabIndex = 31;
             this.AwayTeamNamelabel.Text = "label2";
             // 
+            // getAwayTeamButton
+            // 
+            this.getAwayTeamButton.Location = new System.Drawing.Point(278, 79);
+            this.getAwayTeamButton.Name = "getAwayTeamButton";
+            this.getAwayTeamButton.Size = new System.Drawing.Size(75, 36);
+            this.getAwayTeamButton.TabIndex = 32;
+            this.getAwayTeamButton.Text = "Get AwayTeam";
+            this.getAwayTeamButton.UseVisualStyleBackColor = true;
+            this.getAwayTeamButton.Click += new System.EventHandler(this.getAwayTeamButton_Click);
+            // 
             // ScoreCard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(711, 566);
+            this.Controls.Add(this.getAwayTeamButton);
             this.Controls.Add(this.AwayTeamNamelabel);
             this.Controls.Add(this.HomeTeamNameLabel);
             this.Controls.Add(this.getOtherTeamsButton);
@@ -909,5 +922,6 @@
         private System.Windows.Forms.Button getOtherTeamsButton;
         private System.Windows.Forms.Label HomeTeamNameLabel;
         private System.Windows.Forms.Label AwayTeamNamelabel;
+        private System.Windows.Forms.Button getAwayTeamButton;
     }
 }

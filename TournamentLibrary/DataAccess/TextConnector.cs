@@ -12,7 +12,12 @@ namespace TournamentLibrary.DataAccess
         // PersonModel.csv will always be this file/name (note fullpath not locked in) 
         private const string PersonFile = "PersonModel.csv";
 
-        public void AddPlayers(GameModel thisGame)
+        public void AddAwayPlayers(GameModel thisGame)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddHomePlayers(GameModel thisGame)
         {
             throw new NotImplementedException();
         }
@@ -192,6 +197,11 @@ namespace TournamentLibrary.DataAccess
             throw new NotImplementedException();
         }
 
+        public AwayTeamPlayersModel GetAwayTeamPlayers(GameModel thisGame)
+        {
+            throw new NotImplementedException();
+        }
+
         public TeamModel GetBye()
         {
             throw new NotImplementedException();
@@ -218,6 +228,16 @@ namespace TournamentLibrary.DataAccess
         }
 
         public List<GameModel> GetGameModels(int sdtpID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetHomeTeamPlayers(int gameID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameModel GetHomeTeamPlayers(GameModel gameID)
         {
             throw new NotImplementedException();
         }
@@ -318,6 +338,11 @@ namespace TournamentLibrary.DataAccess
         }
 
         List<DivisionModel> IDataConnection.GetDivsNotInThisSeason(int seasonID)
+        {
+            throw new NotImplementedException();
+        }
+
+        HomeTeamPlayersModel IDataConnection.GetHomeTeamPlayers(GameModel gameID)
         {
             throw new NotImplementedException();
         }

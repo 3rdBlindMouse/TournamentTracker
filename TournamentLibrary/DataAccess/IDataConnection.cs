@@ -80,6 +80,9 @@ namespace TournamentLibrary.DataAccess
         GameModel CreateGame(GameModel game);
         TeamModel GetBye();
         void CreateLogin(int sdtpID, string password);
-        void AddPlayers(GameModel thisGame);
+        void AddHomePlayers(GameModel thisGame);
+        HomeTeamPlayersModel GetHomeTeamPlayers(GameModel gameID);
+        AwayTeamPlayersModel GetAwayTeamPlayers(GameModel thisGame);
+        void AddAwayPlayers(GameModel thisGame);
     }
 }
