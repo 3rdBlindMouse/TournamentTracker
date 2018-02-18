@@ -83,8 +83,15 @@ namespace TournamentTrackerUI
             thisGame = (GameModel)dateComboBox.SelectedValue;
 
             
+
+
             thisGame.HomeTeamModel = (TeamModel)allTeams.FirstOrDefault(x => x.TeamID == thisGame.HomeTeam);
             thisGame.AwayTeamModel = (TeamModel)allTeams.FirstOrDefault(x => x.TeamID == thisGame.AwayTeam);
+
+            if(thisGame.HomeTeamModel.TeamID != 0)
+            {
+
+            }
 
 
             //DateTime date = thisGame.GameDate;
@@ -158,10 +165,10 @@ namespace TournamentTrackerUI
         private void T1ConfirmteamButton_Click(object sender, EventArgs e)
         {
             bool playersGood = true;
-            List<PersonModel> selectedPlayers = new List<PersonModel>();
+            t1Selected = new List<PersonModel>();
             foreach(ComboBox cb in t1boxes)
             {
-                if (selectedPlayers.Contains((PersonModel)(cb.SelectedValue)))
+                if (t1Selected.Contains((PersonModel)(cb.SelectedValue)))
                 {
                     MessageBox.Show("A Player is Selected More Than Once");
                     playersGood = false;
@@ -169,23 +176,30 @@ namespace TournamentTrackerUI
                 }
                 else
                 {
-                    selectedPlayers.Add((PersonModel)(cb.SelectedValue));
+                    t1Selected.Add((PersonModel)(cb.SelectedValue));
                 }
                 
             }
             if(playersGood)
             {
                 //TODO find a better way to do this
-                thisGame.HomeTeamPlayer1 = selectedPlayers[0];
-                thisGame.HomeTeamPlayer2 = selectedPlayers[1];
-                thisGame.HomeTeamPlayer3 = selectedPlayers[2];
-                thisGame.HomeTeamPlayer4 = selectedPlayers[3];
-                thisGame.HomeTeamPlayer5 = selectedPlayers[4];
-                thisGame.HomeTeamPlayer6 = selectedPlayers[5];
-                thisGame.HomeTeamPlayer7 = selectedPlayers[6];
-                thisGame.HomeTeamPlayer8 = selectedPlayers[7];
-            }
+                thisGame.HomeTeamPlayer1 = t1Selected[0];
+                thisGame.HomeTeamPlayer2 = t1Selected[1];
+                thisGame.HomeTeamPlayer3 = t1Selected[2];
+                thisGame.HomeTeamPlayer4 = t1Selected[3];
+                thisGame.HomeTeamPlayer5 = t1Selected[4];
+                thisGame.HomeTeamPlayer6 = t1Selected[5];
+                thisGame.HomeTeamPlayer7 = t1Selected[6];
+                thisGame.HomeTeamPlayer8 = t1Selected[7];
+
+                GlobalConfig.Connection.AddPlayers(thisGame);
+               }
             
+        }
+
+        private void T2ConfirmteamButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

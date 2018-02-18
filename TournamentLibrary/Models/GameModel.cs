@@ -67,5 +67,14 @@ namespace TournamentLibrary.Models
         public PersonModel HomeTeamPlayer6 { get; set; }
         public PersonModel HomeTeamPlayer7 { get; set; }
         public PersonModel HomeTeamPlayer8 { get; set; }
+
+        public PersonModel AwayTeamPlayer1 { get; set; }
+        public PersonModel AwayTeamPlayer2 { get; set; }
+        public PersonModel AwayTeamPlayer3 { get; set; }
+        public PersonModel AwayTeamPlayer4 { get; set; }
+        public PersonModel AwayTeamPlayer5 { get; set; }
+        public PersonModel AwayTeamPlayer6 { get; set; }
+        public PersonModel AwayTeamPlayer7 { get; set; }
+        public PersonModel AwayTeamPlayer8 { get; set; }
     }
 }

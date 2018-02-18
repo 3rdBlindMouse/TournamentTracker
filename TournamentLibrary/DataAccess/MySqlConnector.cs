@@ -873,8 +873,22 @@ namespace TournamentLibrary.DataAccess
                 var p = new DynamicParameters();
                 p.Add("@GameID", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 p.Add("@InGameDate", model.GameDate);
-                p.Add("@InHomeTeam", model.HomeTeamModel.TeamID);
-                p.Add("@InAwayTeam", model.AwayTeamModel.TeamID);
+                if (model.HomeTeamModel.TeamID != 0)
+                {
+                    p.Add("@InHomeTeam", model.HomeTeamModel.TeamID);
+                }
+                else
+                {
+                    p.Add("@InHomeTeam", null);
+                }
+                if (model.AwayTeamModel.TeamID != 0)
+                {
+                    p.Add("@InAwayTeam", model.AwayTeamModel.TeamID);
+                }
+                else
+                {
+                    p.Add("@InAwayTeam", null);
+                }
                 p.Add("@InRoundID", model.RoundID);
                 connection.Execute("spGame", p, commandType: CommandType.StoredProcedure);
 
@@ -1014,6 +1028,25 @@ namespace TournamentLibrary.DataAccess
                 p.Add("InSdtpID", sdtpID);
                 p.Add("@InPassword", password);
                 connection.Execute("spCreateLogin", p, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void AddPlayers(GameModel thisGame)
+        {
+            using (IDbConnection connection = new MySqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("InGameID", thisGame.GameID);
+                p.Add("InHomeTeamPlayer1", thisGame.HomeTeamPlayer1.PersonID);
+                p.Add("InHomeTeamPlayer2", thisGame.HomeTeamPlayer2.PersonID);
+                p.Add("InHomeTeamPlayer3", thisGame.HomeTeamPlayer3.PersonID);
+                p.Add("InHomeTeamPlayer4", thisGame.HomeTeamPlayer4.PersonID);
+                p.Add("InHomeTeamPlayer5", thisGame.HomeTeamPlayer5.PersonID);
+                p.Add("InHomeTeamPlayer6", thisGame.HomeTeamPlayer6.PersonID);
+                p.Add("InHomeTeamPlayer7", thisGame.HomeTeamPlayer7.PersonID);
+                p.Add("InHomeTeamPlayer8", thisGame.HomeTeamPlayer8.PersonID);
+
+                connection.Execute("spAddHomeTeamPlayers", p, commandType: CommandType.StoredProcedure);
             }
         }
     }

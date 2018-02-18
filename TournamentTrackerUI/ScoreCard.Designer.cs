@@ -752,6 +752,7 @@
             this.T2ConfirmteamButton.TabIndex = 28;
             this.T2ConfirmteamButton.Text = "Confirm Team";
             this.T2ConfirmteamButton.UseVisualStyleBackColor = true;
+            this.T2ConfirmteamButton.Click += new System.EventHandler(this.T2ConfirmteamButton_Click);
             // 
             // getOtherTeamsButton
             // 

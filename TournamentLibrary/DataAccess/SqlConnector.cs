@@ -348,5 +348,10 @@ namespace TournamentLibrary.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void AddPlayers(GameModel thisGame)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
